@@ -21,18 +21,16 @@ struct ListBlock: View {
                 Text("\(self.destination.name)").bold()
                 HStack(spacing: 12){
                     ForEach(0..<self.destination.rating){ _ in
-                        Image(systemName: "heart.fill")
+                        Image("heartfill")
                                 .resizable()
                                 .scaledToFit()
                                 .frame(width: heartSize, height: heartSize)
-                            .foregroundColor(.red)
                     }
                     ForEach(self.destination.rating..<5){ _ in
-                        Image(systemName: "heart")
+                        Image("hearthollow")
                                 .resizable()
                                 .scaledToFit()
                                 .frame(width: heartSize, height: heartSize)
-                            .foregroundColor(.red)
                     }
                 }
             })
@@ -61,9 +59,14 @@ struct ListView: View {
                 }, label: {
                     Text("Show in map")
                 })
-                NavigationLink(destination: SearchView(planId: planId)) {
+                Button(action: {
+                    viewRouter.currentPage = .search
+                }, label: {
                     Text("Add a destination")
-                }
+                })
+//                NavigationLink(destination: SearchView(planId: planId)) {
+//                    Text("Add a destination")
+//                }
             })
         }
         .navigationBarTitle(Text("\(name)"))

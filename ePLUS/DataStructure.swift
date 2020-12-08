@@ -5,9 +5,14 @@
 //  Created by 林承緯 on 2020/12/7.
 //
 
-import Foundation
+enum Page {
+    case list
+    case map
+    case search
+    case addDestination
+}
 
-struct Plan: Decodable, Identifiable {
+struct Plan: Codable, Identifiable {
     let id: String
     let img: String
     let destinations: [[String]]
@@ -24,7 +29,7 @@ struct Destination: Identifiable {
     let rating: Int
 }
 
-struct Location: Decodable, Identifiable {
+struct Location: Codable, Identifiable {
     let id: String
     let img: String
     let name: String
@@ -32,9 +37,23 @@ struct Location: Decodable, Identifiable {
     let coordinate: Coordinate
 }
 
-struct Coordinate: Decodable {
+struct Coordinate: Codable {
     let latitude: Double
     let longitude: Double
+}
+
+struct User: Codable {
+    let account: String
+    let password: String
+    let nickname: String
+    let plans: [String]
+    let comments: [Comment]
+}
+
+struct Comment: Codable {
+    let locationId: String
+    let content: String
+    let rating: Int
 }
 
 struct EmptyJson: Decodable {}

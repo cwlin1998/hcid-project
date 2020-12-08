@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import GooglePlaces
 
 struct API {
     let hostURL = "http://localhost:8000"
@@ -30,6 +31,37 @@ struct API {
                     let data = data ?? Data()
                     let plan = try encoder.decode(Plan.self, from: data)
                     handler(.success(plan))
+                } catch {
+                    handler(.failure(error))
+                }
+
+            }
+
+        }
+
+        task.resume()
+    }
+    
+    func getUser(userAccount: String, handler: @escaping (Result<User, Error>) -> Void) {
+        guard let url = URL(string: hostURL + "/users/" + userAccount) else {
+            print("error...")
+            return
+        }
+        
+        let task = URLSession.shared.dataTask(with: url) {(data, response, error) in
+
+            if let error = error {
+                handler(.failure(error))
+            } else {
+
+                do {
+                    let encoder = JSONDecoder()
+
+                    // convert any snake_case to camelCase
+                    encoder.keyDecodingStrategy = .convertFromSnakeCase
+                    let data = data ?? Data()
+                    let user = try encoder.decode(User.self, from: data)
+                    handler(.success(user))
                 } catch {
                     handler(.failure(error))
                 }
@@ -132,6 +164,40 @@ struct API {
                     let data = data ?? Data()
                     let emptyJson = try encoder.decode(EmptyJson.self, from: data)
                     handler(.success(emptyJson))
+                } catch {
+                    handler(.failure(error))
+                }
+
+            }
+
+        }
+
+        task.resume()
+    }
+}
+
+struct GoogleAPI {
+    let hostURL = "https://maps.googleapis.com/maps/api/place/details/json"
+    func getLocation(locationId: String, handler: @escaping (Result<GooglePlaceDetailsResponse, Error>) -> Void) {
+        guard let url = URL(string: hostURL + "?" + "key=AIzaSyBP-OM2AulCwjnQV8IN72HdH-w12umJpxQ" + "&" + "placeid=" + locationId) else {
+            print("error...")
+            return
+        }
+        
+        let task = URLSession.shared.dataTask(with: url) {(data, response, error) in
+
+            if let error = error {
+                handler(.failure(error))
+            } else {
+
+                do {
+                    let encoder = JSONDecoder()
+
+                    // convert any snake_case to camelCase
+                    // encoder.keyDecodingStrategy = .convertFromSnakeCase
+                    let data = data ?? Data()
+                    let response = try encoder.decode(GooglePlaceDetailsResponse.self, from: data)
+                    handler(.success(response))
                 } catch {
                     handler(.failure(error))
                 }

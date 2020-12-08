@@ -7,24 +7,85 @@
 
 import SwiftUI
 
-struct ListView: View {
-    
-    @EnvironmentObject var viewRouter: ViewRouter
+struct ListBlock: View {
+    let destination: Destination
     
     var body: some View {
-        VStack(content: {
-            Text("This is the list page.")
-            Button(action: {
-                viewRouter.currentPage = .map
-            }, label: {
-                Text("Show in map")
+        let heartSize: CGFloat = 20
+        HStack(alignment: .center, spacing: 20, content: {
+            Image(self.destination.img)
+                .resizable()
+                .cornerRadius(10)
+                .frame(width: 60, height: 60)
+            VStack(alignment: .leading, spacing: 10, content: {
+                Text("\(self.destination.name)").bold()
+                HStack(spacing: 12){
+                    ForEach(0..<self.destination.rating){ _ in
+                        Image(systemName: "heart.fill")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: heartSize, height: heartSize)
+                            .foregroundColor(.red)
+                    }
+                    ForEach(self.destination.rating..<5){ _ in
+                        Image(systemName: "heart")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: heartSize, height: heartSize)
+                            .foregroundColor(.red)
+                    }
+                }
             })
         })
     }
 }
 
+struct ListView: View {
+    @State var error = false
+    
+    @EnvironmentObject var viewRouter: ViewRouter
+    
+    let name: String
+    let destinations: [[Destination]]
+    let users: [String]
+    let planId: String
+
+    var body: some View {
+        NavigationView{
+            VStack(alignment: .leading, spacing: 30, content: {
+                ForEach(destinations[0]) { des in
+                    ListBlock(destination: des)
+                }
+                Button(action: {
+                    viewRouter.currentPage = .map
+                }, label: {
+                    Text("Show in map")
+                })
+                NavigationLink(destination: SearchView(planId: planId)) {
+                    Text("Add a destination")
+                }
+            })
+        }
+        .navigationBarTitle(Text("\(name)"))
+    }
+}
+
 struct ListView_Previews: PreviewProvider {
     static var previews: some View {
-        ListView().environmentObject(ViewRouter())
+        PreviewWrapper().environmentObject(ViewRouter())
+    }
+    struct PreviewWrapper: View {
+        
+        @State var destinations: [[Destination]] = [
+            [],
+            []
+        ]
+        @State var users: [String] = [
+            "guest"
+        ]
+        
+        var body: some View{
+            ListView(name: "", destinations: destinations, users: users, planId: "")
+        }
     }
 }

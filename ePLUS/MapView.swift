@@ -6,6 +6,8 @@
 //
 
 import SwiftUI
+import UIKit
+
 
 struct MapView: View {
     
@@ -13,12 +15,17 @@ struct MapView: View {
     
     var body: some View {
         VStack(content: {
-            Text("This is the map page.")
-            Button(action: {
-                viewRouter.currentPage = .list
-            }, label: {
-                Text("Show in list")
-            })
+            VStack {
+                GoogleMapsView()
+//                        .edgesIgnoringSafeArea(.top)
+//                        .frame(height: 300)
+                    }
+//            Text("This is the map page.")
+//            Button(action: {
+//                viewRouter.currentPage = .list
+//            }, label: {
+//                Text("Show in list")
+//            })
         })
     }
 }

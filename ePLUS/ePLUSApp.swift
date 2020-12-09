@@ -9,7 +9,7 @@ import SwiftUI
 
 @main
 struct ePLUSApp: App {
-    
+    @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
     @StateObject var viewRouter = ViewRouter()
     
     var body: some Scene {

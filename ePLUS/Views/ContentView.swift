@@ -10,7 +10,9 @@ import SwiftUI
 struct ContentView: View {
     @EnvironmentObject var viewRouter: ViewRouter
     
-    @State var loading = false
+    let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
+    
+    @State var loading = true
     @State var error = false
     @State var plans: [String]?
     @State var plan: Plan?
@@ -28,34 +30,29 @@ struct ContentView: View {
             if (plan != nil && destinations != nil) {
                 switch viewRouter.currentPage {
                 case .list:
-                    Button(action:{
-                        self.fetchData()
-                    }, label:{
-                        Text("Refresh")
-                    })
                     ListView(
                         name: self.plan!.id,
                         destinations: self.destinations!,
                         users: self.plan!.users,
-                        planId: self.plan!.id
+                        planId: self.plan!.id,
+                        fetchData: self.fetchData
                     )
                 case .map:
                     MapView()
-                case .search:
-                    GoogleSearchView(placeId: self.$placeId)
-                case .addDestination:
-                    AddDesCommentView(planId: self.plan!.id, placeId: self.placeId)
                 }
             }
         }
         .onAppear(perform: fetchData)
+        .onReceive(timer) { _ in
+            self.fetchData()
+        }
     }
     
     func fetchData() {
         let group = DispatchGroup()
         
         group.enter()
-        loading = true
+        self.loading = true
         
         API().getUser(userAccount: "guest") { result in
             
@@ -68,16 +65,8 @@ struct ContentView: View {
             group.leave()
         }
         
-        group.notify(queue: .main) {
-            self.fetchPlan()
-        }
-    }
-
-    func fetchPlan() {
-        let group = DispatchGroup()
-        
+        group.wait()
         group.enter()
-        loading = true
         
         API().getPlan(planId: self.plans![0]) { result in
             self.loading = false
@@ -91,16 +80,13 @@ struct ContentView: View {
             group.leave()
         }
         
-        group.notify(queue: .main) {
-            self.fetchDestinations()
-        }
-    }
-    
-    func fetchDestinations() {
-        self.destinations = []
+        group.wait()
+        
+        var destinations: [[Destination]] = []
         for (dayIndex, day) in self.plan!.destinations.enumerated() {
-            self.destinations!.append([])
+            destinations.append([])
             for locationId in day {
+                group.enter()
                 GoogleAPI().getLocation(locationId: locationId) { result in
                     switch result {
                     case .success(let location):
@@ -116,40 +102,23 @@ struct ContentView: View {
                             comments: [],
                             rating: 2
                         )
-                        self.destinations![dayIndex].append(destination)
+                        destinations[dayIndex].append(destination)
                     case .failure:
                         self.error = true
                     }
+                    group.leave()
                 }
+                group.wait()
             }
         }
+        
+        group.notify(queue: .main) {
+            if (destinations != self.destinations) {
+                self.destinations = destinations
+            }
+        }
+        
     }
-    
-//    func fetchDestinations() {
-//        self.destinations = []
-//        for (dayIndex, day) in self.plan!.destinations.enumerated() {
-//            self.destinations!.append([])
-//            for locationId in day {
-//                API().getLocation(locationId: locationId) { result in
-//                    switch result {
-//                    case .success(let location):
-//                        let destination = Destination(
-//                            id: location.id,
-//                            img: location.img,
-//                            name: location.name,
-//                            address: location.address,
-//                            cooridinate: location.coordinate,
-//                            comments: [],
-//                            rating: 2
-//                        )
-//                        self.destinations![dayIndex].append(destination)
-//                    case .failure:
-//                        self.error = true
-//                    }
-//                }
-//            }
-//        }
-//    }
 }
 
 struct ContentView_Previews: PreviewProvider {

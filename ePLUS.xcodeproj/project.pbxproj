@@ -7,14 +7,20 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		822EE43F257EACBF00EB6DBB /* SearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 822EE43E257EACBF00EB6DBB /* SearchView.swift */; };
 		823FACC9257E189F001FC646 /* DataStructure.swift in Sources */ = {isa = PBXBuildFile; fileRef = 823FACC8257E189F001FC646 /* DataStructure.swift */; };
 		823FACCE257E1C5E001FC646 /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 823FACCD257E1C5E001FC646 /* API.swift */; };
+		8243879B25827D5D00DC6664 /* TextArea.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8243879A25827D5D00DC6664 /* TextArea.swift */; };
+		824387AD258281B700DC6664 /* ReturnButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 824387AC258281B700DC6664 /* ReturnButton.swift */; };
+		824387B2258283C500DC6664 /* RoundedRectButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 824387B1258283C500DC6664 /* RoundedRectButton.swift */; };
+		824387BD2582856600DC6664 /* HeartRating.swift in Sources */ = {isa = PBXBuildFile; fileRef = 824387BC2582856600DC6664 /* HeartRating.swift */; };
 		824FADFB25752EA7005C62C4 /* ListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 824FADFA25752EA7005C62C4 /* ListView.swift */; };
 		824FAE0025752EB3005C62C4 /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 824FADFF25752EB3005C62C4 /* MapView.swift */; };
 		824FAE0525752F7D005C62C4 /* ViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 824FAE0425752F7D005C62C4 /* ViewRouter.swift */; };
 		824FAE0D2575319C005C62C4 /* CommentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 824FAE0C2575319C005C62C4 /* CommentView.swift */; };
-		825F2B93257F935B0001D37C /* GoogleSearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 825F2B92257F935B0001D37C /* GoogleSearchView.swift */; };
+		825151C62583A75500E4D9FF /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 825151C52583A75500E4D9FF /* Utils.swift */; };
+		825151CE2583FCF100E4D9FF /* DestinationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 825151CD2583FCF000E4D9FF /* DestinationView.swift */; };
+		825151D32584900200E4D9FF /* MenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 825151D22584900200E4D9FF /* MenuView.swift */; };
+		825F2B93257F935B0001D37C /* AddDestinationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 825F2B92257F935B0001D37C /* AddDestinationView.swift */; };
 		825F2BA1257FA0E20001D37C /* GoooglePlaceStructure.swift in Sources */ = {isa = PBXBuildFile; fileRef = 825F2BA0257FA0E20001D37C /* GoooglePlaceStructure.swift */; };
 		825F2BAF257FE4DE0001D37C /* AddDesCommentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 825F2BAE257FE4DE0001D37C /* AddDesCommentView.swift */; };
 		82CD08EA256E5F9100F21693 /* ePLUSApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CD08E9256E5F9100F21693 /* ePLUSApp.swift */; };
@@ -44,14 +50,20 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		822EE43E257EACBF00EB6DBB /* SearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchView.swift; sourceTree = "<group>"; };
 		823FACC8257E189F001FC646 /* DataStructure.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataStructure.swift; sourceTree = "<group>"; };
 		823FACCD257E1C5E001FC646 /* API.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
+		8243879A25827D5D00DC6664 /* TextArea.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextArea.swift; sourceTree = "<group>"; };
+		824387AC258281B700DC6664 /* ReturnButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReturnButton.swift; sourceTree = "<group>"; };
+		824387B1258283C500DC6664 /* RoundedRectButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedRectButton.swift; sourceTree = "<group>"; };
+		824387BC2582856600DC6664 /* HeartRating.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeartRating.swift; sourceTree = "<group>"; };
 		824FADFA25752EA7005C62C4 /* ListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListView.swift; sourceTree = "<group>"; };
 		824FADFF25752EB3005C62C4 /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
 		824FAE0425752F7D005C62C4 /* ViewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewRouter.swift; sourceTree = "<group>"; };
 		824FAE0C2575319C005C62C4 /* CommentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentView.swift; sourceTree = "<group>"; };
-		825F2B92257F935B0001D37C /* GoogleSearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleSearchView.swift; sourceTree = "<group>"; };
+		825151C52583A75500E4D9FF /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
+		825151CD2583FCF000E4D9FF /* DestinationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DestinationView.swift; sourceTree = "<group>"; };
+		825151D22584900200E4D9FF /* MenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuView.swift; sourceTree = "<group>"; };
+		825F2B92257F935B0001D37C /* AddDestinationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddDestinationView.swift; sourceTree = "<group>"; };
 		825F2BA0257FA0E20001D37C /* GoooglePlaceStructure.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoooglePlaceStructure.swift; sourceTree = "<group>"; };
 		825F2BAE257FE4DE0001D37C /* AddDesCommentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddDesCommentView.swift; sourceTree = "<group>"; };
 		82CD08E6256E5F9100F21693 /* ePLUS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ePLUS.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -105,6 +117,51 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		8243879F2582805000DC6664 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				824FAE0425752F7D005C62C4 /* ViewRouter.swift */,
+				8243879A25827D5D00DC6664 /* TextArea.swift */,
+				824387AC258281B700DC6664 /* ReturnButton.swift */,
+				824387B1258283C500DC6664 /* RoundedRectButton.swift */,
+				824387BC2582856600DC6664 /* HeartRating.swift */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
+		824387A0258280AF00DC6664 /* DataStructure */ = {
+			isa = PBXGroup;
+			children = (
+				823FACC8257E189F001FC646 /* DataStructure.swift */,
+				825F2BA0257FA0E20001D37C /* GoooglePlaceStructure.swift */,
+			);
+			path = DataStructure;
+			sourceTree = "<group>";
+		};
+		824387A1258280F400DC6664 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				823FACCD257E1C5E001FC646 /* API.swift */,
+				825151C52583A75500E4D9FF /* Utils.swift */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
+		824387A22582810E00DC6664 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				82CD08EB256E5F9100F21693 /* ContentView.swift */,
+				825F2BAE257FE4DE0001D37C /* AddDesCommentView.swift */,
+				824FADFF25752EB3005C62C4 /* MapView.swift */,
+				824FAE0C2575319C005C62C4 /* CommentView.swift */,
+				825151CD2583FCF000E4D9FF /* DestinationView.swift */,
+				824FADFA25752EA7005C62C4 /* ListView.swift */,
+				825F2B92257F935B0001D37C /* AddDestinationView.swift */,
+				825151D22584900200E4D9FF /* MenuView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 		82CD08DD256E5F9100F21693 = {
 			isa = PBXGroup;
 			children = (
@@ -130,18 +187,11 @@
 		82CD08E8256E5F9100F21693 /* ePLUS */ = {
 			isa = PBXGroup;
 			children = (
-				825F2BAE257FE4DE0001D37C /* AddDesCommentView.swift */,
+				824387A1258280F400DC6664 /* Utils */,
+				824387A0258280AF00DC6664 /* DataStructure */,
+				8243879F2582805000DC6664 /* Components */,
+				824387A22582810E00DC6664 /* Views */,
 				82CD08E9256E5F9100F21693 /* ePLUSApp.swift */,
-				82CD08EB256E5F9100F21693 /* ContentView.swift */,
-				823FACC8257E189F001FC646 /* DataStructure.swift */,
-				823FACCD257E1C5E001FC646 /* API.swift */,
-				824FADFA25752EA7005C62C4 /* ListView.swift */,
-				825F2BA0257FA0E20001D37C /* GoooglePlaceStructure.swift */,
-				824FADFF25752EB3005C62C4 /* MapView.swift */,
-				824FAE0C2575319C005C62C4 /* CommentView.swift */,
-				822EE43E257EACBF00EB6DBB /* SearchView.swift */,
-				825F2B92257F935B0001D37C /* GoogleSearchView.swift */,
-				824FAE0425752F7D005C62C4 /* ViewRouter.swift */,
 				82CD08ED256E5F9400F21693 /* Assets.xcassets */,
 				82CD08F2256E5F9400F21693 /* Info.plist */,
 				82CD08EF256E5F9400F21693 /* Preview Content */,
@@ -358,16 +408,22 @@
 			buildActionMask = 2147483647;
 			files = (
 				824FAE0D2575319C005C62C4 /* CommentView.swift in Sources */,
-				822EE43F257EACBF00EB6DBB /* SearchView.swift in Sources */,
+				8243879B25827D5D00DC6664 /* TextArea.swift in Sources */,
 				824FAE0525752F7D005C62C4 /* ViewRouter.swift in Sources */,
 				82CD08EC256E5F9100F21693 /* ContentView.swift in Sources */,
+				824387BD2582856600DC6664 /* HeartRating.swift in Sources */,
 				823FACC9257E189F001FC646 /* DataStructure.swift in Sources */,
-				825F2B93257F935B0001D37C /* GoogleSearchView.swift in Sources */,
+				825F2B93257F935B0001D37C /* AddDestinationView.swift in Sources */,
+				825151C62583A75500E4D9FF /* Utils.swift in Sources */,
 				824FAE0025752EB3005C62C4 /* MapView.swift in Sources */,
+				825151CE2583FCF100E4D9FF /* DestinationView.swift in Sources */,
 				82CD08EA256E5F9100F21693 /* ePLUSApp.swift in Sources */,
 				823FACCE257E1C5E001FC646 /* API.swift in Sources */,
 				825F2BAF257FE4DE0001D37C /* AddDesCommentView.swift in Sources */,
+				825151D32584900200E4D9FF /* MenuView.swift in Sources */,
+				824387AD258281B700DC6664 /* ReturnButton.swift in Sources */,
 				825F2BA1257FA0E20001D37C /* GoooglePlaceStructure.swift in Sources */,
+				824387B2258283C500DC6664 /* RoundedRectButton.swift in Sources */,
 				824FADFB25752EA7005C62C4 /* ListView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

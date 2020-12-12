@@ -10,17 +10,17 @@ import UIKit
 import GooglePlaces
 import Foundation
 
-struct PlacePicker: UIViewControllerRepresentable {
+struct AutoCompleteView: UIViewControllerRepresentable {
 
     func makeCoordinator() -> Coordinator {
         Coordinator(self)
     }
-    @EnvironmentObject var viewRouter: ViewRouter
     @Environment(\.presentationMode) var presentationMode
+    
     @Binding var placeId: String
-//    @Binding var address: String
+    @Binding var searching: Bool
 
-    func makeUIViewController(context: UIViewControllerRepresentableContext<PlacePicker>) -> GMSAutocompleteViewController {
+    func makeUIViewController(context: UIViewControllerRepresentableContext<AutoCompleteView>) -> UINavigationController {
 
         let autocompleteController = GMSAutocompleteViewController()
         autocompleteController.delegate = context.coordinator
@@ -31,34 +31,31 @@ struct PlacePicker: UIViewControllerRepresentable {
                 UInt(GMSPlaceField.name.rawValue) | UInt(GMSPlaceField.formattedAddress.rawValue)
         )
         autocompleteController.placeFields = fields
-
-//        let filter = GMSAutocompleteFilter()
-//        filter.country = "US"
-//        autocompleteController.autocompleteFilter = filter
-        return autocompleteController
+        autocompleteController.tableCellBackgroundColor = UIColor.secondarySystemBackground
+        
+        // filter
+        // let filter = GMSAutocompleteFilter()
+        // filter.country = "US"
+        // autocompleteController.autocompleteFilter = filter
+        return UINavigationController(rootViewController: autocompleteController)
     }
 
-    func updateUIViewController(_ uiViewController: GMSAutocompleteViewController, context: UIViewControllerRepresentableContext<PlacePicker>) {
+    func updateUIViewController(_ uiViewController: UINavigationController, context: UIViewControllerRepresentableContext<AutoCompleteView>) {
     }
 
     class Coordinator: NSObject, UINavigationControllerDelegate, GMSAutocompleteViewControllerDelegate {
 
-        var parent: PlacePicker
+        var parent: AutoCompleteView
 
-        init(_ parent: PlacePicker) {
+        init(_ parent: AutoCompleteView) {
             self.parent = parent
         }
 
         func viewController(_ viewController: GMSAutocompleteViewController, didAutocompleteWith place: GMSPlace) {
             DispatchQueue.main.async {
-//                print(place.name!)
-//                print(place.formattedAddress!)
-//                print(place.placeID!)
                 self.parent.placeId = place.placeID!
-                self.parent.viewRouter.currentPage = .addDestination
-//                print(place.description.description as Any)
-//                self.parent.address =  place.name!
-//                self.parent.presentationMode.wrappedValue.dismiss()
+                self.parent.searching = false
+                // print(place.description.description as Any)
             }
         }
 
@@ -67,31 +64,33 @@ struct PlacePicker: UIViewControllerRepresentable {
         }
 
         func wasCancelled(_ viewController: GMSAutocompleteViewController) {
-//            parent.presentationMode.wrappedValue.dismiss()
-            parent.viewRouter.currentPage = .list
+            parent.presentationMode.wrappedValue.dismiss()
         }
 
     }
 }
 
-struct GoogleSearchView: View {
-    @Binding var placeId: String
-
-    var body: some View {
-        PlacePicker(placeId: self.$placeId)
-    }
-}
-
-struct GoogleSearchViewPreviewContainer: View {
+struct AddDestinationView: View {
+    let planId: String
+    let dayIndex: Int
     @State var placeId: String = ""
+    @State var searching: Bool = true
 
     var body: some View {
-        PlacePicker(placeId: self.$placeId)
+        VStack {
+            if (searching) {
+                AutoCompleteView(placeId: $placeId, searching: $searching).ignoresSafeArea(edges: .all)
+            } else {
+                AddDesCommentView(planId: planId, dayIndex: dayIndex, placeId: placeId, searching: $searching)
+            }
+        }
+        .navigationBarHidden(true)
     }
 }
 
-struct GoogleSearchView_Previews: PreviewProvider {
+struct AddDestination_Previews: PreviewProvider {
     static var previews: some View {
-        GoogleSearchViewPreviewContainer()
+        AddDestinationView(planId: "", dayIndex: 0)
+            .preferredColorScheme(.dark)
     }
 }

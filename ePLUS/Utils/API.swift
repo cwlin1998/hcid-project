@@ -73,71 +73,8 @@ struct API {
         task.resume()
     }
     
-    func getLocation(locationId: String, handler: @escaping (Result<Location, Error>) -> Void) {
-        guard let url = URL(string: hostURL + "/locations/" + locationId) else {
-            print("error...")
-            return
-        }
-        
-        let task = URLSession.shared.dataTask(with: url) {(data, response, error) in
-
-            if let error = error {
-                handler(.failure(error))
-            } else {
-
-                do {
-                    let encoder = JSONDecoder()
-
-                    // convert any snake_case to camelCase
-                    encoder.keyDecodingStrategy = .convertFromSnakeCase
-                    let data = data ?? Data()
-                    let location = try encoder.decode(Location.self, from: data)
-                    handler(.success(location))
-                } catch {
-                    handler(.failure(error))
-                }
-
-            }
-
-        }
-
-        task.resume()
-    }
-    
-    func getLocations(handler: @escaping (Result<Array<Location>, Error>) -> Void) {
-        guard let url = URL(string: hostURL + "/locations") else {
-            print("error...")
-            return
-        }
-        
-        let task = URLSession.shared.dataTask(with: url) {(data, response, error) in
-
-            if let error = error {
-                handler(.failure(error))
-            } else {
-
-                do {
-                    let encoder = JSONDecoder()
-
-                    // convert any snake_case to camelCase
-                    encoder.keyDecodingStrategy = .convertFromSnakeCase
-                    let data = data ?? Data()
-                    let locations = try encoder.decode(Array<Location>.self, from: data)
-
-                    handler(.success(locations))
-                } catch {
-                    handler(.failure(error))
-                }
-
-            }
-
-        }
-
-        task.resume()
-    }
-    
-    func addDestination(planId: String, locationId: String, handler: @escaping (Result<EmptyJson, Error>) -> Void) {
-        guard let url = URL(string: hostURL + "/plans/" + planId + "/0") else {
+    func addDestination(planId: String, dayIndex: Int, locationId: String, handler: @escaping (Result<EmptyJson, Error>) -> Void) {
+        guard let url = URL(string: hostURL + "/plans/" + planId + "/" + String(dayIndex)) else {
             print("error...")
             return
         }

@@ -8,8 +8,6 @@
 enum Page {
     case list
     case map
-    case search
-    case addDestination
 }
 
 struct Plan: Codable, Identifiable {
@@ -19,7 +17,7 @@ struct Plan: Codable, Identifiable {
     let users: [String]
 }
 
-struct Destination: Identifiable {
+struct Destination: Identifiable, Equatable {
     let id: String
     let img: String
     let name: String
@@ -27,6 +25,10 @@ struct Destination: Identifiable {
     let cooridinate: Coordinate
     let comments: [String]
     let rating: Int
+    
+    static func == (lhs: Destination, rhs: Destination) -> Bool {
+        return lhs.id == rhs.id
+    }
 }
 
 struct Location: Codable, Identifiable {

@@ -91,6 +91,9 @@ struct DaysView: View {
     }
     
     func handleDragging(translation: CGSize) {
+        if (self.destinations.count == 1) {
+            return
+        }
         if ((self.dayIndex > 0 && self.dayIndex < self.destinations.count - 1) ||
             (self.dayIndex == self.destinations.count - 1 && translation.width > 0) ||
             (self.dayIndex == 0 && translation.width < 0)) {
@@ -131,6 +134,7 @@ struct ListView: View {
     let users: [String]
     let planId: String
     let fetchData: () -> Void
+    @Binding var showMenu: Bool
     
     @State var dayIndex: Int = 0
 
@@ -143,9 +147,21 @@ struct ListView: View {
                 VStack(alignment: .center) {
                     Text(name)
                     DaysView(destinations: destinations, dayIndex: $dayIndex)
-                }
+                }.disabled(self.showMenu ? true : false)
                 VStack(alignment: .trailing, spacing: 10) {
                     HStack() {
+                        Button(action: {
+                            withAnimation {
+                               self.showMenu.toggle()
+                            }
+                        }) {
+                            Image(systemName: self.showMenu ? "chevron.backward.circle.fill" : "line.horizontal.3")
+                                .resizable()
+                                .frame(width: 30, height: 30)
+                                .foregroundColor(Color(UIColor.systemIndigo))
+                                .imageScale(.large)
+                        }
+                        Spacer()
                         Button(action: {
                             viewRouter.currentPage = .map
                         }, label: {
@@ -159,7 +175,7 @@ struct ListView: View {
                     }
                     Spacer()
                 }.frame(minWidth: 0, maxWidth: .infinity, alignment: .trailing)
-            }.ignoresSafeArea(edges: .bottom)
+            }.ignoresSafeArea(edges:.bottom)
         }
     }
 }
@@ -169,16 +185,17 @@ struct ListView_Previews: PreviewProvider {
         PreviewWrapper().environmentObject(ViewRouter())
     }
     struct PreviewWrapper: View {
-        
+
         @State var destinations: [[Destination]] = [
             [Destination(id: "", img: "unknown_destination", name: "Test", address: "Address Test", cooridinate: Coordinate(latitude: 0.0, longitude: 0.0), comments: [], rating: 3)]
         ]
         @State var users: [String] = [
             "guest"
         ]
-        
+        @State var showMenu = false
+
         var body: some View{
-            ListView(name: "", destinations: destinations, users: users, planId: "", fetchData: {})
+            ListView(name: "", destinations: destinations, users: users, planId: "", fetchData: {}, showMenu: $showMenu)
         }
     }
 }

@@ -17,7 +17,8 @@ struct DayBlock: View{
         .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: 16)
         .padding()
         .background(Color(UIColor.tertiarySystemBackground))
-        .foregroundColor(Color(red: 63/255, green: 38/255, blue: 185/255))
+        .foregroundColor(Color(UIColor.systemIndigo))
+        .opacity(0.8)
         .cornerRadius(50)
     }
     
@@ -31,7 +32,7 @@ func getSafeImage(usernickname: String) -> Image {
 
 struct MenuView: View {
     let planId: String = ""
-    let users : [String] = ["zuccottiPark", "Amy", "Bob", "Candy", "Daniel"]
+    let users : [String] = ["zuccottiPark", "Amy", "Bob", "Candy"]
     let destinations: [[Destination]] = [[],[]]
     @State var showMenu = false
     
@@ -48,14 +49,14 @@ struct MenuView: View {
                                 .resizable()
                                 .scaledToFit()
                                 .frame(width: 60, height: 60)
-                                .foregroundColor(Color.gray)
+                                .foregroundColor(Color(UIColor.systemIndigo))
                                 .clipShape(Circle())
                         }
                     }
                 }
                 // Invite people
                 Button(action: {
-                    // TODO: get to list page
+                    // TODO: get to invite view
                 }) {
                     HStack (spacing: 20){
                         Image(systemName: "person.fill.badge.plus")
@@ -66,7 +67,7 @@ struct MenuView: View {
                     .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: 24)
                     .padding()
                     .foregroundColor(.white)
-                    .background(Color(red: 63/255, green: 38/255, blue: 185/255))
+                    .background(Color(UIColor.systemIndigo))
                     .cornerRadius(50)
                 }
                 // Days

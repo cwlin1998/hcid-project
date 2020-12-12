@@ -24,12 +24,6 @@ struct DayBlock: View{
     
 }
 
-func getSafeImage(usernickname: String) -> Image {
-    let firstcharacter: String = String(usernickname.prefix(1)).lowercased()
-    let uiImage = (UIImage(named: usernickname) ?? UIImage(systemName: "\(firstcharacter).circle.fill")?.withTintColor(.purple, renderingMode: .alwaysTemplate))!
-    return Image(uiImage: uiImage)
-}
-
 struct MenuView: View {
     let planId: String = ""
     let users : [String] = ["zuccottiPark", "Amy", "Bob", "Candy"]
@@ -45,7 +39,7 @@ struct MenuView: View {
                 ForEach(0..<users.count / 4 + 1) { i in
                     HStack{
                         ForEach(users[i*4..<min((i+1)*4, users.count)], id: \.self){ name in
-                            getSafeImage(usernickname: name)
+                            utils().getUserImage(usernickname: name)
                                 .resizable()
                                 .scaledToFit()
                                 .frame(width: 60, height: 60)

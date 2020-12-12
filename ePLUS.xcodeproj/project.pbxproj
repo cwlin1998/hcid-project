@@ -29,7 +29,10 @@
 		82CD08F1256E5F9400F21693 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 82CD08F0256E5F9400F21693 /* Preview Assets.xcassets */; };
 		82CD08FC256E5F9400F21693 /* ePLUSTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CD08FB256E5F9400F21693 /* ePLUSTests.swift */; };
 		82CD0907256E5F9400F21693 /* ePLUSUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CD0906256E5F9400F21693 /* ePLUSUITests.swift */; };
-		AEE9E374A4CC2FC79EDAB376 /* libPods-ePLUS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E7AEB87F9CD2731B20281D90 /* libPods-ePLUS.a */; };
+		A9836884FEF57E0F0F1388DF /* Pods_ePLUS_ePLUSUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EFB11D1282BFD2F4DC11F190 /* Pods_ePLUS_ePLUSUITests.framework */; };
+		B7D69A296EA1AB1AC60DFCF6 /* Pods_ePLUS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 030386468C8355C87F6FD4AF /* Pods_ePLUS.framework */; };
+		CA81FB9072D17473F6D9C491 /* Pods_ePLUSTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B18EC19AD969C570449CD242 /* Pods_ePLUSTests.framework */; };
+		F365E65E25849B0F00D7A767 /* GoogleMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F365E65D25849B0F00D7A767 /* GoogleMapView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -50,6 +53,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		030386468C8355C87F6FD4AF /* Pods_ePLUS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ePLUS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		5257923BD43E76E6C18CB722 /* Pods-ePLUS-ePLUSUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ePLUS-ePLUSUITests.release.xcconfig"; path = "Target Support Files/Pods-ePLUS-ePLUSUITests/Pods-ePLUS-ePLUSUITests.release.xcconfig"; sourceTree = "<group>"; };
+		69101D831803B9EEAAE3DB5C /* Pods-ePLUS-ePLUSUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ePLUS-ePLUSUITests.debug.xcconfig"; path = "Target Support Files/Pods-ePLUS-ePLUSUITests/Pods-ePLUS-ePLUSUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		823FACC8257E189F001FC646 /* DataStructure.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataStructure.swift; sourceTree = "<group>"; };
 		823FACCD257E1C5E001FC646 /* API.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
 		8243879A25827D5D00DC6664 /* TextArea.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextArea.swift; sourceTree = "<group>"; };
@@ -78,9 +84,13 @@
 		82CD0902256E5F9400F21693 /* ePLUSUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ePLUSUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		82CD0906256E5F9400F21693 /* ePLUSUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ePLUSUITests.swift; sourceTree = "<group>"; };
 		82CD0908256E5F9400F21693 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A26617BC15068EEDC0AEFED3 /* Pods-ePLUSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ePLUSTests.release.xcconfig"; path = "Target Support Files/Pods-ePLUSTests/Pods-ePLUSTests.release.xcconfig"; sourceTree = "<group>"; };
+		B18EC19AD969C570449CD242 /* Pods_ePLUSTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ePLUSTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		BB5F27ACA66D75A17DA3D260 /* Pods-ePLUSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ePLUSTests.debug.xcconfig"; path = "Target Support Files/Pods-ePLUSTests/Pods-ePLUSTests.debug.xcconfig"; sourceTree = "<group>"; };
 		CEF273CD6A756DFDBBBDC636 /* Pods-ePLUS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ePLUS.debug.xcconfig"; path = "Target Support Files/Pods-ePLUS/Pods-ePLUS.debug.xcconfig"; sourceTree = "<group>"; };
 		E045F45D9B6858255B7C0E86 /* Pods-ePLUS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ePLUS.release.xcconfig"; path = "Target Support Files/Pods-ePLUS/Pods-ePLUS.release.xcconfig"; sourceTree = "<group>"; };
-		E7AEB87F9CD2731B20281D90 /* libPods-ePLUS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ePLUS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		EFB11D1282BFD2F4DC11F190 /* Pods_ePLUS_ePLUSUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ePLUS_ePLUSUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		F365E65D25849B0F00D7A767 /* GoogleMapView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GoogleMapView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -88,7 +98,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AEE9E374A4CC2FC79EDAB376 /* libPods-ePLUS.a in Frameworks */,
+				B7D69A296EA1AB1AC60DFCF6 /* Pods_ePLUS.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -96,6 +106,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CA81FB9072D17473F6D9C491 /* Pods_ePLUSTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -103,6 +114,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A9836884FEF57E0F0F1388DF /* Pods_ePLUS_ePLUSUITests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -112,7 +124,9 @@
 		0DFCA4892743005B7087D658 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				E7AEB87F9CD2731B20281D90 /* libPods-ePLUS.a */,
+				030386468C8355C87F6FD4AF /* Pods_ePLUS.framework */,
+				EFB11D1282BFD2F4DC11F190 /* Pods_ePLUS_ePLUSUITests.framework */,
+				B18EC19AD969C570449CD242 /* Pods_ePLUSTests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -153,6 +167,7 @@
 				82CD08EB256E5F9100F21693 /* ContentView.swift */,
 				825F2BAE257FE4DE0001D37C /* AddDesCommentView.swift */,
 				824FADFF25752EB3005C62C4 /* MapView.swift */,
+				F365E65D25849B0F00D7A767 /* GoogleMapView.swift */,
 				824FAE0C2575319C005C62C4 /* CommentView.swift */,
 				825151CD2583FCF000E4D9FF /* DestinationView.swift */,
 				824FADFA25752EA7005C62C4 /* ListView.swift */,
@@ -230,6 +245,10 @@
 			children = (
 				CEF273CD6A756DFDBBBDC636 /* Pods-ePLUS.debug.xcconfig */,
 				E045F45D9B6858255B7C0E86 /* Pods-ePLUS.release.xcconfig */,
+				69101D831803B9EEAAE3DB5C /* Pods-ePLUS-ePLUSUITests.debug.xcconfig */,
+				5257923BD43E76E6C18CB722 /* Pods-ePLUS-ePLUSUITests.release.xcconfig */,
+				BB5F27ACA66D75A17DA3D260 /* Pods-ePLUSTests.debug.xcconfig */,
+				A26617BC15068EEDC0AEFED3 /* Pods-ePLUSTests.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -260,6 +279,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 82CD090E256E5F9400F21693 /* Build configuration list for PBXNativeTarget "ePLUSTests" */;
 			buildPhases = (
+				322583E883E67F0397296F04 /* [CP] Check Pods Manifest.lock */,
 				82CD08F3256E5F9400F21693 /* Sources */,
 				82CD08F4256E5F9400F21693 /* Frameworks */,
 				82CD08F5256E5F9400F21693 /* Resources */,
@@ -278,9 +298,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 82CD0911256E5F9400F21693 /* Build configuration list for PBXNativeTarget "ePLUSUITests" */;
 			buildPhases = (
+				3C59732B026C3CE14105744A /* [CP] Check Pods Manifest.lock */,
 				82CD08FE256E5F9400F21693 /* Sources */,
 				82CD08FF256E5F9400F21693 /* Frameworks */,
 				82CD0900256E5F9400F21693 /* Resources */,
+				BBB801102924F4477282F3B8 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -361,6 +383,50 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		322583E883E67F0397296F04 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-ePLUSTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		3C59732B026C3CE14105744A /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-ePLUS-ePLUSUITests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
 		9109B66BC5A68B4B9FC67A23 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -400,6 +466,23 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
+		BBB801102924F4477282F3B8 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-ePLUS-ePLUSUITests/Pods-ePLUS-ePLUSUITests-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-ePLUS-ePLUSUITests/Pods-ePLUS-ePLUSUITests-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-ePLUS-ePLUSUITests/Pods-ePLUS-ePLUSUITests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -421,6 +504,7 @@
 				823FACCE257E1C5E001FC646 /* API.swift in Sources */,
 				825F2BAF257FE4DE0001D37C /* AddDesCommentView.swift in Sources */,
 				825151D32584900200E4D9FF /* MenuView.swift in Sources */,
+				F365E65E25849B0F00D7A767 /* GoogleMapView.swift in Sources */,
 				824387AD258281B700DC6664 /* ReturnButton.swift in Sources */,
 				825F2BA1257FA0E20001D37C /* GoooglePlaceStructure.swift in Sources */,
 				824387B2258283C500DC6664 /* RoundedRectButton.swift in Sources */,
@@ -624,6 +708,7 @@
 		};
 		82CD090F256E5F9400F21693 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = BB5F27ACA66D75A17DA3D260 /* Pods-ePLUSTests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -645,6 +730,7 @@
 		};
 		82CD0910256E5F9400F21693 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = A26617BC15068EEDC0AEFED3 /* Pods-ePLUSTests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -666,6 +752,7 @@
 		};
 		82CD0912256E5F9400F21693 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 69101D831803B9EEAAE3DB5C /* Pods-ePLUS-ePLUSUITests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
@@ -685,6 +772,7 @@
 		};
 		82CD0913256E5F9400F21693 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5257923BD43E76E6C18CB722 /* Pods-ePLUS-ePLUSUITests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;

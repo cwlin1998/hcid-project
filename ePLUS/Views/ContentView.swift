@@ -38,24 +38,14 @@ struct ContentView: View {
                         if (showMenu) {
                             MenuView().frame(width: originalOffset)
                         }
-                        ZStack(alignment: .leading) {
-                            VStack {
-                                switch viewRouter.currentPage {
-                                case .list:
-                                    ListView(
-                                        name: self.plan!.id,
-                                        destinations: self.destinations!,
-                                        users: self.plan!.users,
-                                        planId: self.plan!.id,
-                                        fetchData: self.fetchData,
-                                        showMenu: self.$showMenu
-                                    )
-                                case .map:
-                                    MapView()
-                                }
-                            }
-                            .frame(width: g.frame(in: .global).width)
-                        }
+                        SwitcherView(
+                            name: self.plan!.id,
+                            destinations: self.destinations!,
+                            users: self.plan!.users,
+                            planId: self.plan!.id,
+                            showMenu: self.$showMenu
+                        )
+                        .frame(width: g.frame(in: .global).width)
                         .offset(x: self.showMenu ? self.offset: 0)
                     }
                     .gesture(

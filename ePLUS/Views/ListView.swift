@@ -132,51 +132,18 @@ struct ListView: View {
     let name: String
     let destinations: [[Destination]]
     let users: [String]
-    let planId: String
-    let fetchData: () -> Void
-    @Binding var showMenu: Bool
-    
-    @State var dayIndex: Int = 0
+    @Binding var dayIndex: Int
 
     var body: some View {
-        NavigationView(){
-            ZStack(alignment: .topLeading) {
-                Rectangle()
-                    .fill(Color(UIColor.systemTeal))
-                    .frame(height: 200)
-                VStack(alignment: .center) {
-                    Text(name)
-                    DaysView(destinations: destinations, dayIndex: $dayIndex)
-                }.disabled(self.showMenu ? true : false)
-                VStack(alignment: .trailing, spacing: 10) {
-                    HStack() {
-                        Button(action: {
-                            withAnimation {
-                               self.showMenu.toggle()
-                            }
-                        }) {
-                            Image(systemName: self.showMenu ? "chevron.backward.circle.fill" : "line.horizontal.3")
-                                .resizable()
-                                .frame(width: 30, height: 30)
-                                .foregroundColor(Color(UIColor.systemIndigo))
-                                .imageScale(.large)
-                        }
-                        Spacer()
-                        Button(action: {
-                            viewRouter.currentPage = .map
-                        }, label: {
-                            Text("MAP")
-                        })
-                        NavigationLink(destination: AddDestinationView(planId: planId, dayIndex: dayIndex)) {
-                            Text("+")
-                        }
-                        .navigationBarTitle("")
-                        .navigationBarHidden(true)
-                    }
-                    Spacer()
-                }.frame(minWidth: 0, maxWidth: .infinity, alignment: .trailing)
-            }.ignoresSafeArea(edges:.bottom)
-        }
+        ZStack(alignment: .topLeading) {
+            Rectangle()
+                .fill(Color(UIColor.systemTeal))
+                .frame(height: 200)
+            VStack(alignment: .center) {
+                Text(name)
+                DaysView(destinations: destinations, dayIndex: $dayIndex)
+            }
+        }.ignoresSafeArea(edges:.bottom)
     }
 }
 
@@ -192,10 +159,11 @@ struct ListView_Previews: PreviewProvider {
         @State var users: [String] = [
             "guest"
         ]
+        @State var dayIndex = 0
         @State var showMenu = false
 
         var body: some View{
-            ListView(name: "", destinations: destinations, users: users, planId: "", fetchData: {}, showMenu: $showMenu)
+            ListView(name: "", destinations: destinations, users: users, dayIndex: $dayIndex)
         }
     }
 }

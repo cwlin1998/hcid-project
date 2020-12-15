@@ -25,12 +25,13 @@ struct DayBlock: View{
 }
 
 struct MenuView: View {
+    @EnvironmentObject var dayRouter: DayRouter
+    
     @State var error = false
     let planId: String
     let users : [String] = ["zuccottiPark", "Amy", "Bob", "Candy"]
     let destinations: [[Destination]]
     @Binding var showMenu: Bool
-    @Binding var dayIndex: Int
     
     var body: some View {
         NavigationView {
@@ -69,7 +70,7 @@ struct MenuView: View {
                 // Add a day
                 Button(action: {
                     self.addDay()
-                    self.dayIndex = self.destinations.count
+                    self.dayRouter.dayIndex = self.destinations.count
                     self.showMenu = false
                     // TODO: get to add a day page
                 }) {
@@ -117,7 +118,7 @@ struct MenuView_Previews: PreviewProvider {
         @State var dayIndex = 0
 
         var body: some View{
-            MenuView(planId: "", destinations: [[], []], showMenu: $showMenu, dayIndex: $dayIndex)
+            MenuView(planId: "", destinations: [[], []], showMenu: $showMenu)
         }
     }
 }

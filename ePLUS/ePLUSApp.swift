@@ -11,10 +11,13 @@ import SwiftUI
 struct ePLUSApp: App {
     
     @StateObject var viewRouter = ViewRouter()
+    @StateObject var dayRouter = DayRouter()
     
     var body: some Scene {
         WindowGroup {
-            ContentView().environmentObject(viewRouter)
+            ContentView()
+                .environmentObject(viewRouter)
+                .environmentObject(dayRouter)
         }
     }
 }

@@ -38,7 +38,6 @@ struct ListBlock: View {
 }
 
 struct DayView: View {
-    @EnvironmentObject var viewRouter: ViewRouter
     let dayIndex: Int
     let destinations: [Destination]
 
@@ -61,9 +60,10 @@ struct DayView: View {
 }
 
 struct DaysView: View {
+    @EnvironmentObject var dayRouter: DayRouter
+    
     let destinations: [[Destination]]
     
-    @Binding var dayIndex: Int
     @State var originalOffset: CGFloat = 0
     @State var offset: CGFloat = 0
     
@@ -86,17 +86,22 @@ struct DaysView: View {
                     .onEnded({ value in
                         self.handleDragged(translation: value.translation)
                     })
-            )
+            ).onReceive(dayRouter.objectWillChange, perform: self.updateOffset)
         }.animation(.default)
+    }
+    
+    func updateOffset() {
+        self.offset = -CGFloat(dayRouter.dayIndex) * UIScreen.screenWidth
+        self.originalOffset = self.offset
     }
     
     func handleDragging(translation: CGSize) {
         if (self.destinations.count == 1) {
             return
         }
-        if ((self.dayIndex > 0 && self.dayIndex < self.destinations.count - 1) ||
-            (self.dayIndex == self.destinations.count - 1 && translation.width > 0) ||
-            (self.dayIndex == 0 && translation.width < 0)) {
+        if ((dayRouter.dayIndex > 0 && dayRouter.dayIndex < self.destinations.count - 1) ||
+            (dayRouter.dayIndex == self.destinations.count - 1 && translation.width > 0) ||
+            (dayRouter.dayIndex == 0 && translation.width < 0)) {
             self.offset = self.originalOffset + translation.width
         }
     }
@@ -114,25 +119,24 @@ struct DaysView: View {
     
     func changeView(direction: String) {
         if (direction == "left") {
-            if (self.dayIndex != self.destinations.count - 1) {
-                self.dayIndex += 1
+            if (dayRouter.dayIndex != self.destinations.count - 1) {
+                dayRouter.dayIndex += 1
             }
         } else if (direction == "right") {
-            if (self.dayIndex != 0) {
-                self.dayIndex -= 1
+            if (dayRouter.dayIndex != 0) {
+                dayRouter.dayIndex -= 1
             }
         }
-        self.offset = -CGFloat(self.dayIndex) * UIScreen.screenWidth
+        self.offset = -CGFloat(dayRouter.dayIndex) * UIScreen.screenWidth
     }
 }
 
 struct ListView: View {
-    @EnvironmentObject var viewRouter: ViewRouter
+    @EnvironmentObject var dayRouter: DayRouter
     
     let name: String
     let destinations: [[Destination]]
     let users: [String]
-    @Binding var dayIndex: Int
 
     var body: some View {
         ZStack(alignment: .topLeading) {
@@ -141,7 +145,7 @@ struct ListView: View {
                 .frame(height: 200)
             VStack(alignment: .center) {
                 Text(name)
-                DaysView(destinations: destinations, dayIndex: $dayIndex)
+                DaysView(destinations: destinations)
             }
         }.ignoresSafeArea(edges:.bottom)
     }
@@ -149,7 +153,7 @@ struct ListView: View {
 
 struct ListView_Previews: PreviewProvider {
     static var previews: some View {
-        PreviewWrapper().environmentObject(ViewRouter())
+        PreviewWrapper().environmentObject(DayRouter())
     }
     struct PreviewWrapper: View {
 
@@ -159,11 +163,10 @@ struct ListView_Previews: PreviewProvider {
         @State var users: [String] = [
             "guest"
         ]
-        @State var dayIndex = 0
         @State var showMenu = false
 
         var body: some View{
-            ListView(name: "", destinations: destinations, users: users, dayIndex: $dayIndex)
+            ListView(name: "", destinations: destinations, users: users)
         }
     }
 }

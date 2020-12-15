@@ -10,6 +10,7 @@ import SwiftUI
 
 struct ContentView: View {
     @EnvironmentObject var viewRouter: ViewRouter
+    @EnvironmentObject var dayRouter: DayRouter
     
     let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
     
@@ -40,8 +41,7 @@ struct ContentView: View {
                             MenuView(
                                 planId: self.plan!.id,
                                 destinations: self.destinations!,
-                                showMenu: self.$showMenu,
-                                dayIndex: self.$dayIndex
+                                showMenu: self.$showMenu
                             ).frame(width: originalOffset)
                         }
                         SwitcherView(
@@ -49,9 +49,7 @@ struct ContentView: View {
                             destinations: self.destinations!,
                             users: self.plan!.users,
                             planId: self.plan!.id,
-                            showMenu: self.$showMenu,
-                            dayIndex: self.$dayIndex
-                        )
+                            showMenu: self.$showMenu                        )
                         .frame(width: g.frame(in: .global).width)
                         .offset(x: self.showMenu ? self.offset: 0)
                     }
@@ -154,6 +152,8 @@ struct ContentView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView().environmentObject(ViewRouter())
+        ContentView()
+            .environmentObject(ViewRouter())
+            .environmentObject(DayRouter())
     }
 }

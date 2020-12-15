@@ -9,13 +9,13 @@ import SwiftUI
 
 struct SwitcherView: View {
     @EnvironmentObject var viewRouter: ViewRouter
+    @EnvironmentObject var dayRouter: DayRouter
     
     let name: String
     let destinations: [[Destination]]
     let users: [String]
     let planId: String
     @Binding var showMenu: Bool
-    @Binding var dayIndex: Int
 
     var body: some View {
         NavigationView(){
@@ -23,7 +23,7 @@ struct SwitcherView: View {
                 VStack {
                     switch viewRouter.currentPage {
                     case .list:
-                        ListView(name: name, destinations: destinations, users: users, dayIndex: $dayIndex)
+                        ListView(name: name, destinations: destinations, users: users)
                     case .map:
                         MapView()
                     }
@@ -47,7 +47,7 @@ struct SwitcherView: View {
                         }, label: {
                             (viewRouter.currentPage == .map) ? Text("LIST") : Text("Map")
                         })
-                        NavigationLink(destination: AddDestinationView(planId: planId, dayIndex: dayIndex)) {
+                        NavigationLink(destination: AddDestinationView(planId: planId, dayIndex: dayRouter.dayIndex)) {
                             Text("+")
                         }
                     }
@@ -62,7 +62,9 @@ struct SwitcherView: View {
 
 struct SwitcherView_Previews: PreviewProvider {
     static var previews: some View {
-        PreviewWrapper().environmentObject(ViewRouter())
+        PreviewWrapper()
+            .environmentObject(ViewRouter())
+            .environmentObject(DayRouter())
     }
     struct PreviewWrapper: View {
 
@@ -76,7 +78,7 @@ struct SwitcherView_Previews: PreviewProvider {
         @State var dayIndex = 0
 
         var body: some View{
-            SwitcherView(name: "", destinations: destinations, users: users, planId: "", showMenu: $showMenu, dayIndex: $dayIndex)
+            SwitcherView(name: "", destinations: destinations, users: users, planId: "", showMenu: $showMenu)
         }
     }
 }

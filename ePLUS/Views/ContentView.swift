@@ -23,13 +23,19 @@ struct ContentView: View {
     @State var placeId: String = ""
     @State var dayIndex = 0
     
-    let originalOffset: CGFloat = 320
-    @State var offset: CGFloat = 320
+    let originalOffset: CGFloat = UIScreen.main.bounds.size.width/3*2.3  // 320
+    @State var offset: CGFloat = UIScreen.main.bounds.size.width/3*2.3  // 320
     
     var body: some View {
         VStack {
             if (loading) {
-                Text("Loading...")
+//                Text("Loading...")
+                /*
+                 Notice:
+                 please add [pod 'ActivityIndicatorView']  in your Podfile
+                 and run pod install
+                 */
+                LoadingView()
             }
             if (error) {
                 Text("Error. Doh!")
@@ -49,7 +55,9 @@ struct ContentView: View {
                             destinations: self.destinations!,
                             users: self.plan!.users,
                             planId: self.plan!.id,
-                            showMenu: self.$showMenu                        )
+                            showMenu: self.$showMenu,
+                            loading: self.$loading
+                        )
                         .frame(width: g.frame(in: .global).width)
                         .offset(x: self.showMenu ? self.offset: 0)
                     }
@@ -120,7 +128,8 @@ struct ContentView: View {
                     case .success(let location):
                         let destination = Destination(
                             id: location.result.place_id,
-                            img: "unknown_destination",
+//                            img: "unknown_destination",
+                            img: location.result.photos != nil ? location.result.photos![0].photoReference : "unknown_destination",
                             name: location.result.name,
                             address: location.result.formatted_address,
                             cooridinate: Coordinate(

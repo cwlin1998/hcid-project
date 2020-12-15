@@ -26,7 +26,11 @@
 		825151EB2587555100E4D9FF /* InviteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 825151EA2587555100E4D9FF /* InviteView.swift */; };
 		825F2B93257F935B0001D37C /* AddDestinationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 825F2B92257F935B0001D37C /* AddDestinationView.swift */; };
 		825F2BA1257FA0E20001D37C /* GoooglePlaceStructure.swift in Sources */ = {isa = PBXBuildFile; fileRef = 825F2BA0257FA0E20001D37C /* GoooglePlaceStructure.swift */; };
-		825F2BAF257FE4DE0001D37C /* AddDesCommentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 825F2BAE257FE4DE0001D37C /* AddDesCommentView.swift */; };
+		827A37C42589389A00F3DC0D /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 827A37C32589389A00F3DC0D /* LoadingView.swift */; };
+		827A37C9258938A600F3DC0D /* CityImageStructure.swift in Sources */ = {isa = PBXBuildFile; fileRef = 827A37C8258938A600F3DC0D /* CityImageStructure.swift */; };
+		827A37CF258938C800F3DC0D /* GooglePlaceImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 827A37CD258938C800F3DC0D /* GooglePlaceImage.swift */; };
+		827A37D0258938C800F3DC0D /* RemoteImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 827A37CE258938C800F3DC0D /* RemoteImage.swift */; };
+		827A38092589437C00F3DC0D /* addDesCommentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 827A38082589437C00F3DC0D /* addDesCommentView.swift */; };
 		82CD08EA256E5F9100F21693 /* ePLUSApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CD08E9256E5F9100F21693 /* ePLUSApp.swift */; };
 		82CD08EC256E5F9100F21693 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CD08EB256E5F9100F21693 /* ContentView.swift */; };
 		82CD08EE256E5F9400F21693 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 82CD08ED256E5F9400F21693 /* Assets.xcassets */; };
@@ -72,7 +76,11 @@
 		825151EA2587555100E4D9FF /* InviteView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InviteView.swift; sourceTree = "<group>"; };
 		825F2B92257F935B0001D37C /* AddDestinationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddDestinationView.swift; sourceTree = "<group>"; };
 		825F2BA0257FA0E20001D37C /* GoooglePlaceStructure.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoooglePlaceStructure.swift; sourceTree = "<group>"; };
-		825F2BAE257FE4DE0001D37C /* AddDesCommentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddDesCommentView.swift; sourceTree = "<group>"; };
+		827A37C32589389A00F3DC0D /* LoadingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
+		827A37C8258938A600F3DC0D /* CityImageStructure.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CityImageStructure.swift; sourceTree = "<group>"; };
+		827A37CD258938C800F3DC0D /* GooglePlaceImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GooglePlaceImage.swift; sourceTree = "<group>"; };
+		827A37CE258938C800F3DC0D /* RemoteImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RemoteImage.swift; sourceTree = "<group>"; };
+		827A38082589437C00F3DC0D /* addDesCommentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = addDesCommentView.swift; sourceTree = "<group>"; };
 		82CD08E6256E5F9100F21693 /* ePLUS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ePLUS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		82CD08E9256E5F9100F21693 /* ePLUSApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ePLUSApp.swift; sourceTree = "<group>"; };
 		82CD08EB256E5F9100F21693 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -128,6 +136,8 @@
 		8243879F2582805000DC6664 /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				827A37CD258938C800F3DC0D /* GooglePlaceImage.swift */,
+				827A37CE258938C800F3DC0D /* RemoteImage.swift */,
 				824FAE0425752F7D005C62C4 /* Observables.swift */,
 				8243879A25827D5D00DC6664 /* TextArea.swift */,
 				824387AC258281B700DC6664 /* ReturnButton.swift */,
@@ -140,6 +150,7 @@
 		824387A0258280AF00DC6664 /* DataStructure */ = {
 			isa = PBXGroup;
 			children = (
+				827A37C8258938A600F3DC0D /* CityImageStructure.swift */,
 				823FACC8257E189F001FC646 /* DataStructure.swift */,
 				825F2BA0257FA0E20001D37C /* GoooglePlaceStructure.swift */,
 			);
@@ -158,11 +169,12 @@
 		824387A22582810E00DC6664 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				827A38082589437C00F3DC0D /* addDesCommentView.swift */,
+				827A37C32589389A00F3DC0D /* LoadingView.swift */,
 				825151EA2587555100E4D9FF /* InviteView.swift */,
 				825151E52587552D00E4D9FF /* NewPlanView.swift */,
 				82CD08EB256E5F9100F21693 /* ContentView.swift */,
 				825151E02584B97700E4D9FF /* SwitcherView.swift */,
-				825F2BAE257FE4DE0001D37C /* AddDesCommentView.swift */,
 				824FADFF25752EB3005C62C4 /* MapView.swift */,
 				F365E65D25849B0F00D7A767 /* GoogleMapView.swift */,
 				824FAE0C2575319C005C62C4 /* CommentView.swift */,
@@ -422,7 +434,9 @@
 				824FAE0D2575319C005C62C4 /* CommentView.swift in Sources */,
 				8243879B25827D5D00DC6664 /* TextArea.swift in Sources */,
 				824FAE0525752F7D005C62C4 /* Observables.swift in Sources */,
+				827A38092589437C00F3DC0D /* addDesCommentView.swift in Sources */,
 				82CD08EC256E5F9100F21693 /* ContentView.swift in Sources */,
+				827A37CF258938C800F3DC0D /* GooglePlaceImage.swift in Sources */,
 				824387BD2582856600DC6664 /* HeartRating.swift in Sources */,
 				823FACC9257E189F001FC646 /* DataStructure.swift in Sources */,
 				825F2B93257F935B0001D37C /* AddDestinationView.swift in Sources */,
@@ -432,15 +446,17 @@
 				825151CE2583FCF100E4D9FF /* DestinationView.swift in Sources */,
 				82CD08EA256E5F9100F21693 /* ePLUSApp.swift in Sources */,
 				823FACCE257E1C5E001FC646 /* API.swift in Sources */,
-				825F2BAF257FE4DE0001D37C /* AddDesCommentView.swift in Sources */,
 				825151D32584900200E4D9FF /* MenuView.swift in Sources */,
 				F365E65E25849B0F00D7A767 /* GoogleMapView.swift in Sources */,
+				827A37C9258938A600F3DC0D /* CityImageStructure.swift in Sources */,
 				824387AD258281B700DC6664 /* ReturnButton.swift in Sources */,
+				827A37D0258938C800F3DC0D /* RemoteImage.swift in Sources */,
 				825151E62587552D00E4D9FF /* NewPlanView.swift in Sources */,
 				825F2BA1257FA0E20001D37C /* GoooglePlaceStructure.swift in Sources */,
 				825151E12584B97700E4D9FF /* SwitcherView.swift in Sources */,
 				824387B2258283C500DC6664 /* RoundedRectButton.swift in Sources */,
 				824FADFB25752EA7005C62C4 /* ListView.swift in Sources */,
+				827A37C42589389A00F3DC0D /* LoadingView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

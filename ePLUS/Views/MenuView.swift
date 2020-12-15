@@ -21,7 +21,22 @@ struct DayBlock: View{
         .opacity(0.8)
         .cornerRadius(50)
     }
-    
+}
+
+struct MenuButton: View{
+    let text: String
+    var body: some View{
+        HStack (spacing: 20){
+            Text("\(text)")
+                .font(.system(size: 22, weight: .regular))
+        }
+        .frame(minWidth: 0, maxWidth: .infinity)
+        .frame(height: 16)
+        .padding()
+        .foregroundColor(.white)
+        .background(Color(red: 43/255, green: 185/255, blue: 222/255))
+        .cornerRadius(50)
+    }
 }
 
 struct MenuView: View {
@@ -51,45 +66,64 @@ struct MenuView: View {
                 }
                 // Invite people
                 NavigationLink(destination: InviteView()) {
-                    HStack (spacing: 20){
-                        Image(systemName: "person.fill.badge.plus")
-                            .font(.title)
-                        Text("Invite people")
-                            .font(.system(size: 24, weight: .regular))
-                    }
-                    .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: 24)
-                    .padding()
-                    .foregroundColor(.white)
-                    .background(Color(UIColor.systemIndigo))
-                    .cornerRadius(50)
+                    Text("Invite people")
+                        .font(.system(size: 24, weight: .regular))
+                        .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: 24)
+                        .padding()
+                        .foregroundColor(.white)
+                        .background(Color(UIColor.systemIndigo))
+                        .cornerRadius(50)
                 }
                 // Days
-                ForEach(destinations.indices, id: \.self){ d in
-                    DayBlock(day: d+1)
-                }
-                // Add a day
-                Button(action: {
-                    self.addDay()
-                    self.dayRouter.dayIndex = self.destinations.count
-                    self.showMenu = false
-                    // TODO: get to add a day page
-                }) {
-                    HStack (spacing: 20){
-                        Text("Add a day")
-                            .font(.system(size: 22, weight: .regular))
+                ScrollView {
+                    VStack(spacing: 12) {
+                        ForEach(destinations.indices, id: \.self){ d in
+                            DayBlock(day: d+1)
+                        }
                     }
-                    .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: 16)
-                    .padding()
-                    .foregroundColor(.gray)
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 50)
-                            .stroke(Color.gray, lineWidth: 3)
-                    )
+                }
+                VStack (spacing: 12){
+                    // Add a day
+                    Button(action: {
+                        self.addDay()
+                        self.dayRouter.dayIndex = self.destinations.count
+                        self.showMenu = false
+                    }) {
+                        HStack (spacing: 20){
+                            Text("Add a day")
+                                .font(.system(size: 22, weight: .regular))
+                        }
+                        .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: 16)
+                        .padding()
+                        .foregroundColor(.gray)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 50)
+                                .stroke(Color.gray, lineWidth: 3)
+                        )
+                    }
+                    Button(action: {
+                        print("switch to other plan")
+                        // TODO
+                    }) {
+                        MenuButton(text: "switch to other plan")
+                    }
+                    Button(action: {
+                        print("create a new plan")
+                        // TODO
+                    }) {
+                        MenuButton(text: "create a new plan")
+                    }
+                    Button(action: {
+                        print("settings")
+                        // TODO
+                    }) {
+                        MenuButton(text: "settings")
+                    }
                 }
                 Spacer()
             }
             .padding(.top, 80)
-            .padding(.horizontal, 8)
+            .padding(.horizontal, 48)
             .background(Color(UIColor.secondarySystemBackground).ignoresSafeArea())
         .navigationBarTitle("")
         .navigationBarHidden(true)

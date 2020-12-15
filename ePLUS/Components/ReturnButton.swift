@@ -9,23 +9,28 @@ import SwiftUI
 
 struct ReturnButton: View {
     let action: () -> Void
+    let size: Int
     
     var body: some View {
         Button(action: {
             self.action()
         }) {
             Image(systemName: "arrow.left")
-                .padding()
+                .font(.system(size: CGFloat(self.size), weight: .bold))
+//                .padding()
+                .padding(.horizontal, 8)
+                .padding(.top, 8)
+                .padding(.bottom, 8)
                 .background(Color(red: 43/255, green: 185/255, blue: 222/255))
                 .foregroundColor(Color.white)
                 .clipShape(Circle())
-                .shadow(radius: 8)
+//                .shadow(radius: 8)
         }
     }
 }
 
 struct ReturnButton_Previews: PreviewProvider {
     static var previews: some View {
-        ReturnButton(action: {})
+        ReturnButton(action: {}, size: 50)
     }
 }

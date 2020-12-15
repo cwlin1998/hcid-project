@@ -23,7 +23,7 @@ struct NewPlanView: View {
                 HStack {
                     ReturnButton(action: {
                         // TODO
-                    })
+                    }, size: 30)
                     Spacer()
                 }
                 Text("Create New Plan").font(.title).fontWeight(.bold)

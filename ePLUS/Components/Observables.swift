@@ -12,9 +12,5 @@ class ViewRouter: ObservableObject {
 }
 
 class DayRouter: ObservableObject {
-    var dayIndex: Int = 0 {
-        willSet {
-            objectWillChange.send()
-        }
-    }
+    @Published var dayIndex: Int = 0
 }

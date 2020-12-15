@@ -20,4 +20,8 @@ struct utils{
         let uiImage = (UIImage(named: usernickname) ?? UIImage(systemName: "\(firstcharacter).circle.fill")?.withTintColor(.purple, renderingMode: .alwaysTemplate))!
         return Image(uiImage: uiImage)
     }
+    func getPlanImage(planname: String) -> Image{
+        let uiImage = (UIImage(named: planname) ?? UIImage(systemName: "photo")?.withTintColor(.purple, renderingMode: .alwaysTemplate))!
+        return Image(uiImage: uiImage)
+    }
 }

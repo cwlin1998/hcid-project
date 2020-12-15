@@ -109,7 +109,7 @@ struct PlaceDetails : Codable {
 //    let formatted_phone_number : String
 //    let website : String
 //    let reviews : String
-//    let photos : [PhotoInfo]?
+    let photos : [PhotoInfo]?
 
 
     enum CodingKeysDetails : String, CodingKey {
@@ -124,7 +124,7 @@ struct PlaceDetails : Codable {
 //        case formatted_phone_number = "formatted_phone_number"
 //        case website = "website"
 //        case reviews = "reviews"
-//        case photos = "photos"
+        case photos = "photos"
     }
     
     // Location struct
@@ -149,5 +149,18 @@ struct PlaceDetails : Codable {
             }
         }
 
+    }
+    
+    struct PhotoInfo : Codable {
+
+        let height : Int
+        let width : Int
+        let photoReference : String
+
+        enum CodingKeys : String, CodingKey {
+            case height = "height"
+            case width = "width"
+            case photoReference = "photo_reference"
+        }
     }
 }

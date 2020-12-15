@@ -619,11 +619,11 @@ struct GoogleAPI {
                 } catch {
                     handler(.failure(error))
                 }
-
+                
             }
-
+            
         }
-
+        
         task.resume()
     }
 }

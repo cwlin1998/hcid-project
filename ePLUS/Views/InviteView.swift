@@ -56,7 +56,7 @@ struct InviteView: View {
                 HStack {
                     ReturnButton(action: {
                         self.presentationMode.wrappedValue.dismiss()
-                    })
+                    }, size: 30)
                     Spacer()
                 }
                 Text("Invite").font(.title).fontWeight(.bold)

@@ -19,20 +19,23 @@ struct ListBlock: View {
     
     var body: some View {
         NavigationLink(destination: DestinationView(destination: destination, users: users)) {
-            HStack(alignment: .center, spacing: 20) {
-                Image(self.destination.img)
-                    .resizable()
-                    .cornerRadius(10)
-                    .frame(width: 60, height: 60)
+            HStack(spacing: 20) {
+                GooglePlaceImage(url: self.destination.img, width: 60, height: 60, cornerRadius: 10)
+                    .offset(x: 16)
                 VStack(alignment: .leading, spacing: 10) {
-                    Text("\(self.destination.name)").bold()
+                    Text("\(self.destination.name)")
+                        .bold()
+                        .foregroundColor(Color(UIColor.systemIndigo))
                     HeartRating(rating: $rating).disabled(true)
                 }
+                .offset(x: 16)
                 Spacer()
             }
-            .padding()
+//            .padding()
             .frame(minWidth: 0, maxWidth: .infinity)
+            .frame(height: 88)
             .background(Color(UIColor.tertiarySystemBackground))
+            .cornerRadius(10)
         }
     }
 }
@@ -43,19 +46,23 @@ struct DayView: View {
 
     var body: some View {
         VStack(alignment: .center) {
-            Text("Day \(dayIndex)")
+            Text("Day \(dayIndex + 1)")
                 .frame(width: 80, height: 20)
                 .padding(EdgeInsets(top: 10, leading: 20, bottom: 10, trailing: 20))
                 .background(Color(UIColor.tertiarySystemBackground))
-                .cornerRadius(15)
+                .opacity(0.85)
+                .cornerRadius(50)
             ScrollView {
-                VStack {
+                VStack(spacing: 16) { // space bewtween destinations
                     ForEach(destinations) { des in
                         ListBlock(destination: des)
                     }
                 }.frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
+                .padding(.horizontal, 36)
+                .offset(y: 16)  // space with plan img
             }.background(Color(UIColor.secondarySystemBackground))
-        }.padding(.top, 90)
+        }
+//        .padding(.top, 90)
     }
 }
 
@@ -137,16 +144,21 @@ struct ListView: View {
     let name: String
     let destinations: [[Destination]]
     let users: [String]
+    @State var uiImage: UIImage = UIImage(named: "zuccottiPark")!
+
 
     var body: some View {
-        ZStack(alignment: .topLeading) {
-            Rectangle()
-                .fill(Color(UIColor.systemTeal))
-                .frame(height: 200)
+        ZStack(alignment: .top) {
+            Color(UIColor.secondarySystemBackground).ignoresSafeArea()
+//            Rectangle()
+//                .fill(Color(UIColor.systemTeal))
+//                .frame(height: 200)
+            RemoteImage(url: "https://picsum.photos/800/450/?blur", width: Float(UIScreen.main.bounds.size.width), height: Float(UIScreen.main.bounds.size.width/16*9), cornerRadius: 0)
+            Text(name).font(.title).fontWeight(.bold).offset(y: 16)
             VStack(alignment: .center) {
                 Text(name)
                 DaysView(destinations: destinations)
-            }
+            }.offset(y: UIScreen.main.bounds.size.width/16*6)
         }.ignoresSafeArea(edges:.bottom)
     }
 }
@@ -158,6 +170,8 @@ struct ListView_Previews: PreviewProvider {
     struct PreviewWrapper: View {
 
         @State var destinations: [[Destination]] = [
+            [Destination(id: "", img: "unknown_destination", name: "Test", address: "Address Test", cooridinate: Coordinate(latitude: 0.0, longitude: 0.0), comments: [], rating: 3),
+             Destination(id: "", img: "unknown_destination", name: "Test", address: "Address Test", cooridinate: Coordinate(latitude: 0.0, longitude: 0.0), comments: [], rating: 3)],
             [Destination(id: "", img: "unknown_destination", name: "Test", address: "Address Test", cooridinate: Coordinate(latitude: 0.0, longitude: 0.0), comments: [], rating: 3)]
         ]
         @State var users: [String] = [

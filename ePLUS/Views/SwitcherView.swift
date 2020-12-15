@@ -16,6 +16,8 @@ struct SwitcherView: View {
     let users: [String]
     let planId: String
     @Binding var showMenu: Bool
+    @State var dayIndex: Int = 0
+    @Binding var loading:Bool
 
     var body: some View {
         NavigationView(){
@@ -78,7 +80,7 @@ struct SwitcherView_Previews: PreviewProvider {
         @State var dayIndex = 0
 
         var body: some View{
-            SwitcherView(name: "", destinations: destinations, users: users, planId: "", showMenu: $showMenu)
+            SwitcherView(name: "", destinations: destinations, users: users, planId: "", showMenu: $showMenu, loading: .constant(false))
         }
     }
 }

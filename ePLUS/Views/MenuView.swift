@@ -25,15 +25,15 @@ struct DayBlock: View{
 }
 
 struct MenuView: View {
-    let planId: String = ""
+    @State var error = false
+    let planId: String
     let users : [String] = ["zuccottiPark", "Amy", "Bob", "Candy"]
-    let destinations: [[Destination]] = [[],[]]
-    @State var showMenu = false
+    let destinations: [[Destination]]
+    @Binding var showMenu: Bool
+    @Binding var dayIndex: Int
     
     var body: some View {
-        ZStack{
-            Color(UIColor.secondarySystemBackground)
-            .ignoresSafeArea()
+        NavigationView {
             VStack(alignment: .leading, spacing: 20) {
                 // User icon
                 ForEach(0..<users.count / 4 + 1) { i in
@@ -49,9 +49,7 @@ struct MenuView: View {
                     }
                 }
                 // Invite people
-                Button(action: {
-                    // TODO: get to invite view
-                }) {
+                NavigationLink(destination: InviteView()) {
                     HStack (spacing: 20){
                         Image(systemName: "person.fill.badge.plus")
                             .font(.title)
@@ -65,11 +63,14 @@ struct MenuView: View {
                     .cornerRadius(50)
                 }
                 // Days
-                ForEach(0..<destinations.count){ d in
+                ForEach(destinations.indices, id: \.self){ d in
                     DayBlock(day: d+1)
                 }
                 // Add a day
                 Button(action: {
+                    self.addDay()
+                    self.dayIndex = self.destinations.count
+                    self.showMenu = false
                     // TODO: get to add a day page
                 }) {
                     HStack (spacing: 20){
@@ -88,13 +89,35 @@ struct MenuView: View {
             }
             .padding(.top, 80)
             .padding(.horizontal, 8)
+            .background(Color(UIColor.secondarySystemBackground).ignoresSafeArea())
+        .navigationBarTitle("")
+        .navigationBarHidden(true)
         }
     }
     
+    func addDay() {
+        API().addDay(planId: self.planId) { result in
+            
+            switch result {
+            case .success:
+                break
+            case .failure:
+                self.error = true
+            }
+        }
+    }
 }
 
 struct MenuView_Previews: PreviewProvider {
     static var previews: some View {
-        MenuView()
+        PreviewWrapper()
+    }
+    struct PreviewWrapper: View {
+        @State var showMenu = true
+        @State var dayIndex = 0
+
+        var body: some View{
+            MenuView(planId: "", destinations: [[], []], showMenu: $showMenu, dayIndex: $dayIndex)
+        }
     }
 }

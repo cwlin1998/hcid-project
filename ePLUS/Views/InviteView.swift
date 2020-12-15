@@ -42,6 +42,8 @@ struct InviteBlock: View {
 
 
 struct InviteView: View {
+    @Environment(\.presentationMode) var presentationMode
+
     let inviteList: [User] = [
         User(account: "avocado", password: "", nickname: "zuccottiPark", plans: [], comments: []),
         User(account: "pizza", password: "", nickname: "Pizza", plans: [], comments: []),
@@ -53,7 +55,7 @@ struct InviteView: View {
             ZStack {
                 HStack {
                     ReturnButton(action: {
-                        // TODO
+                        self.presentationMode.wrappedValue.dismiss()
                     })
                     Spacer()
                 }
@@ -69,6 +71,8 @@ struct InviteView: View {
             Spacer()
         }
         .padding(.horizontal, 20)
+        .background(Color(UIColor.secondarySystemBackground).ignoresSafeArea())
+        .navigationBarHidden(true)
     }
 }
 

@@ -26,7 +26,7 @@ struct ListBlock: View {
                     .frame(width: 60, height: 60)
                 VStack(alignment: .leading, spacing: 10) {
                     Text("\(self.destination.name)").bold()
-                    HeartRating(rating: $rating)
+                    HeartRating(rating: $rating).disabled(true)
                 }
                 Spacer()
             }
@@ -70,7 +70,7 @@ struct DaysView: View {
     var body: some View {
         GeometryReader { g in
             HStack(spacing: 0) {
-                ForEach(destinations.indices) { dayIndex in
+                ForEach(destinations.indices, id: \.self) { dayIndex in
                     DayView(
                         dayIndex: dayIndex,
                         destinations: destinations[dayIndex]

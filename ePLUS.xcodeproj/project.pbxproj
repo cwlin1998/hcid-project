@@ -16,12 +16,14 @@
 		824387BD2582856600DC6664 /* HeartRating.swift in Sources */ = {isa = PBXBuildFile; fileRef = 824387BC2582856600DC6664 /* HeartRating.swift */; };
 		824FADFB25752EA7005C62C4 /* ListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 824FADFA25752EA7005C62C4 /* ListView.swift */; };
 		824FAE0025752EB3005C62C4 /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 824FADFF25752EB3005C62C4 /* MapView.swift */; };
-		824FAE0525752F7D005C62C4 /* ViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 824FAE0425752F7D005C62C4 /* ViewRouter.swift */; };
+		824FAE0525752F7D005C62C4 /* Observables.swift in Sources */ = {isa = PBXBuildFile; fileRef = 824FAE0425752F7D005C62C4 /* Observables.swift */; };
 		824FAE0D2575319C005C62C4 /* CommentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 824FAE0C2575319C005C62C4 /* CommentView.swift */; };
 		825151C62583A75500E4D9FF /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 825151C52583A75500E4D9FF /* Utils.swift */; };
 		825151CE2583FCF100E4D9FF /* DestinationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 825151CD2583FCF000E4D9FF /* DestinationView.swift */; };
 		825151D32584900200E4D9FF /* MenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 825151D22584900200E4D9FF /* MenuView.swift */; };
 		825151E12584B97700E4D9FF /* SwitcherView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 825151E02584B97700E4D9FF /* SwitcherView.swift */; };
+		825151E62587552D00E4D9FF /* NewPlanView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 825151E52587552D00E4D9FF /* NewPlanView.swift */; };
+		825151EB2587555100E4D9FF /* InviteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 825151EA2587555100E4D9FF /* InviteView.swift */; };
 		825F2B93257F935B0001D37C /* AddDestinationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 825F2B92257F935B0001D37C /* AddDestinationView.swift */; };
 		825F2BA1257FA0E20001D37C /* GoooglePlaceStructure.swift in Sources */ = {isa = PBXBuildFile; fileRef = 825F2BA0257FA0E20001D37C /* GoooglePlaceStructure.swift */; };
 		825F2BAF257FE4DE0001D37C /* AddDesCommentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 825F2BAE257FE4DE0001D37C /* AddDesCommentView.swift */; };
@@ -60,12 +62,14 @@
 		824387BC2582856600DC6664 /* HeartRating.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeartRating.swift; sourceTree = "<group>"; };
 		824FADFA25752EA7005C62C4 /* ListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListView.swift; sourceTree = "<group>"; };
 		824FADFF25752EB3005C62C4 /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
-		824FAE0425752F7D005C62C4 /* ViewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewRouter.swift; sourceTree = "<group>"; };
+		824FAE0425752F7D005C62C4 /* Observables.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Observables.swift; sourceTree = "<group>"; };
 		824FAE0C2575319C005C62C4 /* CommentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentView.swift; sourceTree = "<group>"; };
 		825151C52583A75500E4D9FF /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		825151CD2583FCF000E4D9FF /* DestinationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DestinationView.swift; sourceTree = "<group>"; };
 		825151D22584900200E4D9FF /* MenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuView.swift; sourceTree = "<group>"; };
 		825151E02584B97700E4D9FF /* SwitcherView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwitcherView.swift; sourceTree = "<group>"; };
+		825151E52587552D00E4D9FF /* NewPlanView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewPlanView.swift; sourceTree = "<group>"; };
+		825151EA2587555100E4D9FF /* InviteView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InviteView.swift; sourceTree = "<group>"; };
 		825F2B92257F935B0001D37C /* AddDestinationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddDestinationView.swift; sourceTree = "<group>"; };
 		825F2BA0257FA0E20001D37C /* GoooglePlaceStructure.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoooglePlaceStructure.swift; sourceTree = "<group>"; };
 		825F2BAE257FE4DE0001D37C /* AddDesCommentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddDesCommentView.swift; sourceTree = "<group>"; };
@@ -124,7 +128,7 @@
 		8243879F2582805000DC6664 /* Components */ = {
 			isa = PBXGroup;
 			children = (
-				824FAE0425752F7D005C62C4 /* ViewRouter.swift */,
+				824FAE0425752F7D005C62C4 /* Observables.swift */,
 				8243879A25827D5D00DC6664 /* TextArea.swift */,
 				824387AC258281B700DC6664 /* ReturnButton.swift */,
 				824387B1258283C500DC6664 /* RoundedRectButton.swift */,
@@ -154,6 +158,8 @@
 		824387A22582810E00DC6664 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				825151EA2587555100E4D9FF /* InviteView.swift */,
+				825151E52587552D00E4D9FF /* NewPlanView.swift */,
 				82CD08EB256E5F9100F21693 /* ContentView.swift */,
 				825151E02584B97700E4D9FF /* SwitcherView.swift */,
 				825F2BAE257FE4DE0001D37C /* AddDesCommentView.swift */,
@@ -415,11 +421,12 @@
 			files = (
 				824FAE0D2575319C005C62C4 /* CommentView.swift in Sources */,
 				8243879B25827D5D00DC6664 /* TextArea.swift in Sources */,
-				824FAE0525752F7D005C62C4 /* ViewRouter.swift in Sources */,
+				824FAE0525752F7D005C62C4 /* Observables.swift in Sources */,
 				82CD08EC256E5F9100F21693 /* ContentView.swift in Sources */,
 				824387BD2582856600DC6664 /* HeartRating.swift in Sources */,
 				823FACC9257E189F001FC646 /* DataStructure.swift in Sources */,
 				825F2B93257F935B0001D37C /* AddDestinationView.swift in Sources */,
+				825151EB2587555100E4D9FF /* InviteView.swift in Sources */,
 				825151C62583A75500E4D9FF /* Utils.swift in Sources */,
 				824FAE0025752EB3005C62C4 /* MapView.swift in Sources */,
 				825151CE2583FCF100E4D9FF /* DestinationView.swift in Sources */,
@@ -429,6 +436,7 @@
 				825151D32584900200E4D9FF /* MenuView.swift in Sources */,
 				F365E65E25849B0F00D7A767 /* GoogleMapView.swift in Sources */,
 				824387AD258281B700DC6664 /* ReturnButton.swift in Sources */,
+				825151E62587552D00E4D9FF /* NewPlanView.swift in Sources */,
 				825F2BA1257FA0E20001D37C /* GoooglePlaceStructure.swift in Sources */,
 				825151E12584B97700E4D9FF /* SwitcherView.swift in Sources */,
 				824387B2258283C500DC6664 /* RoundedRectButton.swift in Sources */,

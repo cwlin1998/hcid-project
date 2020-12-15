@@ -20,6 +20,7 @@ struct ContentView: View {
     @State var plan: Plan?
     @State var destinations: [[Destination]]?
     @State var placeId: String = ""
+    @State var dayIndex = 0
     
     let originalOffset: CGFloat = 320
     @State var offset: CGFloat = 320
@@ -36,14 +37,20 @@ struct ContentView: View {
                 GeometryReader { g in
                     ZStack(alignment: .leading) {
                         if (showMenu) {
-                            MenuView().frame(width: originalOffset)
+                            MenuView(
+                                planId: self.plan!.id,
+                                destinations: self.destinations!,
+                                showMenu: self.$showMenu,
+                                dayIndex: self.$dayIndex
+                            ).frame(width: originalOffset)
                         }
                         SwitcherView(
                             name: self.plan!.id,
                             destinations: self.destinations!,
                             users: self.plan!.users,
                             planId: self.plan!.id,
-                            showMenu: self.$showMenu
+                            showMenu: self.$showMenu,
+                            dayIndex: self.$dayIndex
                         )
                         .frame(width: g.frame(in: .global).width)
                         .offset(x: self.showMenu ? self.offset: 0)
@@ -77,7 +84,6 @@ struct ContentView: View {
         let group = DispatchGroup()
         
         group.enter()
-        self.loading = true
         
         API().getUser(userAccount: "guest") { result in
             
@@ -94,7 +100,6 @@ struct ContentView: View {
         group.enter()
         
         API().getPlan(planId: self.plans![0]) { result in
-            self.loading = false
             
             switch result {
             case .success(let plan):
@@ -141,6 +146,7 @@ struct ContentView: View {
             if (destinations != self.destinations) {
                 self.destinations = destinations
             }
+            self.loading = false
         }
         
     }

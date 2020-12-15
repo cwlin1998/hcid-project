@@ -15,7 +15,7 @@ struct SwitcherView: View {
     let users: [String]
     let planId: String
     @Binding var showMenu: Bool
-    @State var dayIndex: Int = 0
+    @Binding var dayIndex: Int
 
     var body: some View {
         NavigationView(){
@@ -50,12 +50,12 @@ struct SwitcherView: View {
                         NavigationLink(destination: AddDestinationView(planId: planId, dayIndex: dayIndex)) {
                             Text("+")
                         }
-                        .navigationBarTitle("")
-                        .navigationBarHidden(true)
                     }
                     Spacer()
                 }.frame(minWidth: 0, maxWidth: .infinity, alignment: .trailing)
             }.ignoresSafeArea(edges:.bottom)
+        .navigationBarTitle("")
+        .navigationBarHidden(true)
         }
     }
 }
@@ -73,9 +73,10 @@ struct SwitcherView_Previews: PreviewProvider {
             "guest"
         ]
         @State var showMenu = false
+        @State var dayIndex = 0
 
         var body: some View{
-            SwitcherView(name: "", destinations: destinations, users: users, planId: "", showMenu: $showMenu)
+            SwitcherView(name: "", destinations: destinations, users: users, planId: "", showMenu: $showMenu, dayIndex: $dayIndex)
         }
     }
 }

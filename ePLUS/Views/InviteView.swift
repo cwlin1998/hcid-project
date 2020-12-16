@@ -111,7 +111,7 @@ struct InviteView: View {
 
         var inviteList: [User] = []
         // please revise all the users you create
-        for user in ["guest", "catherine", "alice", "bob", "david"] {
+        for user in ["guest","a", "b", "c", "d"] {
             group.enter()
             API().getUser(userAccount: user) { result in
                 switch result {
@@ -120,7 +120,7 @@ struct InviteView: View {
                         inviteList.append(user)
                     }
                 case .failure:
-                    self.error = true
+                    print("fetch user in invite failure")
                 }
                 group.leave()
             }

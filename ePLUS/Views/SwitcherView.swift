@@ -21,7 +21,7 @@ struct SwitcherView: View {
     @Binding var loading: Bool
 
     var body: some View {
-        NavigationView(){
+//        NavigationView(){
             ZStack(alignment: .topLeading) {
                 VStack {
                     switch viewRouter.currentPage {
@@ -59,7 +59,7 @@ struct SwitcherView: View {
             }.ignoresSafeArea(edges:.bottom)
         .navigationBarTitle("")
         .navigationBarHidden(true)
-        }
+//        }
     }
 }
 

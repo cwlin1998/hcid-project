@@ -14,3 +14,7 @@ class ViewRouter: ObservableObject {
 class DayRouter: ObservableObject {
     @Published var dayIndex: Int = 0
 }
+
+class UserData: ObservableObject {
+    @Published var currentUser: User = User(account: "guest", password: "guest", nickname: "guest", plans: [], comments: [])
+}

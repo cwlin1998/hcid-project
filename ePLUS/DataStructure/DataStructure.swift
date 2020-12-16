@@ -24,7 +24,7 @@ struct Destination: Identifiable, Equatable {
     let address: String
     let cooridinate: Coordinate
     let comments: [String]
-    let rating: Int
+    let rating: Float
     
     static func == (lhs: Destination, rhs: Destination) -> Bool {
         return lhs.id == rhs.id

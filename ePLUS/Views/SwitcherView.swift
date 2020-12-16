@@ -10,6 +10,7 @@ import SwiftUI
 struct SwitcherView: View {
     @EnvironmentObject var viewRouter: ViewRouter
     @EnvironmentObject var dayRouter: DayRouter
+    @EnvironmentObject var userData: UserData
     
     let name: String
     let destinations: [[Destination]]
@@ -17,7 +18,7 @@ struct SwitcherView: View {
     let planId: String
     @Binding var showMenu: Bool
     @State var dayIndex: Int = 0
-    @Binding var loading:Bool
+    @Binding var loading: Bool
 
     var body: some View {
         NavigationView(){
@@ -67,6 +68,7 @@ struct SwitcherView_Previews: PreviewProvider {
         PreviewWrapper()
             .environmentObject(ViewRouter())
             .environmentObject(DayRouter())
+            .environmentObject(UserData())
     }
     struct PreviewWrapper: View {
 

@@ -17,14 +17,10 @@ struct ReturnButton: View {
         }) {
             Image(systemName: "arrow.left")
                 .font(.system(size: CGFloat(self.size), weight: .bold))
-//                .padding()
-                .padding(.horizontal, 8)
-                .padding(.top, 8)
-                .padding(.bottom, 8)
+                .padding(8)
                 .background(Color(red: 43/255, green: 185/255, blue: 222/255))
                 .foregroundColor(Color.white)
                 .clipShape(Circle())
-//                .shadow(radius: 8)
         }
     }
 }

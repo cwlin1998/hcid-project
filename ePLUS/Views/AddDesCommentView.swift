@@ -9,6 +9,7 @@ import SwiftUI
 import MapKit
 
 struct InformationBlock: View {
+    @EnvironmentObject var userData: UserData
     @Environment(\.presentationMode) var presentationMode
     
     @Binding var loading: Bool
@@ -20,7 +21,7 @@ struct InformationBlock: View {
     @State var destination: Destination?
     @State private var commentText: String = ""
     
-    @State var currentRating: Int = 0
+    @State var currentRating: Float = 0
     @State var img: Image
     
     
@@ -56,7 +57,7 @@ struct InformationBlock: View {
                 // Add to plan button
                 RoundedRectButton(action: {
                     self.addDestination()
-                    // TODO: Update user data
+                    self.addComment()
                     self.presentationMode.wrappedValue.dismiss()
                 }, text: "Add to plan")
                 
@@ -77,9 +78,26 @@ struct InformationBlock: View {
         }
     }
     
+    func addComment() {
+        let comment = Comment(
+            locationId: self.placeId,
+            content: self.commentText,
+            rating: Int(self.currentRating)
+        )
+        API().addComment(userAccount: userData.currentUser.account, comment: comment) { result in
+            switch result {
+            case .success:
+                self.error = false
+            case .failure:
+                self.error = true
+            }
+        }
+    }
+    
 }
 
 struct AddDesCommentView: View {
+    @EnvironmentObject var userData: UserData
     @State var loading = false
     @State var error = false
     let planId: String
@@ -104,18 +122,10 @@ struct AddDesCommentView: View {
     var body: some View {
         VStack{
             if (loading) {
-//                Text("Loading...")
                 LoadingView()
             }
             if (destination != nil && region.center.latitude != 0){
                 ZStack{
-                    // Map Background
-                    // Image("addDesCommentbg")
-                    //     .resizable()
-                    //     .scaledToFill()
-                    //     .frame(width: UIScreen.screenWidth)
-                    //     .ignoresSafeArea(edges: .all)
-                    
                     Map(coordinateRegion: $region).ignoresSafeArea(edges: .all)
                     
                     // Foreground
@@ -180,6 +190,7 @@ struct AddDesCommentView_Previews_Container: View {
     @State var searching: Bool = true
     var body: some View {
         AddDesCommentView(planId: "", dayIndex: 0, placeId: "", searching: $searching)
+            .environmentObject(UserData())
     }
 }
 

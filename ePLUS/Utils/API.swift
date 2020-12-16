@@ -12,7 +12,6 @@ struct API {
     let hostURL = "http://localhost:8000"
     
     // PLAN API
-    // not confirmed
     func addPlan(userAccount: String, handler: @escaping (Result<EmptyJson, Error>) -> Void) {
         guard let url = URL(string: hostURL + "/plans") else {
             print("error...")
@@ -448,7 +447,6 @@ struct API {
         task.resume()
     }
     
-    // not confirmed
     func addComment(userAccount: String, comment: Comment, handler: @escaping (Result<EmptyJson, Error>) -> Void) {
         guard let url = URL(string: hostURL + "/users/" + userAccount + "/comment") else {
             print("error...")
@@ -487,7 +485,6 @@ struct API {
         task.resume()
     }
     
-    // not confirmed
     func getComment(userAccount: String, locationId: String, handler: @escaping (Result<Comment, Error>) -> Void) {
         guard let url = URL(string: hostURL + "/users/" + userAccount + "/comment/" + locationId) else {
             print("error...")

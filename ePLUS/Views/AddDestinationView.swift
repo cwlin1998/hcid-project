@@ -71,6 +71,8 @@ struct AutoCompleteView: UIViewControllerRepresentable {
 }
 
 struct AddDestinationView: View {
+    @EnvironmentObject var userData: UserData
+    
     let planId: String
     let dayIndex: Int
     @State var placeId: String = ""
@@ -91,6 +93,6 @@ struct AddDestinationView: View {
 struct AddDestination_Previews: PreviewProvider {
     static var previews: some View {
         AddDestinationView(planId: "", dayIndex: 0)
-            .preferredColorScheme(.dark)
+            .environmentObject(UserData())
     }
 }

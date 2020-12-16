@@ -9,11 +9,12 @@ import SwiftUI
 
 struct ListBlock: View {
     let destination: Destination
-    let users: [String] = ["guest"]
-    @State var rating: Int
+    let users: [String]
+    @State var rating: Float
     
-    init(destination: Destination) {
+    init(destination: Destination, users: [String]) {
         self.destination = destination
+        self.users = users
         self._rating = State(initialValue: destination.rating)
     }
     
@@ -43,6 +44,7 @@ struct ListBlock: View {
 struct DayView: View {
     let dayIndex: Int
     let destinations: [Destination]
+    let users: [String]
 
     var body: some View {
         VStack(alignment: .center) {
@@ -55,14 +57,13 @@ struct DayView: View {
             ScrollView {
                 VStack(spacing: 16) { // space bewtween destinations
                     ForEach(destinations) { des in
-                        ListBlock(destination: des)
+                        ListBlock(destination: des, users: users)
                     }
                 }.frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
                 .padding(.horizontal, 36)
                 .offset(y: 16)  // space with plan img
             }.background(Color(UIColor.secondarySystemBackground))
         }
-//        .padding(.top, 90)
     }
 }
 
@@ -70,6 +71,7 @@ struct DaysView: View {
     @EnvironmentObject var dayRouter: DayRouter
     
     let destinations: [[Destination]]
+    let users: [String]
     
     @State var originalOffset: CGFloat = 0
     @State var offset: CGFloat = 0
@@ -80,7 +82,8 @@ struct DaysView: View {
                 ForEach(destinations.indices, id: \.self) { dayIndex in
                     DayView(
                         dayIndex: dayIndex,
-                        destinations: destinations[dayIndex]
+                        destinations: destinations[dayIndex],
+                        users: users
                     ).frame(width: g.frame(in: .global).width)
                 }
             }
@@ -146,18 +149,13 @@ struct ListView: View {
     let users: [String]
     @State var uiImage: UIImage = UIImage(named: "zuccottiPark")!
 
-
     var body: some View {
         ZStack(alignment: .top) {
             Color(UIColor.secondarySystemBackground).ignoresSafeArea()
-//            Rectangle()
-//                .fill(Color(UIColor.systemTeal))
-//                .frame(height: 200)
             RemoteImage(url: "https://picsum.photos/800/450/?blur", width: Float(UIScreen.main.bounds.size.width), height: Float(UIScreen.main.bounds.size.width/16*9), cornerRadius: 0)
             Text(name).font(.title).fontWeight(.bold).offset(y: 16)
             VStack(alignment: .center) {
-//                Text(name)
-                DaysView(destinations: destinations)
+                DaysView(destinations: destinations, users: users)
             }.offset(y: UIScreen.main.bounds.size.width/16*6)
         }.ignoresSafeArea(edges:.bottom)
     }

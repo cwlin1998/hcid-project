@@ -12,12 +12,14 @@ struct ePLUSApp: App {
     
     @StateObject var viewRouter = ViewRouter()
     @StateObject var dayRouter = DayRouter()
+    @StateObject var userData = UserData()
     
     var body: some Scene {
         WindowGroup {
             ContentView()
                 .environmentObject(viewRouter)
                 .environmentObject(dayRouter)
+                .environmentObject(userData)
         }
     }
 }

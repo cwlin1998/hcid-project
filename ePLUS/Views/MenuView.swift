@@ -8,22 +8,29 @@
 import SwiftUI
 
 struct DayBlock: View{
+    @EnvironmentObject var dayRouter: DayRouter
     let day: Int
+    @Binding var showMenu: Bool
+
+    
     var body: some View{
-        HStack (spacing: 20){
+        Button(action: {
+            self.dayRouter.dayIndex = day - 1
+            self.showMenu = false
+        }) {
             Text("Day \(day)")
                 .font(.system(size: 22, weight: .regular))
+                .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: 16)
+                .padding()
+                .background(Color(UIColor.tertiarySystemBackground))
+                .foregroundColor(Color(UIColor.systemIndigo))
+                .opacity(0.8)
+                .cornerRadius(50)
         }
-        .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: 16)
-        .padding()
-        .background(Color(UIColor.tertiarySystemBackground))
-        .foregroundColor(Color(UIColor.systemIndigo))
-        .opacity(0.8)
-        .cornerRadius(50)
     }
 }
 
-struct MenuButton: View{
+struct MenuButton: View {
     let text: String
     var body: some View{
         HStack (spacing: 20){
@@ -39,6 +46,45 @@ struct MenuButton: View{
     }
 }
 
+struct AddDayButton: View {
+    @EnvironmentObject var dayRouter: DayRouter
+    @State var error = false
+    let planId: String
+    let destinations: [[Destination]]
+    @Binding var showMenu: Bool
+
+    var body: some View {
+        Button(action: {
+            self.addDay()
+            self.dayRouter.dayIndex = self.destinations.count
+            self.showMenu = false
+        }) {
+            HStack (spacing: 20){
+                Text("Add a day")
+                    .font(.system(size: 22, weight: .regular))
+            }
+            .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: 16)
+            .padding()
+            .foregroundColor(.gray)
+            .overlay(
+                RoundedRectangle(cornerRadius: 50)
+                    .stroke(Color.gray, lineWidth: 3)
+            )
+        }
+    }
+    func addDay() {
+        API().addDay(planId: self.planId) { result in
+            
+            switch result {
+            case .success:
+                break
+            case .failure:
+                self.error = true
+            }
+        }
+    }
+}
+
 struct MenuView: View {
     @EnvironmentObject var dayRouter: DayRouter
     
@@ -46,7 +92,7 @@ struct MenuView: View {
     
     @State var error = false
     let planId: String
-    @State var users : [String]
+    let users : [String]
     let destinations: [[Destination]]
     @Binding var showMenu: Bool
     
@@ -80,29 +126,17 @@ struct MenuView: View {
                 ScrollView {
                     VStack(spacing: 12) {
                         ForEach(destinations.indices, id: \.self){ d in
-                            DayBlock(day: d+1)
+                            DayBlock(day: d+1, showMenu: $showMenu)
                         }
                     }
                 }
                 VStack (spacing: 12){
                     // Add a day
-                    Button(action: {
-                        self.addDay()
-                        self.dayRouter.dayIndex = self.destinations.count
-                        self.showMenu = false
-                    }) {
-                        HStack (spacing: 20){
-                            Text("Add a day")
-                                .font(.system(size: 22, weight: .regular))
-                        }
-                        .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: 16)
-                        .padding()
-                        .foregroundColor(.gray)
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 50)
-                                .stroke(Color.gray, lineWidth: 3)
-                        )
-                    }
+                    AddDayButton(
+                        planId: planId,
+                        destinations: destinations,
+                        showMenu: $showMenu
+                    )
                     Button(action: {
                         print("switch to other plan")
                         // TODO
@@ -121,40 +155,7 @@ struct MenuView: View {
             .navigationBarTitle("")
             .navigationBarHidden(true)
         }
-        .onAppear(perform: fetchUser)
-        .onReceive(timer) { _ in
-            self.fetchUser()
-        }
-        
     }
-    
-    
-    func fetchUser() {
-        let group = DispatchGroup()
-
-        group.enter()
-        
-        var users: [String] = []
-        API().getPlan(planId: self.planId) { result in
-            
-            switch result {
-            case .success(let plan):
-                users = plan.users
-            case .failure:
-                self.error = true
-            }
-            group.leave()
-        }
-        
-        group.wait()
-        
-        group.notify(queue: .main) {
-            if (users != self.users) {
-                self.users = users
-            }
-        }
-    }
-    
     
     func addDay() {
         API().addDay(planId: self.planId) { result in

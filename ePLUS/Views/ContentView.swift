@@ -46,6 +46,7 @@ struct ContentView: View {
                         if (showMenu) {
                             MenuView(
                                 planId: self.plan!.id,
+                                users: self.plan!.users,
                                 destinations: self.destinations!,
                                 showMenu: self.$showMenu
                             ).frame(width: originalOffset)

@@ -42,9 +42,11 @@ struct MenuButton: View{
 struct MenuView: View {
     @EnvironmentObject var dayRouter: DayRouter
     
+    let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
+    
     @State var error = false
     let planId: String
-    let users : [String] = ["zuccottiPark", "Amy", "Bob", "Candy"]
+    @State var users : [String]
     let destinations: [[Destination]]
     @Binding var showMenu: Bool
     
@@ -65,7 +67,7 @@ struct MenuView: View {
                     }
                 }
                 // Invite people
-                NavigationLink(destination: InviteView()) {
+                NavigationLink(destination: InviteView(planId: self.planId)) {
                     Text("Invite people")
                         .font(.system(size: 24, weight: .regular))
                         .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: 24)
@@ -116,10 +118,43 @@ struct MenuView: View {
             .padding(.top, 80)
             .padding(.horizontal, 48)
             .background(Color(UIColor.secondarySystemBackground).ignoresSafeArea())
-        .navigationBarTitle("")
-        .navigationBarHidden(true)
+            .navigationBarTitle("")
+            .navigationBarHidden(true)
+        }
+        .onAppear(perform: fetchUser)
+        .onReceive(timer) { _ in
+            self.fetchUser()
+        }
+        
+    }
+    
+    
+    func fetchUser() {
+        let group = DispatchGroup()
+
+        group.enter()
+        
+        var users: [String] = []
+        API().getPlan(planId: self.planId) { result in
+            
+            switch result {
+            case .success(let plan):
+                users = plan.users
+            case .failure:
+                self.error = true
+            }
+            group.leave()
+        }
+        
+        group.wait()
+        
+        group.notify(queue: .main) {
+            if (users != self.users) {
+                self.users = users
+            }
         }
     }
+    
     
     func addDay() {
         API().addDay(planId: self.planId) { result in
@@ -143,7 +178,7 @@ struct MenuView_Previews: PreviewProvider {
         @State var dayIndex = 0
 
         var body: some View{
-            MenuView(planId: "", destinations: [[], []], showMenu: $showMenu)
+            MenuView(planId: "", users: ["Candy", "Bob", "Alice"], destinations: [[], []], showMenu: $showMenu)
         }
     }
 }

@@ -44,12 +44,16 @@ struct Coordinate: Codable {
     let longitude: Double
 }
 
-struct User: Codable {
+struct User: Codable, Equatable {
     let account: String
     let password: String
     let nickname: String
     let plans: [String]
     let comments: [Comment]
+    
+    static func == (lhs: User, rhs: User) -> Bool {
+        return lhs.account == rhs.account
+    }
 }
 
 struct Comment: Codable {

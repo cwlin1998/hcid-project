@@ -7,51 +7,165 @@
 
 import SwiftUI
 
-struct NewPlanView: View {
-    @State private var day = 3
-    static let formatter = NumberFormatter()
-    var binding: Binding<String> {
-            .init(get: {
-                "\(self.day)"
-            }, set: {
-                self.day = Int($0) ?? self.day
+struct CustomStepper : View {
+    @Binding var value: Int
+    var textColor: Color
+    var step = 1
+    var valueText: Binding<String> {
+        .init(get: {
+            "\(self.value)"
+        }, set: {
+            self.value = Int($0) ?? self.value
+        })
+    }
+    var body: some View {
+        HStack (spacing: 12){
+            Button(action: {
+                if self.value > 1 {
+                    self.value -= self.step
+                    self.feedback()
+                }
+            }, label: {
+                Image(systemName: "minus.square")
+                    .font(.system(size: CGFloat(25), weight: .bold))
+                    .foregroundColor(value > 1 ? textColor : Color.gray)
+            })
+            
+            TextField(" \(value)", text: valueText)
+                .font(.title)
+                .foregroundColor(textColor)
+                .multilineTextAlignment(.center)
+                .keyboardType(.decimalPad)
+                .frame(width: 50, height: 50)
+                .onAppear {
+                    NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillHideNotification, object: nil, queue: .main) { (noti) in
+                        withAnimation {
+                            self.value = self.value > 99 ? 99 : self.value
+                            self.value = self.value < 1 ? 1 : self.value
+                        }
+                    }
+                }
+            Button(action: {
+                if self.value < 99 {
+                    self.value += self.step
+                    self.feedback()
+                }
+            }, label: {
+                Image(systemName: "plus.square")
+                    .font(.system(size: CGFloat(25), weight: .bold))
+                    .foregroundColor(value < 99 ? textColor : Color.gray)
             })
         }
+    }
+    func feedback() {
+        let generator = UIImpactFeedbackGenerator(style: .light)
+        generator.impactOccurred()
+    }
+}
+struct NewPlanView: View {
+    @Environment(\.presentationMode) var presentationMode
+    @State var nameText: String = "Plan name"
+    @State var day: Int = 3
+    var dayText: Binding<String> {
+        .init(get: {
+            "\(self.day)"
+        }, set: {
+            self.day = Int($0) ?? self.day
+        })
+    }
     var body: some View {
         VStack(spacing: 24){
             ZStack {
                 HStack {
                     ReturnButton(action: {
-                        // TODO
-                    }, size: 30)
+                        self.presentationMode.wrappedValue.dismiss()
+                    }, size: 20)
                     Spacer()
                 }
-                Text("Create New Plan").font(.title).fontWeight(.bold)
-            }
-            VStack{
-                HStack {
-                    TextField("", text: binding)
-                        Stepper("", onIncrement: {
-                            self.day += 1
-                        }, onDecrement: {
-                            self.day -= (self.day > 0 ? 1 : 0)
-                    }).keyboardType(.decimalPad)
-//                    Text("Days: \(day)").font(.title).fontWeight(.bold)
-                    //                   Spacer()
-//
-//                    Stepper("", onIncrement: {
-//                            self.day += 1
-//                        }, onDecrement: {
-//                            self.day -= (self.day > 0 ? 1 : 0)
-//                        }
-//                    )
-//                    .cornerRadius(8)
+                HStack{
+                    Spacer()
+                    Text("Create New Plan").font(.system(size: 24, weight: .bold))
                 }
+            }
+            VStack(spacing: 20) {
+                // Name
+                HStack (alignment: .bottom){
+                    Text("Name:").font(.title).fontWeight(.bold)
+                    TextField("Plan name", text: self.$nameText)
+                        .foregroundColor(self.nameText == "Plan name" ? Color(UIColor.placeholderText) : .primary)
+                        .font(.system(size: 28, weight: .regular))
+                        .frame(minWidth: 0, maxWidth: .infinity)
+                        .lineLimit(1)
+                        .onAppear {
+                            self.nameText = "Plan name"
+                            // remove the placeholder text when keyboard appears
+                            NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillShowNotification, object: nil, queue: .main) { (noti) in
+                                withAnimation {
+                                        self.nameText = self.nameText == "Plan name" ? "" : self.nameText
+                                }
+                            }
+                            // put back the placeholder text if the user dismisses the keyboard without adding any text
+                            NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillHideNotification, object: nil, queue: .main) { (noti) in
+                                withAnimation {
+                                        self.nameText = self.nameText == "" ? "Plan name" : self.nameText
+                                }
+                            }
+                        }
+                    Spacer()
+                }.frame(height: 50)
                 
+                // Days
+                ZStack {
+                    HStack {
+                        Text("Days:").font(.title).fontWeight(.bold)
+                        Spacer()
+                    }
+                    HStack{
+                        Spacer()
+                        CustomStepper(value: self.$day, textColor: Color(UIColor.systemIndigo), step: Int(1))
+                    }
+                }.frame(height: 50)
+                
+                // Invite people
+                HStack (spacing: 20) {
+                    Image(systemName: "person.fill.badge.plus")
+                        .font(.title)
+                    Text("Invite people")
+                        .font(.system(size: 24, weight: .regular))
+                }
+                .frame(minWidth: 0, maxWidth: .infinity)
+                .frame(height: 20)
+                .padding()
+                .foregroundColor(.white)
+                .background(Color(UIColor.systemIndigo))
+                .cornerRadius(50)
+                Spacer()
+                
+                // Button
+                HStack{
+                    Text("cancel")
+                        .font(.system(size: 28, weight: .regular))
+                        .frame(minWidth: 0, maxWidth: .infinity)
+                        .frame(height: 20)
+                        .padding()
+                        .foregroundColor(.white)
+                        .background(Color(.lightGray))
+                        .cornerRadius(15)
+                    Text("Create")
+                        .font(.system(size: 28, weight: .regular))
+                        .frame(minWidth: 0, maxWidth: .infinity)
+                        .frame(height: 20)
+                        .padding()
+                        .foregroundColor(.white)
+                        .background(Color(red: 43/255, green: 185/255, blue: 222/255))
+                        .cornerRadius(15)
+                }
             }
             Spacer()
         }
         .padding(.horizontal, 20)
+        .background(Color(UIColor.secondarySystemBackground).ignoresSafeArea())
+        .navigationBarHidden(true)
     }
 }
 

@@ -107,17 +107,8 @@ struct MenuView: View {
                     }) {
                         MenuButton(text: "switch to other plan")
                     }
-                    Button(action: {
-                        print("create a new plan")
-                        // TODO
-                    }) {
+                    NavigationLink(destination: NewPlanView()) {
                         MenuButton(text: "create a new plan")
-                    }
-                    Button(action: {
-                        print("settings")
-                        // TODO
-                    }) {
-                        MenuButton(text: "settings")
                     }
                 }
                 Spacer()

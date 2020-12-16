@@ -156,7 +156,7 @@ struct ListView: View {
             RemoteImage(url: "https://picsum.photos/800/450/?blur", width: Float(UIScreen.main.bounds.size.width), height: Float(UIScreen.main.bounds.size.width/16*9), cornerRadius: 0)
             Text(name).font(.title).fontWeight(.bold).offset(y: 16)
             VStack(alignment: .center) {
-                Text(name)
+//                Text(name)
                 DaysView(destinations: destinations)
             }.offset(y: UIScreen.main.bounds.size.width/16*6)
         }.ignoresSafeArea(edges:.bottom)

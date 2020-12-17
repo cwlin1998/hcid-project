@@ -28,7 +28,7 @@ struct SwitcherView: View {
                     case .list:
                         ListView(planId: planId, name: name, destinations: destinations, users: users)
                     case .map:
-                        MapView(destinations: destinations,dayIndex:$dayIndex )
+                        MapView(destinations: destinations,dayIndex:dayRouter.dayIndex)
                     }
                 }.disabled(self.showMenu ? true : false)
                 VStack(alignment: .trailing, spacing: 10) {

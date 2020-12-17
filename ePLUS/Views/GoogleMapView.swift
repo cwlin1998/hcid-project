@@ -1,31 +1,25 @@
 import SwiftUI
 import GoogleMaps
-struct markerInfoWindow:
-    
-    View {
+struct markerInfoWindow: View {
     var name : String
     var stars: String
     var users: [String] = ["guest"]
     var destination: Destination
     var body: some View {
-         VStack(){
-            Spacer();
-            ZStack(alignment : .bottom){
-                Image("Tag description").resizable().frame(width: 300, height: 55).padding()
-                VStack(){
-                    HStack(alignment : .bottom){
-                        Text(name)
-                        Text(stars).foregroundColor(Color.red)
-                        Image("heartfill").resizable().frame(width: 15, height: 15)
-
-                    }.frame(width: 200, height: 30).padding()
-
-                }.offset(x:0,y:-19)//V
-            }//Z
-            .offset(y:10)
-        }//V
-
-    }}
+        VStack{
+            Spacer()
+            ZStack {
+                Image("Tag description").resizable().frame(width: 320, height: 150)
+                HStack {
+                    Text(name).font(.title3)
+                    Text(stars).foregroundColor(Color.red).font(.title2)
+                    Image("heartfill").resizable().frame(width: 20, height: 20)
+                }.offset(y: -18)
+            }.offset(y: 40)
+        }
+    }
+    
+}
 
 struct GoogleMapsView: UIViewRepresentable {
     let destinations: [[Destination]]
@@ -53,7 +47,7 @@ struct GoogleMapsView: UIViewRepresentable {
         //            marker.title = des.name
                     marker.snippet = String(index)
                     marker.map = mapView
-                    marker.icon = UIImage(named: "Marker")
+                    marker.icon = UIImage(named: "Marker")!.imageResized(to: CGSize(width: 30, height: 40))
                     marker.userData = des
                     mapView.delegate = context.coordinator
             }

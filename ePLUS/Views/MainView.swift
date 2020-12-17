@@ -38,13 +38,10 @@ struct MainView: View {
                 Text("Error. Doh!")
             }
             if (!havePlan) {
-                VStack {
-                    Text("You got no plan.")
-                    Button(action: {
-                        self.addPlan()
-                    }) {
+                NavigationLink(destination: NewPlanView(havePlan: self.havePlan)) {
+                    VStack {
+                        Text("You got no plan.")
                         MenuButton(text: "create a new plan")
-                            .navigationBarHidden(true)
                     }
                 }
             }
@@ -93,6 +90,7 @@ struct MainView: View {
         .onReceive(timer) { _ in
             self.fetchData()
         }
+        .navigationBarHidden(true)
     }
     
     func fetchData() {

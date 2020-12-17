@@ -64,8 +64,13 @@ struct CustomStepper : View {
 }
 struct NewPlanView: View {
     @Environment(\.presentationMode) var presentationMode
+    @EnvironmentObject var userData: UserData
+    
+    @State var error = false
+    var havePlan = true
     @State var nameText: String = "Plan name"
     @State var day: Int = 3
+    
     var dayText: Binding<String> {
         .init(get: {
             "\(self.day)"
@@ -73,6 +78,7 @@ struct NewPlanView: View {
             self.day = Int($0) ?? self.day
         })
     }
+    
     var body: some View {
         VStack(spacing: 24){
             ZStack {
@@ -83,7 +89,7 @@ struct NewPlanView: View {
                     Spacer()
                 }
                 HStack{
-                    Spacer()
+                    if havePlan { Spacer() }
                     Text("Create New Plan").font(.system(size: 24, weight: .bold))
                 }
             }
@@ -143,22 +149,34 @@ struct NewPlanView: View {
                 
                 // Button
                 HStack{
-                    Text("cancel")
-                        .font(.system(size: 28, weight: .regular))
-                        .frame(minWidth: 0, maxWidth: .infinity)
-                        .frame(height: 20)
-                        .padding()
-                        .foregroundColor(.white)
-                        .background(Color(.lightGray))
-                        .cornerRadius(15)
-                    Text("Create")
-                        .font(.system(size: 28, weight: .regular))
-                        .frame(minWidth: 0, maxWidth: .infinity)
-                        .frame(height: 20)
-                        .padding()
-                        .foregroundColor(.white)
-                        .background(Color(red: 43/255, green: 185/255, blue: 222/255))
-                        .cornerRadius(15)
+                    Button(action:{
+                        self.presentationMode.wrappedValue.dismiss()
+                        // TODO: action sheet
+                    }) {
+                        Text("cancel")
+                            .font(.system(size: 28, weight: .regular))
+                            .frame(minWidth: 0, maxWidth: .infinity)
+                            .frame(height: 20)
+                            .padding()
+                            .foregroundColor(.white)
+                            .background(Color(.lightGray))
+                            .cornerRadius(15)
+                    }
+                    
+                    Button(action: {
+                        self.addPlan()
+                        self.presentationMode.wrappedValue.dismiss()
+                    }) {
+                        Text("Create")
+                            .font(.system(size: 28, weight: .regular))
+                            .frame(minWidth: 0, maxWidth: .infinity)
+                            .frame(height: 20)
+                            .padding()
+                            .foregroundColor(.white)
+                            .background(Color(red: 43/255, green: 185/255, blue: 222/255))
+                            .cornerRadius(15)
+                            .navigationBarHidden(true)
+                    }
                 }
             }
             Spacer()
@@ -166,6 +184,17 @@ struct NewPlanView: View {
         .padding(.horizontal, 20)
         .background(Color(UIColor.secondarySystemBackground).ignoresSafeArea())
         .navigationBarHidden(true)
+    }
+    
+    func addPlan() {
+        API().addPlan(userAccount: userData.currentUser.account) { result in
+            switch result {
+            case .success:
+                break
+            case .failure:
+                self.error = true
+            }
+        }
     }
 }
 

@@ -8,11 +8,16 @@
 import SwiftUI
 
 struct ListBlock: View {
+    @EnvironmentObject var dayRouter: DayRouter
+    
+    let planId: String
     let destination: Destination
     let users: [String]
     @State var rating: Float
+    @State var showDeleteAlert: Bool = false
     
-    init(destination: Destination, users: [String]) {
+    init(planId: String, destination: Destination, users: [String]) {
+        self.planId = planId
         self.destination = destination
         self.users = users
         self._rating = State(initialValue: destination.rating)
@@ -37,11 +42,47 @@ struct ListBlock: View {
             .frame(height: 88)
             .background(Color(UIColor.tertiarySystemBackground))
             .cornerRadius(10)
+            .contextMenu{
+                VStack {
+                    Button(action: {
+                        self.showDeleteAlert = true
+                    }){
+                        Image(systemName: "trash")
+                        Text("Delete")
+                        .foregroundColor(.red)
+                    }
+                }
+            }
+            .alert(isPresented: $showDeleteAlert) {
+                Alert(
+                    title: Text("Remove \(self.destination.name) from Day \(dayRouter.dayIndex+1)?"),
+                    message: Text("The action cannot be recovered"),
+                    primaryButton: .cancel(),
+                    secondaryButton: .destructive(
+                        Text("Delete"),
+                        action: {
+                            self.deleteDestination()
+                        }
+                    )
+                )
+            }
+        }
+    }
+    
+    func deleteDestination() {
+        API().deleteDestination(planId: self.planId, dayIndex: dayRouter.dayIndex, locationId: self.destination.id) { result in
+            switch result{
+            case .success:
+                print("delete \(self.destination.name) from day \(dayRouter.dayIndex)")
+            case .failure:
+                print("delete failure!")
+            }
         }
     }
 }
 
 struct DayView: View {
+    let planId: String
     let dayIndex: Int
     let destinations: [Destination]
     let users: [String]
@@ -57,7 +98,7 @@ struct DayView: View {
             ScrollView {
                 VStack(spacing: 16) { // space bewtween destinations
                     ForEach(destinations) { des in
-                        ListBlock(destination: des, users: users)
+                        ListBlock(planId: planId, destination: des, users: users)
                     }
                 }.frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
                 .padding(.horizontal, 36)
@@ -70,6 +111,7 @@ struct DayView: View {
 struct DaysView: View {
     @EnvironmentObject var dayRouter: DayRouter
     
+    let planId: String
     let destinations: [[Destination]]
     let users: [String]
     
@@ -81,7 +123,7 @@ struct DaysView: View {
             HStack(spacing: 0) {
                 ForEach(destinations.indices, id: \.self) { dayIndex in
                     DayView(
-                        dayIndex: dayIndex,
+                        planId: planId, dayIndex: dayIndex,
                         destinations: destinations[dayIndex],
                         users: users
                     ).frame(width: g.frame(in: .global).width)
@@ -144,6 +186,7 @@ struct DaysView: View {
 struct ListView: View {
     @EnvironmentObject var dayRouter: DayRouter
     
+    let planId: String
     let name: String
     let destinations: [[Destination]]
     let users: [String]
@@ -155,7 +198,7 @@ struct ListView: View {
             RemoteImage(url: "https://picsum.photos/800/450/?blur", width: Float(UIScreen.main.bounds.size.width), height: Float(UIScreen.main.bounds.size.width/16*9), cornerRadius: 0)
             Text(name).font(.title).fontWeight(.bold).offset(y: 16)
             VStack(alignment: .center) {
-                DaysView(destinations: destinations, users: users)
+                DaysView(planId: planId, destinations: destinations, users: users)
             }.offset(y: UIScreen.main.bounds.size.width/16*6)
         }.ignoresSafeArea(edges:.bottom)
     }
@@ -178,7 +221,7 @@ struct ListView_Previews: PreviewProvider {
         @State var showMenu = false
 
         var body: some View{
-            ListView(name: "", destinations: destinations, users: users)
+            ListView(planId: "", name: "", destinations: destinations, users: users)
         }
     }
 }

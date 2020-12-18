@@ -87,6 +87,7 @@ struct AddDayButton: View {
 
 struct MenuView: View {
     @EnvironmentObject var dayRouter: DayRouter
+    @EnvironmentObject var userData: UserData
     
     let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
     
@@ -95,6 +96,7 @@ struct MenuView: View {
     let users : [String]
     let destinations: [[Destination]]
     @Binding var showMenu: Bool
+    @Binding var planIndex: Int
     
     var body: some View {
         NavigationView {
@@ -137,13 +139,23 @@ struct MenuView: View {
                         destinations: destinations,
                         showMenu: $showMenu
                     )
-                    Button(action: {
-                        print("switch to other plan")
-                        // TODO
-                    }) {
-                        MenuButton(text: "switch to other plan")
-                    }
-                    NavigationLink(destination: NewPlanView()) {
+                    
+                    Menu ("switch to other plan"){
+                        ForEach(userData.currentUser.plans, id: \.self) { planId in
+                            Button(action: {
+                                self.planIndex = userData.currentUser.plans.firstIndex(of: planId)!
+                                self.showMenu = false
+                            }) {
+                                Text("\(planId)")
+                            }
+                        }
+                    }.frame(minWidth: 0, maxWidth: .infinity)
+                    .frame(height: 16)
+                    .padding()
+                    .foregroundColor(.white)
+                    .background(Color(red: 43/255, green: 185/255, blue: 222/255))
+                    .cornerRadius(50)
+                    NavigationLink(destination: NewPlanView(showMenu: $showMenu, planIndex: $planIndex)) {
                         MenuButton(text: "create a new plan")
                     }
                 }
@@ -177,9 +189,10 @@ struct MenuView_Previews: PreviewProvider {
     struct PreviewWrapper: View {
         @State var showMenu = true
         @State var dayIndex = 0
+        @State var planIndex = 0
 
         var body: some View{
-            MenuView(planId: "", users: ["Candy", "Bob", "Alice"], destinations: [[], []], showMenu: $showMenu)
+            MenuView(planId:"", users: ["Candy", "Bob", "Alice"], destinations: [[], []], showMenu: $showMenu, planIndex: $planIndex)
         }
     }
 }

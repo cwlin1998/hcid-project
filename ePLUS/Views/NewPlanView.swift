@@ -62,6 +62,45 @@ struct CustomStepper : View {
         generator.impactOccurred()
     }
 }
+
+struct CreatePlanButton: View {
+    @EnvironmentObject var userData: UserData
+    
+    @State var error = false
+    @Binding var showMenu: Bool
+    @Binding var planIndex: Int
+    
+    var body : some View{
+        Button(action: {
+            self.addPlan()
+            self.planIndex = userData.currentUser.plans.count
+            self.showMenu = false
+        }) {
+            Text("Create")
+                .font(.system(size: 28, weight: .regular))
+                .frame(minWidth: 0, maxWidth: .infinity)
+                .frame(height: 20)
+                .padding()
+                .foregroundColor(.white)
+                .background(Color(red: 43/255, green: 185/255, blue: 222/255))
+                .cornerRadius(15)
+                .navigationBarHidden(true)
+        }
+    }
+    
+    func addPlan() {
+        API().addPlan(userAccount: userData.currentUser.account) { result in
+            switch result {
+            case .success:
+                break
+            case .failure:
+                self.error = true
+            }
+        }
+    }
+    
+}
+
 struct NewPlanView: View {
     @Environment(\.presentationMode) var presentationMode
     @EnvironmentObject var userData: UserData
@@ -70,6 +109,8 @@ struct NewPlanView: View {
     var havePlan = true
     @State var nameText: String = "Plan name"
     @State var day: Int = 3
+    @Binding var showMenu: Bool
+    @Binding var planIndex: Int
     
     var dayText: Binding<String> {
         .init(get: {
@@ -163,20 +204,7 @@ struct NewPlanView: View {
                             .cornerRadius(15)
                     }
                     
-                    Button(action: {
-                        self.addPlan()
-                        self.presentationMode.wrappedValue.dismiss()
-                    }) {
-                        Text("Create")
-                            .font(.system(size: 28, weight: .regular))
-                            .frame(minWidth: 0, maxWidth: .infinity)
-                            .frame(height: 20)
-                            .padding()
-                            .foregroundColor(.white)
-                            .background(Color(red: 43/255, green: 185/255, blue: 222/255))
-                            .cornerRadius(15)
-                            .navigationBarHidden(true)
-                    }
+                    CreatePlanButton(showMenu: $showMenu, planIndex: $planIndex)
                 }
             }
             Spacer()
@@ -186,20 +214,12 @@ struct NewPlanView: View {
         .navigationBarHidden(true)
     }
     
-    func addPlan() {
-        API().addPlan(userAccount: userData.currentUser.account) { result in
-            switch result {
-            case .success:
-                break
-            case .failure:
-                self.error = true
-            }
-        }
-    }
 }
 
+/*
 struct NewPlanView_Previews: PreviewProvider {
     static var previews: some View {
-        NewPlanView()
+        NewPlanView(showMenu: .constant(false))
     }
 }
+ */

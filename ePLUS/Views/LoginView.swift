@@ -22,7 +22,7 @@ struct LoginView: View {
     var body: some View {
         NavigationView() {
             VStack() {
-                Text("Name")
+                Text("Trip Together")
                     .font(.largeTitle)
                     .shadow(radius: 10.0, x: 20, y: 10)
                 Spacer()
@@ -48,7 +48,7 @@ struct LoginView: View {
                         .shadow(radius: 5.0, x: 10, y: 5)
                     
                     NavigationLink(
-                        destination: MainView(),
+                        destination: MainView(account: self.account),
                         isActive: self.$isLoginValid,
                         label: {
                             Text("Sign In")
@@ -65,7 +65,7 @@ struct LoginView: View {
                                         isLoginValid = true
                                     }
                                     if isLoginValid {
-                                        userData.currentUser = User(account: self.account, password: self.password, nickname: self.account, plans: [], comments: [])
+//                                        userData.currentUser = User(account: self.account, password: self.password, nickname: self.account, plans: [], comments: [])
                                         self.isLoginValid = true //trigger NavigationLink
                                     } else {
                                         self.shouldShowLoginAlert = true //trigger Alert

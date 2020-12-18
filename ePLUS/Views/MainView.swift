@@ -19,6 +19,7 @@ struct MainView: View {
     @State var error = false
     @State var showMenu = false
     @State var havePlan = true
+    @State var account: String
     @State var plans: [String]?
     @State var plan: Plan?
     @State var destinations: [[Destination]]?
@@ -38,7 +39,7 @@ struct MainView: View {
                 Text("Error. Doh!")
             }
             if (!havePlan) {
-                NavigationLink(destination: NewPlanView(havePlan: self.havePlan)) {
+                NavigationLink(destination: NewPlanView(havePlan: false, showMenu: $showMenu, planIndex: $planIndex)) {
                     VStack {
                         Text("You got no plan.")
                         MenuButton(text: "create a new plan")
@@ -48,14 +49,6 @@ struct MainView: View {
             if (plan != nil && destinations != nil) {
                 GeometryReader { g in
                     ZStack(alignment: .leading) {
-                        if (showMenu) {
-                            MenuView(
-                                planId: self.plan!.id,
-                                users: self.plan!.users,
-                                destinations: self.destinations!,
-                                showMenu: self.$showMenu
-                            ).frame(width: originalOffset)
-                        }
                         SwitcherView(
                             name: self.plan!.id,
                             destinations: self.destinations!,
@@ -66,6 +59,15 @@ struct MainView: View {
                         )
                         .frame(width: g.frame(in: .global).width)
                         .offset(x: self.showMenu ? self.offset: 0)
+                        if (showMenu) {
+                            MenuView(
+                                planId: self.plan!.id,
+                                users: self.plan!.users,
+                                destinations: self.destinations!,
+                                showMenu: self.$showMenu,
+                                planIndex: $planIndex
+                            ).frame(width: originalOffset)
+                        }
                     }
                     .gesture(
                         DragGesture()
@@ -97,9 +99,8 @@ struct MainView: View {
         let group = DispatchGroup()
         
         group.enter()
-        print(userData.currentUser.account)
         
-        API().getUser(userAccount: userData.currentUser.account) { result in
+        API().getUser(userAccount: self.account) { result in
             
             switch result {
             case .success(let user):
@@ -135,11 +136,12 @@ struct MainView: View {
         }
         
         group.notify(queue: .main) {
-            if (destinations == nil) {
+            if (self.plans!.count == 0) {
                 self.havePlan = false
             } else if (destinations != self.destinations) {
                 self.destinations = destinations
             }
+            userData.currentUser = User(account: self.account, password: self.account, nickname: self.account, plans:self.plans!, comments: [])
             self.loading = false
         }
     }
@@ -184,7 +186,7 @@ struct MainView: View {
                             ratings += Float(comment.rating)
                         case .failure:
                             self.error = true
-                            print("ERROR: get comment")
+//                            print("ERROR: get comment")
                         }
                         group.leave()
                     }
@@ -212,6 +214,6 @@ struct MainView: View {
 
 struct MainView_Previews: PreviewProvider {
     static var previews: some View {
-        MainView()
+        MainView(account: "guest")
     }
 }

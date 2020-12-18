@@ -102,7 +102,7 @@ struct DayView: View {
                     }
                 }.frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
                 .padding(.horizontal, 36)
-                .offset(y: 16)  // space with plan img
+                .padding(.top, 16)  // space with plan img
             }.background(Color(UIColor.secondarySystemBackground))
         }
     }
@@ -190,16 +190,19 @@ struct ListView: View {
     let name: String
     let destinations: [[Destination]]
     let users: [String]
-    @State var uiImage: UIImage = UIImage(named: "zuccottiPark")!
 
     var body: some View {
         ZStack(alignment: .top) {
             Color(UIColor.secondarySystemBackground).ignoresSafeArea()
-            RemoteImage(url: "https://picsum.photos/800/450/?blur", width: Float(UIScreen.main.bounds.size.width), height: Float(UIScreen.main.bounds.size.width/16*9), cornerRadius: 0)
+            utils().getPlanImage()
+                .resizable()
+                .scaledToFill()
+                .frame(width: UIScreen.main.bounds.size.width, height: UIScreen.main.bounds.size.width/16*9)
+//            RemoteImage(url: "https://picsum.photos/800/450/?blur", width: Float(UIScreen.main.bounds.size.width), height: Float(UIScreen.main.bounds.size.width/16*9), cornerRadius: 0)
             Text(name).font(.title).fontWeight(.bold).offset(y: 16)
             VStack(alignment: .center) {
                 DaysView(planId: planId, destinations: destinations, users: users)
-            }.offset(y: UIScreen.main.bounds.size.width/16*6)
+            }.padding(.top, UIScreen.main.bounds.size.width/16*6)
         }.ignoresSafeArea(edges:.bottom)
     }
 }

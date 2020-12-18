@@ -8,12 +8,12 @@ struct MapView: View {
     
 //    @EnvironmentObject var viewRouter: ViewRouter
     let destinations: [[Destination]]
-    let dayIndex: Int
+    @Binding var dayIndex: Int
     @State var isactive: [Bool]
-    init(destinations: [[Destination]],dayIndex: Int){
-        self.dayIndex = dayIndex
+    init(destinations: [[Destination]],dayIndex: Binding<Int>){
+        self._dayIndex = dayIndex
         self.destinations = destinations
-        self._isactive = State(initialValue: [Bool](repeating: false, count: destinations[dayIndex].count))
+        self._isactive = State(initialValue: [Bool](repeating: false, count: destinations[dayIndex.wrappedValue].count))
         
 
     }

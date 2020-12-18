@@ -20,9 +20,15 @@ struct utils{
         let uiImage = (UIImage(named: usernickname) ?? UIImage(systemName: "\(firstcharacter).circle.fill")?.withTintColor(.purple, renderingMode: .alwaysTemplate))!
         return Image(uiImage: uiImage)
     }
-    func getPlanImage(planname: String) -> Image{
-        let uiImage = (UIImage(named: planname) ?? UIImage(systemName: "photo")?.withTintColor(.purple, renderingMode: .alwaysTemplate))!
+    func getPlanImage() -> Image{
+        let num = Int.random(in: 0...5)
+        let imgname = "randomBg\(num)"
+        let uiImage = (UIImage(named: imgname) ?? UIImage(systemName: "photo")?.withTintColor(.purple, renderingMode: .alwaysTemplate))!
         return Image(uiImage: uiImage)
+    }
+    func getAllUsers()-> [String]{
+        // here are all the users you create
+        return ["guest", "a", "b", "c", "d"]
     }
 }
 

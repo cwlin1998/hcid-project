@@ -111,7 +111,7 @@ struct InviteView: View {
 
         var inviteList: [User] = []
         // please revise all the users you create
-        for user in ["guest","a", "b", "c", "d"] {
+        for user in utils().getAllUsers() {
             group.enter()
             API().getUser(userAccount: user) { result in
                 switch result {

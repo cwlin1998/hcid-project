@@ -60,6 +60,7 @@ struct LoginView: View {
                                 .cornerRadius(15.0)
                                 .shadow(radius: 10.0, x: 20, y: 10)
                                 .onTapGesture {
+                                    print("tap login!")
                                     if verifyUser(account: self.account, password: self.password) {
                                         isLoginValid = true
                                     }
@@ -89,9 +90,8 @@ struct LoginView: View {
         let group = DispatchGroup()
         
         // please revise all the users you create
-        let account: [String] = ["guest", "a", "b", "c", "d"]
         
-        for user in account {
+        for user in utils().getAllUsers() {
             group.enter()
             API().getUser(userAccount: user) { result in
                 switch result {

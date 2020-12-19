@@ -96,7 +96,6 @@ struct DestinationView: View {
         var usercommentDict = [String: Comment]()
         
         for userAccount in self.users {
-            print(userAccount)
             group.enter()
             API().getComment(userAccount: userAccount, locationId: self.destination.id) { result in
                 switch result {
@@ -115,7 +114,6 @@ struct DestinationView: View {
         
         
         group.notify(queue: .main) {
-            print(usercommentDict as Any)
             self.usercommentDict = usercommentDict
             self.loading = false
         }

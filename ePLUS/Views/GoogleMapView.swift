@@ -11,7 +11,7 @@ struct markerInfoWindow: View {
             ZStack {
                 Image("Tag description").resizable().frame(width: 320, height: 150)
                 HStack {
-                    Text(name).font(.title3)
+                    Text(name).font(.title3).foregroundColor(Color(UIColor.systemIndigo))
                     Text(stars).foregroundColor(Color.red).font(.title2)
                     Image("heartfill").resizable().frame(width: 20, height: 20)
                 }.offset(y: -18)

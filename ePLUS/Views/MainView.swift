@@ -182,14 +182,15 @@ struct MainView: View {
                             comments[userAccount] = comment.content
                             ratings += Float(comment.rating)
                         case .failure:
-                            self.error = true
+                            break
+//                            self.error = true
                         }
                         group.leave()
                     }
                     group.wait()
                 }
                 let destination = Destination(id: id, img: img, name: name, address: address, cooridinate: coordinate,
-                                              comments: comments, rating: ratings / Float(self.plan!.users.count))
+                                              comments: comments, rating: ratings / Float(comments.count))
                 destinations[dayIndex].append(destination)
             }
         }

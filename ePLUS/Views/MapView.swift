@@ -10,11 +10,12 @@ struct MapView: View {
     let destinations: [[Destination]]
     @Binding var dayIndex: Int
     @State var isactive: [Bool]
-    init(destinations: [[Destination]],dayIndex: Binding<Int>){
+    let users: [String]
+    init(destinations: [[Destination]],dayIndex: Binding<Int>, users: [String]){
         self._dayIndex = dayIndex
         self.destinations = destinations
         self._isactive = State(initialValue: [Bool](repeating: false, count: destinations[dayIndex.wrappedValue].count))
-        
+        self.users = users
 
     }
     
@@ -28,7 +29,7 @@ struct MapView: View {
         //
         ForEach(destinations[dayIndex].indices) {
             (index) in
-            NavigationLink("", destination: DestinationView(destination: destinations[dayIndex][index],users: ["guest"]), isActive: $isactive[index])
+            NavigationLink("", destination: DestinationView(destination: destinations[dayIndex][index],users: self.users), isActive: $isactive[index])
             
         }
   

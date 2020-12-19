@@ -50,7 +50,7 @@ struct MainView: View {
                 GeometryReader { g in
                     ZStack(alignment: .leading) {
                         SwitcherView(
-                            name: self.plan!.id,
+                            name: self.plan!.name,
                             destinations: self.destinations!,
                             users: self.plan!.users,
                             planId: self.plan!.id,

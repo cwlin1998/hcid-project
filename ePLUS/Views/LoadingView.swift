@@ -23,7 +23,7 @@ struct LoadingView: View {
                    .frame(width: size, height: size)
                    .foregroundColor(Color(UIColor.systemIndigo))
             Text("Loading").font(.title).fontWeight(.bold).foregroundColor(Color(UIColor.systemIndigo))
-           }
+           }.ignoresSafeArea(edges:.all)
     }
 }
 

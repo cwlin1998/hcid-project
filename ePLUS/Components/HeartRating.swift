@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct HeartRating: View {
+    @Environment(\.colorScheme) var colorScheme
     let heartSize: CGFloat = 20
     @Binding var rating: Float
     @State var status: [String] = ["hearthollow", "hearthollow", "hearthollow", "hearthollow", "hearthollow"]
@@ -17,7 +18,7 @@ struct HeartRating: View {
         // Heart rating
         HStack(spacing: 12){
             ForEach(self.status.indices) { i in
-                Image(self.status[i])
+                Image(colorScheme == .dark ? "dark"+self.status[i] : self.status[i])
                     .resizable()
                     .scaledToFit()
                     .frame(width: heartSize, height: heartSize)

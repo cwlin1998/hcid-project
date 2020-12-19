@@ -17,7 +17,6 @@ struct LoginView: View {
     
     @State private var isLoginValid: Bool = false
     @State private var shouldShowLoginAlert: Bool = false
-    @State var userDict: [String: String] = [:]
     
     var body: some View {
         NavigationView() {
@@ -76,7 +75,6 @@ struct LoginView: View {
                 
                 Spacer()
             }
-            .onAppear(perform: fetchAllUser)
         }
         .background(Color(UIColor.secondarySystemBackground).edgesIgnoringSafeArea(.all))
         .navigationBarHidden(true)
@@ -85,37 +83,25 @@ struct LoginView: View {
         }
     }
     
-    
-    func fetchAllUser() {
+    func verifyUser(account: String, password: String) -> Bool {
         let group = DispatchGroup()
         
-        // please revise all the users you create
-        
-        for user in utils().getAllUsers() {
-            group.enter()
-            API().getUser(userAccount: user) { result in
-                switch result {
-                case .success(let user):
-                    self.userDict[user.account] = user.password
-                case .failure:
-                    print()
-                }
-                group.leave()
+        group.enter()
+        var fetchedPassword: String? = nil
+        API().getUser(userAccount: account) { result in
+            switch result {
+            case .success(let user):
+                print ("success")
+                fetchedPassword = user.password
+            case .failure:
+                print ("failure")
+                break
             }
-            group.wait()
+            group.leave()
         }
+        group.wait()
         
-        group.notify(queue: .main) {
-            print("done!")
-        }
-    }
-    
-    
-    func verifyUser(account: String, password: String) -> Bool {
-        if self.userDict[account] == nil {
-            return false
-        }
-        return self.userDict[account] == password
+        return password == fetchedPassword
     }
     
 }

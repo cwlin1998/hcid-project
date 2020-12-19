@@ -30,6 +30,8 @@
 		827A37CF258938C800F3DC0D /* GooglePlaceImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 827A37CD258938C800F3DC0D /* GooglePlaceImage.swift */; };
 		827A37D0258938C800F3DC0D /* RemoteImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 827A37CE258938C800F3DC0D /* RemoteImage.swift */; };
 		827A381D258A4B2500F3DC0D /* AddDesCommentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 827A381C258A4B2500F3DC0D /* AddDesCommentView.swift */; };
+		827A3840258DF49E00F3DC0D /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 827A383F258DF49E00F3DC0D /* LoginView.swift */; };
+		827A3845258DF4FD00F3DC0D /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 827A3844258DF4FD00F3DC0D /* MainView.swift */; };
 		82CD08EA256E5F9100F21693 /* ePLUSApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CD08E9256E5F9100F21693 /* ePLUSApp.swift */; };
 		82CD08EC256E5F9100F21693 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CD08EB256E5F9100F21693 /* ContentView.swift */; };
 		82CD08EE256E5F9400F21693 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 82CD08ED256E5F9400F21693 /* Assets.xcassets */; };
@@ -80,6 +82,8 @@
 		827A37CD258938C800F3DC0D /* GooglePlaceImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GooglePlaceImage.swift; sourceTree = "<group>"; };
 		827A37CE258938C800F3DC0D /* RemoteImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RemoteImage.swift; sourceTree = "<group>"; };
 		827A381C258A4B2500F3DC0D /* AddDesCommentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddDesCommentView.swift; sourceTree = "<group>"; };
+		827A383F258DF49E00F3DC0D /* LoginView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
+		827A3844258DF4FD00F3DC0D /* MainView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		82CD08E6256E5F9100F21693 /* ePLUS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ePLUS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		82CD08E9256E5F9100F21693 /* ePLUSApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ePLUSApp.swift; sourceTree = "<group>"; };
 		82CD08EB256E5F9100F21693 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -169,6 +173,8 @@
 		824387A22582810E00DC6664 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				827A3844258DF4FD00F3DC0D /* MainView.swift */,
+				827A383F258DF49E00F3DC0D /* LoginView.swift */,
 				827A381C258A4B2500F3DC0D /* AddDesCommentView.swift */,
 				F30B35F6258A70B700D05E3E /* GoogleMapView.swift */,
 				F30B35F7258A70B700D05E3E /* MapView.swift */,
@@ -432,6 +438,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				824FAE0D2575319C005C62C4 /* CommentView.swift in Sources */,
+				827A3845258DF4FD00F3DC0D /* MainView.swift in Sources */,
 				8243879B25827D5D00DC6664 /* TextArea.swift in Sources */,
 				824FAE0525752F7D005C62C4 /* Observables.swift in Sources */,
 				827A381D258A4B2500F3DC0D /* AddDesCommentView.swift in Sources */,
@@ -452,6 +459,7 @@
 				824387AD258281B700DC6664 /* ReturnButton.swift in Sources */,
 				827A37D0258938C800F3DC0D /* RemoteImage.swift in Sources */,
 				825151E62587552D00E4D9FF /* NewPlanView.swift in Sources */,
+				827A3840258DF49E00F3DC0D /* LoginView.swift in Sources */,
 				825F2BA1257FA0E20001D37C /* GoooglePlaceStructure.swift in Sources */,
 				825151E12584B97700E4D9FF /* SwitcherView.swift in Sources */,
 				824387B2258283C500DC6664 /* RoundedRectButton.swift in Sources */,

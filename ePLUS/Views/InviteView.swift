@@ -63,12 +63,11 @@ struct InviteBlock: View {
 
 struct InviteView: View {
     @Environment(\.presentationMode) var presentationMode
-    
-    let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
-    
-    @State var loading = true
+        
+    @State var loading = false
     @State var error = false
     let planId: String
+    @State var query = ""
     @State var inviteList: [User]?
         
     var body: some View {
@@ -85,42 +84,47 @@ struct InviteView: View {
                 }
                 Text("Invite").font(.title).fontWeight(.bold)
             }
+            TextField("search", text: $query)
+                .onChange(of: query) { _ in
+                    self.fetchInviteList(query: query)
+                }
             ScrollView{
                 VStack (spacing: 12){
+                    if (loading) {
+                        LoadingView()
+                    }
                     if (inviteList != nil) {
-                        ForEach(inviteList!, id: \.self.account) { person in
-                            InviteBlock(planId: self.planId, user: person)
+                        ForEach(inviteList!, id: \.self.account) { user in
+                            InviteBlock(planId: self.planId, user: user)
                         }
                     }
                 }
             }
             Spacer()
         }
-        .onAppear(perform: fetchInviteList)
-        .onReceive(timer) { _ in
-            self.fetchInviteList()
-        }
         .padding(.horizontal, 20)
         .background(Color(UIColor.secondarySystemBackground).ignoresSafeArea())
         .navigationBarHidden(true)
     }
     
-    
-    func fetchInviteList() {
+    func fetchInviteList(query: String) {
+        self.loading = true
+
         let group = DispatchGroup()
 
         var inviteList: [User] = []
-        // please revise all the users you create
-        for user in utils().getAllUsers() {
+        if (query != "") {
             group.enter()
-            API().getUser(userAccount: user) { result in
+            API().getUsers(query: query) { result in
                 switch result {
-                case .success(let user):
-                    if !user.plans.contains(self.planId) {
-                        inviteList.append(user)
+                case .success(let users):
+                    for user in users {
+                        if (!user.plans.contains(self.planId)) {
+                            inviteList.append(user)
+                        }
                     }
                 case .failure:
-                    print("fetch user in invite failure")
+                    break
                 }
                 group.leave()
             }
@@ -139,9 +143,9 @@ struct InviteView: View {
 
 struct InviteView_Previews: PreviewProvider {
     static var previews: some View {
-        InviteView(planId: "", inviteList: [User(account: "avocado", password: "", nickname: "zuccottiPark", plans: [], comments: []),
-                                                 User(account: "pizza", password: "", nickname: "Pizza", plans: [], comments: []),
-                                                 User(account: "rocket", password: "", nickname: "Rocket", plans: [], comments: [])
+        InviteView(planId: "", inviteList: [User(account: "avocado", password: "", nickname: "zuccottiPark", plans: [], comments: [:]),
+                                            User(account: "pizza", password: "", nickname: "Pizza", plans: [], comments: [:]),
+                                            User(account: "rocket", password: "", nickname: "Rocket", plans: [], comments: [:])
         ]
         )
     }

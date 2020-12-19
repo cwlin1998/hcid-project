@@ -10,6 +10,7 @@ import GooglePlaces
 
 struct API {
     let hostURL = "http://localhost:8000"
+//    let hostURL = "https://hcid-project-backend.herokuapp.com"
     
     // PLAN API
     func addPlan(userAccount: String, planName: String, handler: @escaping (Result<EmptyJson, Error>) -> Void) {
@@ -375,8 +376,37 @@ struct API {
         task.resume()
     }
     
-    
     // USER API
+    func getUsers(query: String, handler: @escaping (Result<[User], Error>) -> Void) {
+        guard let url = URL(string: hostURL + "/users?q=" + query) else {
+            print("error...")
+            return
+        }
+        
+        let task = URLSession.shared.dataTask(with: url) {(data, response, error) in
+
+            if let error = error {
+                handler(.failure(error))
+            } else {
+
+                do {
+                    let encoder = JSONDecoder()
+
+                    // convert any snake_case to camelCase
+                    encoder.keyDecodingStrategy = .convertFromSnakeCase
+                    let data = data ?? Data()
+                    let users = try encoder.decode([User].self, from: data)
+                    handler(.success(users))
+                } catch {
+                    handler(.failure(error))
+                }
+
+            }
+
+        }
+
+        task.resume()
+    }
     // not confirmed
     func addUser(user: User, handler: @escaping (Result<EmptyJson, Error>) -> Void) {
         guard let url = URL(string: hostURL + "/users") else {

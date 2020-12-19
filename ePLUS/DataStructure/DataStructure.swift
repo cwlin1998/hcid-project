@@ -50,7 +50,7 @@ struct User: Codable, Equatable {
     let password: String
     let nickname: String
     let plans: [String]
-    let comments: [Comment]
+    let comments: [String: Comment]
     
     static func == (lhs: User, rhs: User) -> Bool {
         return lhs.account == rhs.account

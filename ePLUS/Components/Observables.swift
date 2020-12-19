@@ -16,5 +16,5 @@ class DayRouter: ObservableObject {
 }
 
 class UserData: ObservableObject {
-    @Published var currentUser: User = User(account: "guest", password: "guest", nickname: "guest", plans: [], comments: [])
+    @Published var currentUser: User = User(account: "guest", password: "guest", nickname: "guest", plans: [], comments: [:])
 }

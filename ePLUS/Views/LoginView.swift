@@ -59,7 +59,6 @@ struct LoginView: View {
                                 .cornerRadius(15.0)
                                 .shadow(radius: 10.0, x: 20, y: 10)
                                 .onTapGesture {
-                                    print("tap login!")
                                     if verifyUser(account: self.account, password: self.password) {
                                         isLoginValid = true
                                     }

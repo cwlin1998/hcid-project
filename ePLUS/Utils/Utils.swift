@@ -26,10 +26,6 @@ struct utils{
         let uiImage = (UIImage(named: imgname) ?? UIImage(systemName: "photo")?.withTintColor(.purple, renderingMode: .alwaysTemplate))!
         return Image(uiImage: uiImage)
     }
-    func getAllUsers()-> [String]{
-        // here are all the users you create
-        return ["guest", "a", "b", "c", "d"]
-    }
 }
 
 extension UIImage {

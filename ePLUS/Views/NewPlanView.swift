@@ -66,6 +66,7 @@ struct CustomStepper : View {
 struct CreatePlanButton: View {
     @EnvironmentObject var userData: UserData
     
+    let planName: String
     @State var error = false
     @Binding var showMenu: Bool
     @Binding var planIndex: Int
@@ -89,7 +90,7 @@ struct CreatePlanButton: View {
     }
     
     func addPlan() {
-        API().addPlan(userAccount: userData.currentUser.account) { result in
+        API().addPlan(userAccount: userData.currentUser.account, planName: planName) { result in
             switch result {
             case .success:
                 break
@@ -107,7 +108,7 @@ struct NewPlanView: View {
     
     @State var error = false
     var havePlan = true
-    @State var nameText: String = "Plan name"
+    @State var nameText: String = ""
     @State var day: Int = 3
     @Binding var showMenu: Bool
     @Binding var planIndex: Int
@@ -139,25 +140,8 @@ struct NewPlanView: View {
                 HStack (alignment: .bottom){
                     Text("Name:").font(.title).fontWeight(.bold)
                     TextField("Plan name", text: self.$nameText)
-                        .foregroundColor(self.nameText == "Plan name" ? Color(UIColor.placeholderText) : .primary)
                         .font(.system(size: 28, weight: .regular))
                         .frame(minWidth: 0, maxWidth: .infinity)
-                        .lineLimit(1)
-                        .onAppear {
-                            self.nameText = "Plan name"
-                            // remove the placeholder text when keyboard appears
-                            NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillShowNotification, object: nil, queue: .main) { (noti) in
-                                withAnimation {
-                                        self.nameText = self.nameText == "Plan name" ? "" : self.nameText
-                                }
-                            }
-                            // put back the placeholder text if the user dismisses the keyboard without adding any text
-                            NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillHideNotification, object: nil, queue: .main) { (noti) in
-                                withAnimation {
-                                        self.nameText = self.nameText == "" ? "Plan name" : self.nameText
-                                }
-                            }
-                        }
                     Spacer()
                 }.frame(height: 50)
                 
@@ -194,7 +178,7 @@ struct NewPlanView: View {
                         self.presentationMode.wrappedValue.dismiss()
                         // TODO: action sheet
                     }) {
-                        Text("cancel")
+                        Text("Cancel")
                             .font(.system(size: 28, weight: .regular))
                             .frame(minWidth: 0, maxWidth: .infinity)
                             .frame(height: 20)
@@ -204,7 +188,7 @@ struct NewPlanView: View {
                             .cornerRadius(15)
                     }
                     
-                    CreatePlanButton(showMenu: $showMenu, planIndex: $planIndex)
+                    CreatePlanButton(planName: nameText, showMenu: $showMenu, planIndex: $planIndex)
                 }
             }
             Spacer()

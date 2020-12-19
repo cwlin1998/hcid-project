@@ -186,7 +186,6 @@ struct MainView: View {
                             ratings += Float(comment.rating)
                         case .failure:
                             self.error = true
-//                            print("ERROR: get comment")
                         }
                         group.leave()
                     }
@@ -198,17 +197,6 @@ struct MainView: View {
             }
         }
         return destinations
-    }
-    
-    func addPlan() {
-        API().addPlan(userAccount: userData.currentUser.account) { result in
-            switch result {
-            case .success:
-                break
-            case .failure:
-                self.error = true
-            }
-        }
     }
 }
 

@@ -13,6 +13,7 @@ enum Page {
 struct Plan: Codable, Identifiable {
     let id: String
     let img: String
+    let name: String
     let destinations: [[String]]
     let users: [String]
 }

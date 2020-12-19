@@ -12,7 +12,7 @@ struct API {
     let hostURL = "http://localhost:8000"
     
     // PLAN API
-    func addPlan(userAccount: String, handler: @escaping (Result<EmptyJson, Error>) -> Void) {
+    func addPlan(userAccount: String, planName: String, handler: @escaping (Result<EmptyJson, Error>) -> Void) {
         guard let url = URL(string: hostURL + "/plans") else {
             print("error...")
             return
@@ -20,7 +20,7 @@ struct API {
         
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
-        let requestBody: [String: Any] = ["user": userAccount]
+        let requestBody: [String: Any] = ["user": userAccount, "name": planName]
         let jsonRequestBody = try? JSONSerialization.data(withJSONObject: requestBody)
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
         request.addValue("application/json", forHTTPHeaderField: "Accept")

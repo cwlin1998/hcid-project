@@ -20,7 +20,7 @@ struct DestinationView_Previews: PreviewProvider {
     static var destination = Destination(
         id: "", img: "", name: "Test", address: "",
         cooridinate: Coordinate(latitude: 0.0, longitude: 0.0),
-        comments: [], rating: 2
+        comments: [:], rating: 2
     )
     static var previews: some View {
         DestinationView(destination: destination, users: [])

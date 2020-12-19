@@ -172,7 +172,7 @@ struct AddDesCommentView: View {
                         latitude: location.result.geometry.location.latitude,
                         longitude: location.result.geometry.location.longitude
                     ),
-                    comments: [],
+                    comments: [:],
                     rating: 4
                 )
                 self.destination = destination

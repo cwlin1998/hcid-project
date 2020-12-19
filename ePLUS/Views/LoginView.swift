@@ -36,13 +36,11 @@ struct LoginView: View {
                     TextField("Account", text: self.$account)
                         .autocapitalization(.none)
                         .padding()
-                        .background(Color.white)
                         .cornerRadius(20.0)
                         .shadow(radius: 5.0, x: 10, y: 5)
                     
                     SecureField("Password", text: self.$password)
                         .padding()
-                        .background(Color.white)
                         .cornerRadius(20.0)
                         .shadow(radius: 5.0, x: 10, y: 5)
                     

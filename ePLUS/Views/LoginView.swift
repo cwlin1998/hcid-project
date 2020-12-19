@@ -64,7 +64,6 @@ struct LoginView: View {
                                         isLoginValid = true
                                     }
                                     if isLoginValid {
-//                                        userData.currentUser = User(account: self.account, password: self.password, nickname: self.account, plans: [], comments: [])
                                         self.isLoginValid = true //trigger NavigationLink
                                     } else {
                                         self.shouldShowLoginAlert = true //trigger Alert
@@ -91,10 +90,8 @@ struct LoginView: View {
         API().getUser(userAccount: account) { result in
             switch result {
             case .success(let user):
-                print ("success")
                 fetchedPassword = user.password
             case .failure:
-                print ("failure")
                 break
             }
             group.leave()

@@ -107,7 +107,6 @@ struct MainView: View {
                 self.plans = user.plans
             case .failure:
                 self.error = true
-                print("ERROR: get user")
             }
             group.leave()
         }
@@ -125,7 +124,6 @@ struct MainView: View {
                     self.plan = plan
                 case .failure:
                     self.error = true
-                    print("ERROR: get plan")
                 }
                 group.leave()
             }
@@ -170,19 +168,18 @@ struct MainView: View {
                         )
                     case .failure:
                         self.error = true
-                        print("ERROR: get destination")
                     }
                     group.leave()
                 }
                 group.wait()
-                var comments: [String] = []
+                var comments: [String: String] = [:]
                 var ratings: Float = 0
                 for userAccount in self.plan!.users {
                     group.enter()
                     API().getComment(userAccount: userAccount, locationId: locationId) { result in
                         switch result {
                         case .success(let comment):
-                            comments.append(comment.content)
+                            comments[userAccount] = comment.content
                             ratings += Float(comment.rating)
                         case .failure:
                             self.error = true

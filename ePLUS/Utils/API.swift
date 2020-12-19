@@ -117,6 +117,46 @@ struct API {
     }
     
     // not confirmed
+    func updatePlan(planId: String, plan: Plan, handler: @escaping (Result<EmptyJson, Error>) -> Void) {
+        guard let url = URL(string: hostURL + "/plans/" + planId) else {
+            print("error...")
+            return
+        }
+        
+        var request = URLRequest(url: url)
+        request.httpMethod = "PATCH"
+        
+        let jsonRequestBody = try? JSONEncoder().encode(plan)
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.addValue("application/json", forHTTPHeaderField: "Accept")
+        request.httpBody = jsonRequestBody
+        
+        let task = URLSession.shared.dataTask(with: request) {(data, response, error) in
+
+            if let error = error {
+                handler(.failure(error))
+            } else {
+
+                do {
+                    let encoder = JSONDecoder()
+
+                    // convert any snake_case to camelCase
+                    encoder.keyDecodingStrategy = .convertFromSnakeCase
+                    let data = data ?? Data()
+                    let emptyJson = try encoder.decode(EmptyJson.self, from: data)
+                    handler(.success(emptyJson))
+                } catch {
+                    handler(.failure(error))
+                }
+
+            }
+
+        }
+
+        task.resume()
+    }
+    
+    // not confirmed
     func deletePlan(planId: String, handler: @escaping (Result<EmptyJson, Error>) -> Void) {
         guard let url = URL(string: hostURL + "/plans/" + planId) else {
             print("error...")

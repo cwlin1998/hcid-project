@@ -119,6 +119,7 @@ struct DaysView: View {
     
     @State var originalOffset: CGFloat = 0
     @State var offset: CGFloat = 0
+    @Binding var showMenu: Bool
     
     var body: some View {
         GeometryReader { g in
@@ -129,6 +130,7 @@ struct DaysView: View {
                         destinations: destinations[dayIndex],
                         users: users
                     ).frame(width: g.frame(in: .global).width)
+                    .opacity((self.showMenu && dayIndex < dayRouter.dayIndex) ? 0 : 1)
                 }
             }
             .offset(x: self.offset)
@@ -192,6 +194,8 @@ struct ListView: View {
     let name: String
     let destinations: [[Destination]]
     let users: [String]
+    
+    @Binding var showMenu: Bool
 
     var body: some View {
         ZStack(alignment: .top) {
@@ -203,7 +207,7 @@ struct ListView: View {
 //            RemoteImage(url: "https://picsum.photos/800/450/?blur", width: Float(UIScreen.main.bounds.size.width), height: Float(UIScreen.main.bounds.size.width/16*9), cornerRadius: 0)
 //            Text(name).font(.title).fontWeight(.bold).foregroundColor(Color.black).offset(y: 16)
             VStack(alignment: .center) {
-                DaysView(planId: planId, destinations: destinations, users: users)
+                DaysView(planId: planId, destinations: destinations, users: users, showMenu: self.$showMenu)
             }.padding(.top, UIScreen.main.bounds.size.width/16*6)
         }.ignoresSafeArea(.all)
     }
@@ -226,7 +230,7 @@ struct ListView_Previews: PreviewProvider {
         @State var showMenu = false
 
         var body: some View{
-            ListView(planId: "", name: "", destinations: destinations, users: users)
+            ListView(planId: "", name: "", destinations: destinations, users: users, showMenu: .constant(false))
         }
     }
 }

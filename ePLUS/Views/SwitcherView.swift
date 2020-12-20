@@ -27,7 +27,7 @@ struct SwitcherView: View {
                 VStack {
                     switch viewRouter.currentPage {
                     case .list:
-                        ListView(planId: planId, name: name, destinations: destinations, users: users)
+                        ListView(planId: planId, name: name, destinations: destinations, users: users, showMenu: self.$showMenu)
                     case .map:
                         MapView(destinations: destinations,dayIndex:$dayRouter.dayIndex, users: users)
                     }

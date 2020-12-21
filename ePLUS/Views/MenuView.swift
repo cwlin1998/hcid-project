@@ -77,7 +77,8 @@ struct AddDayButton: View {
                 Text("Add a day")
                     .font(.system(size: 22, weight: .regular))
             }
-            .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: 16)
+            .frame(minWidth: 0, maxWidth: .infinity)
+            .frame(height: 16)
             .padding()
             .foregroundColor(.gray)
             .overlay(
@@ -113,6 +114,7 @@ struct MenuView: View {
     let destinations: [[Destination]]
     @Binding var showMenu: Bool
     @Binding var planIndex: Int
+    @State var planDict = [String: String]()
     
     var body: some View {
         NavigationView {
@@ -132,13 +134,18 @@ struct MenuView: View {
                 }
                 // Invite people
                 NavigationLink(destination: InviteView(planId: self.planId)) {
-                    Text("Invite people")
-                        .font(.system(size: 24, weight: .regular))
-                        .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: 24)
-                        .padding()
-                        .foregroundColor(.white)
-                        .background(colorScheme == .dark ? Color(UIColor.systemTeal): Color(UIColor.systemIndigo))
-                        .cornerRadius(50)
+                    HStack (spacing: 20) {
+                        Image(systemName: "person.fill.badge.plus")
+                            .font(.title)
+                        Text("Invite friends")
+                            .font(.system(size: 24, weight: .regular))
+                    }
+                    .frame(minWidth: 0, maxWidth: .infinity)
+                    .frame(height: 20)
+                    .padding()
+                    .foregroundColor(.white)
+                    .background(colorScheme == .dark ? Color(UIColor.systemTeal): Color(UIColor.systemIndigo))
+                    .cornerRadius(50)
                 }
                 // Days
                 ScrollView {
@@ -162,7 +169,8 @@ struct MenuView: View {
                                 self.planIndex = userData.currentUser.plans.firstIndex(of: planId)!
                                 self.showMenu = false
                             }) {
-                                Text("\(planId)")
+//                                Text("\(planId)")
+                                Text("\(self.planDict[planId]!)")
                             }
                         }
                     }.frame(minWidth: 0, maxWidth: .infinity)
@@ -183,11 +191,11 @@ struct MenuView: View {
                 Spacer()
             }
             .padding(.top, 80)
-            .padding(.horizontal, 48)
+            .padding(.horizontal, 36)
             .background(Color(UIColor.secondarySystemBackground).ignoresSafeArea())
             .navigationBarTitle("")
             .navigationBarHidden(true)
-        }
+        }.onAppear(perform: fetchPlans)
     }
     
     func addDay() {
@@ -198,6 +206,28 @@ struct MenuView: View {
                 break
             case .failure:
                 self.error = true
+            }
+        }
+    }
+    
+    func fetchPlans(){
+        let group = DispatchGroup()
+        
+        if (userData.currentUser.plans.count > 0) {
+            for i in 0..<userData.currentUser.plans.count{
+                group.enter()
+                
+                API().getPlan(planId: userData.currentUser.plans[i]) { result in
+                    switch result {
+                    case .success(let plan):
+                        self.planDict[plan.id] = plan.name
+                    case .failure:
+                        self.error = true
+                    }
+                    group.leave()
+                }
+                
+                group.wait()
             }
         }
     }

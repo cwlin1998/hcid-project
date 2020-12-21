@@ -126,14 +126,14 @@ struct NewPlanView: View {
     var body: some View {
         VStack(spacing: 24){
             ZStack {
-                HStack {
-                    ReturnButton(action: {
-                        self.presentationMode.wrappedValue.dismiss()
-                    }, size: 20)
-                    Spacer()
-                }
+//                HStack {
+//                    ReturnButton(action: {
+//                        self.presentationMode.wrappedValue.dismiss()
+//                    }, size: 20)
+//                    Spacer()
+//                }
                 HStack{
-                    if havePlan { Spacer() }
+//                    if havePlan { Spacer() }
                     Text("Create New Plan").font(.system(size: 24, weight: .bold))
                 }
             }
@@ -141,41 +141,32 @@ struct NewPlanView: View {
                 // Name
                 HStack (alignment: .bottom){
                     Text("Name:").font(.title).fontWeight(.bold)
-                    TextField("Plan name", text: self.$nameText)
-                        .font(.system(size: 28, weight: .regular))
-                        .frame(minWidth: 0, maxWidth: .infinity)
                     Spacer()
                 }.frame(height: 50)
                 
-                // Days
-                ZStack {
-                    HStack {
-                        Text("Days:").font(.title).fontWeight(.bold)
-                        Spacer()
-                    }
-                    HStack{
-                        Spacer()
-                        CustomStepper(value: self.$day, textColor: colorScheme == .dark ? Color(UIColor.systemTeal): Color(UIColor.systemIndigo), step: Int(1))
-                    }
+                HStack (alignment: .bottom){
+                    TextField("Plan name", text: self.$nameText)
+                        .font(.system(size: 28, weight: .regular))
+                        .frame(minWidth: 0, maxWidth: .infinity)
                 }.frame(height: 50)
                 
-                // Invite people
-                HStack (spacing: 20) {
-                    Image(systemName: "person.fill.badge.plus")
-                        .font(.title)
-                    Text("Invite people")
-                        .font(.system(size: 24, weight: .regular))
-                }
-                .frame(minWidth: 0, maxWidth: .infinity)
-                .frame(height: 20)
-                .padding()
-                .foregroundColor(.white)
-                .background(Color(UIColor.systemIndigo))
-                .cornerRadius(50)
+                // Days
+                HStack {
+                    Text("Days:").font(.title).fontWeight(.bold)
+                    Spacer()
+                }.frame(height: 50)
+                
+                HStack{
+                    CustomStepper(value: self.$day, textColor: colorScheme == .dark ? Color(UIColor.systemTeal): Color(UIColor.systemIndigo), step: Int(1))
+                    Spacer()
+                }.frame(height: 50)
+                
                 Spacer()
                 
                 // Button
-                HStack{
+                CreatePlanButton(planName: nameText, showMenu: $showMenu, planIndex: $planIndex)
+                
+                if havePlan{
                     Button(action:{
                         self.presentationMode.wrappedValue.dismiss()
                         // TODO: action sheet
@@ -189,9 +180,8 @@ struct NewPlanView: View {
                             .background(Color(.lightGray))
                             .cornerRadius(15)
                     }
-                    
-                    CreatePlanButton(planName: nameText, showMenu: $showMenu, planIndex: $planIndex)
                 }
+                
             }
             Spacer()
         }

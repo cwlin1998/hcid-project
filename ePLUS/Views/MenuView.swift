@@ -91,6 +91,7 @@ struct MenuView: View {
     @EnvironmentObject var dayRouter: DayRouter
     @EnvironmentObject var userData: UserData
     @Environment(\.colorScheme) var colorScheme
+    @Environment(\.presentationMode) var presentationMode
     
     let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
     
@@ -161,6 +162,11 @@ struct MenuView: View {
                     NavigationLink(destination: NewPlanView(showMenu: $showMenu, planIndex: $planIndex)) {
                         MenuButton(text: "create a new plan")
                     }
+                    Button(action: {
+                        presentationMode.wrappedValue.dismiss()
+                    }, label: {
+                        MenuButton(text: "Logout")
+                    })
                 }
                 Spacer()
             }

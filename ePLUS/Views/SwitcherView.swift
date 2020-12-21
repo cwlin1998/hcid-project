@@ -11,6 +11,7 @@ struct SwitcherView: View {
     @EnvironmentObject var viewRouter: ViewRouter
     @EnvironmentObject var dayRouter: DayRouter
     @EnvironmentObject var userData: UserData
+    @Environment(\.colorScheme) var colorScheme
     
     let name: String
     let destinations: [[Destination]]
@@ -26,34 +27,45 @@ struct SwitcherView: View {
                 VStack {
                     switch viewRouter.currentPage {
                     case .list:
-                        ListView(planId: planId, name: name, destinations: destinations, users: users)
+                        ListView(planId: planId, name: name, destinations: destinations, users: users, showMenu: self.$showMenu)
                     case .map:
                         MapView(destinations: destinations,dayIndex:$dayRouter.dayIndex, users: users)
                     }
                 }.disabled(self.showMenu ? true : false)
                 VStack(alignment: .trailing, spacing: 10) {
-                    HStack() {
+                    HStack(spacing: 12) {
                         Button(action: {
                             withAnimation {
                                self.showMenu.toggle()
                             }
                         }) {
-                            Image(systemName: self.showMenu ? "chevron.backward.circle.fill" : "line.horizontal.3")
+                            Image(systemName: self.showMenu ? "chevron.backward.square.fill" : "chevron.forward.square.fill")
                                 .resizable()
                                 .frame(width: 30, height: 30)
-                                .foregroundColor(Color(UIColor.systemIndigo))
+                                .foregroundColor(colorScheme == .dark ? Color(UIColor.systemTeal): Color(UIColor.systemIndigo))
                                 .imageScale(.large)
                         }
+                        Spacer()
+                        Text(name).font(.title).fontWeight(.bold).foregroundColor(Color.black)
                         Spacer()
                         Button(action: {
                             viewRouter.currentPage = (viewRouter.currentPage == .map) ? .list : .map
                         }, label: {
-                            (viewRouter.currentPage == .map) ? Text("LIST") : Text("Map")
+                            Image(systemName: (viewRouter.currentPage == .map) ? "list.dash": "map.fill")
+                                .resizable()
+                                .frame(width: 30, height: 30)
+                                .foregroundColor(colorScheme == .dark ? Color(UIColor.systemTeal): Color(UIColor.systemIndigo))
+                                .imageScale(.large)
                         })
                         NavigationLink(destination: AddDestinationView(planId: planId, dayIndex: dayRouter.dayIndex)) {
-                            Text("+")
+//                            Text("+")
+                            Image(systemName: "plus.app.fill")
+                                .resizable()
+                                .frame(width: 30, height: 30)
+                                .foregroundColor(colorScheme == .dark ? Color(UIColor.systemTeal): Color(UIColor.systemIndigo))
+                                .imageScale(.large)
                         }
-                    }
+                    }.padding(.horizontal, 8)
                     Spacer()
                 }.frame(minWidth: 0, maxWidth: .infinity, alignment: .trailing)
             }.ignoresSafeArea(edges:.bottom)

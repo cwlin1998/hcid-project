@@ -85,6 +85,7 @@ struct InviteView: View {
                 Text("Invite").font(.title).fontWeight(.bold)
             }
             TextField("search", text: $query)
+                .autocapitalization(.none)
                 .onChange(of: query) { _ in
                     self.fetchInviteList(query: query)
                 }
@@ -140,7 +141,7 @@ struct InviteView: View {
     }
     
 }
-
+/*
 struct InviteView_Previews: PreviewProvider {
     static var previews: some View {
         InviteView(planId: "", inviteList: [User(account: "avocado", password: "", nickname: "zuccottiPark", plans: [], comments: [:]),
@@ -150,3 +151,4 @@ struct InviteView_Previews: PreviewProvider {
         )
     }
 }
+*/

@@ -9,6 +9,7 @@ import SwiftUI
 
 struct DayBlock: View{
     @EnvironmentObject var dayRouter: DayRouter
+    @Environment(\.colorScheme) var colorScheme
     let day: Int
     @Binding var showMenu: Bool
 
@@ -23,7 +24,7 @@ struct DayBlock: View{
                 .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: 16)
                 .padding()
                 .background(Color(UIColor.tertiarySystemBackground))
-                .foregroundColor(Color(UIColor.systemIndigo))
+                .foregroundColor(colorScheme == .dark ? Color(UIColor.systemTeal): Color(UIColor.systemIndigo))
                 .opacity(0.8)
                 .cornerRadius(50)
         }
@@ -31,6 +32,7 @@ struct DayBlock: View{
 }
 
 struct MenuButton: View {
+    @Environment(\.colorScheme) var colorScheme
     let text: String
     var body: some View{
         HStack (spacing: 20){
@@ -41,7 +43,7 @@ struct MenuButton: View {
         .frame(height: 16)
         .padding()
         .foregroundColor(.white)
-        .background(Color(red: 43/255, green: 185/255, blue: 222/255))
+        .background(colorScheme == .dark ? Color(UIColor.systemTeal): Color(UIColor.systemIndigo))
         .cornerRadius(50)
     }
 }
@@ -88,6 +90,7 @@ struct AddDayButton: View {
 struct MenuView: View {
     @EnvironmentObject var dayRouter: DayRouter
     @EnvironmentObject var userData: UserData
+    @Environment(\.colorScheme) var colorScheme
     
     let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
     
@@ -109,7 +112,7 @@ struct MenuView: View {
                                 .resizable()
                                 .scaledToFit()
                                 .frame(width: 60, height: 60)
-                                .foregroundColor(Color(UIColor.systemIndigo))
+                                .foregroundColor(colorScheme == .dark ? Color(UIColor.systemTeal): Color(UIColor.systemIndigo))
                                 .clipShape(Circle())
                         }
                     }
@@ -121,7 +124,7 @@ struct MenuView: View {
                         .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: 24)
                         .padding()
                         .foregroundColor(.white)
-                        .background(Color(UIColor.systemIndigo))
+                        .background(colorScheme == .dark ? Color(UIColor.systemTeal): Color(UIColor.systemIndigo))
                         .cornerRadius(50)
                 }
                 // Days
@@ -153,7 +156,7 @@ struct MenuView: View {
                     .frame(height: 16)
                     .padding()
                     .foregroundColor(.white)
-                    .background(Color(red: 43/255, green: 185/255, blue: 222/255))
+                    .background(colorScheme == .dark ? Color(UIColor.systemTeal): Color(UIColor.systemIndigo))
                     .cornerRadius(50)
                     NavigationLink(destination: NewPlanView(showMenu: $showMenu, planIndex: $planIndex)) {
                         MenuButton(text: "create a new plan")

@@ -11,6 +11,7 @@ struct MapView: View {
     @Binding var dayIndex: Int
     @State var isactive: [Bool]
     let users: [String]
+    
     init(destinations: [[Destination]],dayIndex: Binding<Int>, users: [String]){
         self._dayIndex = dayIndex
         self.destinations = destinations
@@ -19,29 +20,19 @@ struct MapView: View {
 
     }
     
-    
     var body: some View {
-        
+        ZStack{
 
-//        }
-        GoogleMapsView(destinations: destinations,dayIndex: dayIndex, isactive: $isactive)
-        
-        //
-        ForEach(destinations[dayIndex].indices) {
-            (index) in
-            NavigationLink("", destination: DestinationView(destination: destinations[dayIndex][index],users: self.users), isActive: $isactive[index])
+            GoogleMapsView(destinations: destinations,dayIndex: dayIndex, isactive: $isactive)
             
-        }
+            ForEach(destinations[dayIndex].indices) { (index) in
+                NavigationLink("", destination: DestinationView(destination: destinations[dayIndex][index],users: self.users), isActive: $isactive[index])
+            }
+            
+        }.ignoresSafeArea(.all)
   
-        }
-//
-                    
-                
-                    
-                
+    }
 
-        
-    
 }
 //
 //

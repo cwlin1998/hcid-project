@@ -49,16 +49,6 @@ struct MainView: View {
             if (plan != nil && destinations != nil) {
                 GeometryReader { g in
                     ZStack(alignment: .leading) {
-                        SwitcherView(
-                            name: self.plan!.id,
-                            destinations: self.destinations!,
-                            users: self.plan!.users,
-                            planId: self.plan!.id,
-                            showMenu: self.$showMenu,
-                            loading: self.$loading
-                        )
-                        .frame(width: g.frame(in: .global).width)
-                        .offset(x: self.showMenu ? self.offset: 0)
                         if (showMenu) {
                             MenuView(
                                 planId: self.plan!.id,
@@ -68,6 +58,16 @@ struct MainView: View {
                                 planIndex: $planIndex
                             ).frame(width: originalOffset)
                         }
+                        SwitcherView(
+                            name: self.plan!.name,
+                            destinations: self.destinations!,
+                            users: self.plan!.users,
+                            planId: self.plan!.id,
+                            showMenu: self.$showMenu,
+                            loading: self.$loading
+                        )
+                        .frame(width: g.frame(in: .global).width)
+                        .offset(x: self.showMenu ? self.offset: 0)
                     }
                     .gesture(
                         DragGesture()

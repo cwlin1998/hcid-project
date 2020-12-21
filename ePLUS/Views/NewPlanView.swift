@@ -65,6 +65,7 @@ struct CustomStepper : View {
 
 struct CreatePlanButton: View {
     @EnvironmentObject var userData: UserData
+    @Environment(\.colorScheme) var colorScheme
     
     let planName: String
     @State var error = false
@@ -83,7 +84,7 @@ struct CreatePlanButton: View {
                 .frame(height: 20)
                 .padding()
                 .foregroundColor(.white)
-                .background(Color(red: 43/255, green: 185/255, blue: 222/255))
+                .background(colorScheme == .dark ? Color(UIColor.systemTeal): Color(UIColor.systemIndigo))
                 .cornerRadius(15)
                 .navigationBarHidden(true)
         }
@@ -105,6 +106,7 @@ struct CreatePlanButton: View {
 struct NewPlanView: View {
     @Environment(\.presentationMode) var presentationMode
     @EnvironmentObject var userData: UserData
+    @Environment(\.colorScheme) var colorScheme
     
     @State var error = false
     var havePlan = true
@@ -153,7 +155,7 @@ struct NewPlanView: View {
                     }
                     HStack{
                         Spacer()
-                        CustomStepper(value: self.$day, textColor: Color(UIColor.systemIndigo), step: Int(1))
+                        CustomStepper(value: self.$day, textColor: colorScheme == .dark ? Color(UIColor.systemTeal): Color(UIColor.systemIndigo), step: Int(1))
                     }
                 }.frame(height: 50)
                 

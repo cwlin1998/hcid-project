@@ -53,34 +53,39 @@ struct DestinationView: View {
             if loading {
                 LoadingView()
             }
-            ZStack(alignment: .top){
-                Color(UIColor.secondarySystemBackground).ignoresSafeArea()
-                
-                ScrollView{
-                    VStack (spacing: 24){
-                        GooglePlaceImage(url: self.destination.img, width: Int(UIScreen.main.bounds.size.width*0.8), height: Int(UIScreen.main.bounds.size.width*0.45), cornerRadius: 10)
-                        Text(self.destination.address)
-                        ForEach(usercommentDict.keys.sorted(), id: \.self) {key in
-                            CommentBlock(user: key, content: usercommentDict[key]!.content, rating: Float(usercommentDict[key]!.rating))
+            if usercommentDict.count != 0 {
+                ZStack(alignment: .top){
+                    Color(UIColor.secondarySystemBackground).ignoresSafeArea()
+                    
+                    ScrollView{
+                        VStack (spacing: 24){
+                            GooglePlaceImage(url: self.destination.img, width: Int(UIScreen.main.bounds.size.width*0.8), height: Int(UIScreen.main.bounds.size.width*0.45), cornerRadius: 10)
+                            Text(self.destination.address)
+                            CommentBlock(user: userData.currentUser.account, content: usercommentDict[userData.currentUser.account]!.content, rating: Float(usercommentDict[userData.currentUser.account]!.rating))
+                            ForEach(usercommentDict.keys.sorted(), id: \.self) {key in
+                                if key != userData.currentUser.account {
+                                    CommentBlock(user: key, content: usercommentDict[key]!.content, rating: Float(usercommentDict[key]!.rating))
+                                }
+                            }
                         }
+                        .padding(.horizontal, 36)
+                        .padding(.top, 130)
                     }
-                    .padding(.horizontal, 36)
-                    .padding(.top, 130)
-                }
-                
-                ZStack{
-                    Image("desNavigateBar")
-                        .resizable()
-                        .scaledToFill()
-                        .frame(width: UIScreen.main.bounds.size.width, height: UIScreen.main.bounds.size.width*0.32)
-                    HStack {
-                        ReturnButton(action: {
-                            self.presentationMode.wrappedValue.dismiss()
-                        }, size: 35)
-                        Spacer()
-                    }
-                    HStack{
-                        Text(self.destination.name).font(/*@START_MENU_TOKEN@*/.title/*@END_MENU_TOKEN@*/).bold()
+                    
+                    ZStack{
+                        Image("desNavigateBar")
+                            .resizable()
+                            .scaledToFill()
+                            .frame(width: UIScreen.main.bounds.size.width, height: UIScreen.main.bounds.size.width*0.32)
+                        HStack {
+                            ReturnButton(action: {
+                                self.presentationMode.wrappedValue.dismiss()
+                            }, size: 35)
+                            Spacer()
+                        }
+                        HStack{
+                            Text(self.destination.name).font(/*@START_MENU_TOKEN@*/.title/*@END_MENU_TOKEN@*/).bold()
+                        }
                     }
                 }
             }

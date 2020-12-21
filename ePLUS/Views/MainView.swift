@@ -27,6 +27,8 @@ struct MainView: View {
     @State var dayIndex = 0
     @State var planIndex = 0
     
+    @State var isactive: [[Bool]] = [[]]
+    
     let originalOffset: CGFloat = UIScreen.main.bounds.size.width/3*2.3  // 320
     @State var offset: CGFloat = UIScreen.main.bounds.size.width/3*2.3  // 320
     
@@ -64,7 +66,8 @@ struct MainView: View {
                             users: self.plan!.users,
                             planId: self.plan!.id,
                             showMenu: self.$showMenu,
-                            loading: self.$loading
+                            loading: self.$loading,
+                            isactive: self.$isactive
                         )
                         .frame(width: g.frame(in: .global).width)
                         .offset(x: self.showMenu ? self.offset: 0)
@@ -148,6 +151,7 @@ struct MainView: View {
         var destinations: [[Destination]] = []
         for (dayIndex, day) in self.plan!.destinations.enumerated() {
             destinations.append([])
+            isactive.append([])  // for map view
             for locationId in day {
                 group.enter()
                 var id = ""
@@ -192,6 +196,7 @@ struct MainView: View {
                 let destination = Destination(id: id, img: img, name: name, address: address, cooridinate: coordinate,
                                               comments: comments, rating: ratings / Float(comments.count))
                 destinations[dayIndex].append(destination)
+                isactive[dayIndex].append(false)  // for map view
             }
         }
         return destinations
@@ -200,6 +205,6 @@ struct MainView: View {
 
 struct MainView_Previews: PreviewProvider {
     static var previews: some View {
-        MainView(account: "guest")
+        MainView(account: "guest", isactive: [[false]])
     }
 }

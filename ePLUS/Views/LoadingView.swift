@@ -15,14 +15,15 @@ import ActivityIndicatorView
  */
 
 struct LoadingView: View {
+    @Environment(\.colorScheme) var colorScheme
     @State private var showLoadingIndicator: Bool = true
     var body: some View {
        let size = UIScreen.main.bounds.size.width / 4
            VStack() {
                ActivityIndicatorView(isVisible: self.$showLoadingIndicator, type: .default)
                    .frame(width: size, height: size)
-                   .foregroundColor(Color(UIColor.systemIndigo))
-            Text("Loading").font(.title).fontWeight(.bold).foregroundColor(Color(UIColor.systemIndigo))
+                   .foregroundColor(colorScheme == .dark ? Color(UIColor.systemTeal): Color(UIColor.systemIndigo))
+            Text("Loading").font(.title).fontWeight(.bold).foregroundColor(colorScheme == .dark ? Color(UIColor.systemTeal): Color(UIColor.systemIndigo))
            }.ignoresSafeArea(edges:.all)
     }
 }

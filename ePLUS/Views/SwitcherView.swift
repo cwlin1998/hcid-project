@@ -21,6 +21,7 @@ struct SwitcherView: View {
     @State var dayIndex: Int = 0
     @Binding var loading: Bool
 
+    @Binding var isactive: [[Bool]]
     var body: some View {
 //        NavigationView(){
             ZStack(alignment: .topLeading) {
@@ -29,7 +30,7 @@ struct SwitcherView: View {
                     case .list:
                         ListView(planId: planId, name: name, destinations: destinations, users: users, showMenu: self.$showMenu)
                     case .map:
-                        MapView(destinations: destinations,dayIndex:$dayRouter.dayIndex, users: users)
+                        MapView(destinations: destinations, users: users, isactive: self.isactive, showMenu: self.$showMenu)
                     }
                 }.disabled(self.showMenu ? true : false)
                 VStack(alignment: .trailing, spacing: 10) {
@@ -94,7 +95,7 @@ struct SwitcherView_Previews: PreviewProvider {
         @State var dayIndex = 0
 
         var body: some View{
-            SwitcherView(name: "", destinations: destinations, users: users, planId: "", showMenu: $showMenu, loading: .constant(false))
+            SwitcherView(name: "", destinations: destinations, users: users, planId: "", showMenu: $showMenu, loading: .constant(false), isactive: .constant([[false]]))
         }
     }
 }

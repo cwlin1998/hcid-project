@@ -19,14 +19,26 @@ struct DayBlock: View{
             self.dayRouter.dayIndex = day - 1
             self.showMenu = false
         }) {
-            Text("Day \(day)")
-                .font(.system(size: 22, weight: .regular))
-                .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: 16)
-                .padding()
-                .background(Color(UIColor.tertiarySystemBackground))
-                .foregroundColor(colorScheme == .dark ? Color(UIColor.systemTeal): Color(UIColor.systemIndigo))
-                .opacity(0.8)
-                .cornerRadius(50)
+            if colorScheme == .dark {
+                Text("Day \(day)")
+                    .font(.system(size: 22, weight: .regular))
+                    .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: 16)
+                    .padding()
+                    .background((self.dayRouter.dayIndex == day - 1) ? Color(UIColor.systemTeal) : Color(UIColor.tertiarySystemBackground))
+                    .foregroundColor((self.dayRouter.dayIndex == day - 1) ? Color.white : Color(UIColor.systemTeal))
+                    .opacity(0.9)
+                    .cornerRadius(50)
+            }
+            else {
+                Text("Day \(day)")
+                    .font(.system(size: 22, weight: .regular))
+                    .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: 16)
+                    .padding()
+                    .background((self.dayRouter.dayIndex == day - 1) ? Color(UIColor.systemIndigo) : Color(UIColor.tertiarySystemBackground))
+                    .foregroundColor((self.dayRouter.dayIndex == day - 1) ? Color.white : Color(UIColor.systemIndigo))
+                    .opacity(0.9)
+                    .cornerRadius(50)
+            }
         }
     }
 }

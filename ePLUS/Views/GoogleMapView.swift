@@ -65,7 +65,7 @@ struct GoogleMapsView: UIViewRepresentable {
              self.owner = owner
            }
         func mapView(_ mapView: GMSMapView, markerInfoWindow marker: GMSMarker) -> UIView? {
-            print("Showing marker infowindow")
+//            print("Showing marker infowindow")
             let callout = UIHostingController(rootView: markerInfoWindow(
                                                 name: String((marker.userData as! Destination).name) ,stars: String((marker.userData as! Destination).rating) ,destination: marker.userData as! Destination)
             )
@@ -76,10 +76,10 @@ struct GoogleMapsView: UIViewRepresentable {
         }
         func mapView(_ mapView: GMSMapView, didTapInfoWindowOf didTapInfoWindowOfMarker: GMSMarker) {
                 print("You tapped a marker's infowindow!")
-            print(didTapInfoWindowOfMarker)
+//            print(didTapInfoWindowOfMarker)
             let currentId: Int = Int(didTapInfoWindowOfMarker.snippet ?? "0") ?? 0
             self.owner.isactive[currentId] = true
-            print(self.owner.isactive)
+//            print(self.owner.isactive)
                     return
             }
         }

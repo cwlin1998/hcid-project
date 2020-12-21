@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		18F083B3308A1F6AF6D6A146 /* libPods-ePLUS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BD9D64CBA404EE2AAD985FE0 /* libPods-ePLUS.a */; };
+		286871BC2804967F9B461B68 /* libPods-ePLUS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5535AF611B456F99D375B3C0 /* libPods-ePLUS.a */; };
 		823FACC9257E189F001FC646 /* DataStructure.swift in Sources */ = {isa = PBXBuildFile; fileRef = 823FACC8257E189F001FC646 /* DataStructure.swift */; };
 		823FACCE257E1C5E001FC646 /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 823FACCD257E1C5E001FC646 /* API.swift */; };
 		8243879B25827D5D00DC6664 /* TextArea.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8243879A25827D5D00DC6664 /* TextArea.swift */; };
@@ -59,6 +59,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		5535AF611B456F99D375B3C0 /* libPods-ePLUS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ePLUS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		823FACC8257E189F001FC646 /* DataStructure.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataStructure.swift; sourceTree = "<group>"; };
 		823FACCD257E1C5E001FC646 /* API.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
 		8243879A25827D5D00DC6664 /* TextArea.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextArea.swift; sourceTree = "<group>"; };
@@ -94,7 +95,6 @@
 		82CD0902256E5F9400F21693 /* ePLUSUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ePLUSUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		82CD0906256E5F9400F21693 /* ePLUSUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ePLUSUITests.swift; sourceTree = "<group>"; };
 		82CD0908256E5F9400F21693 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		BD9D64CBA404EE2AAD985FE0 /* libPods-ePLUS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ePLUS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CEF273CD6A756DFDBBBDC636 /* Pods-ePLUS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ePLUS.debug.xcconfig"; path = "Target Support Files/Pods-ePLUS/Pods-ePLUS.debug.xcconfig"; sourceTree = "<group>"; };
 		E045F45D9B6858255B7C0E86 /* Pods-ePLUS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ePLUS.release.xcconfig"; path = "Target Support Files/Pods-ePLUS/Pods-ePLUS.release.xcconfig"; sourceTree = "<group>"; };
 		F30B35F6258A70B700D05E3E /* GoogleMapView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GoogleMapView.swift; sourceTree = "<group>"; };
@@ -106,7 +106,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				18F083B3308A1F6AF6D6A146 /* libPods-ePLUS.a in Frameworks */,
+				286871BC2804967F9B461B68 /* libPods-ePLUS.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -130,7 +130,7 @@
 		0DFCA4892743005B7087D658 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				BD9D64CBA404EE2AAD985FE0 /* libPods-ePLUS.a */,
+				5535AF611B456F99D375B3C0 /* libPods-ePLUS.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";

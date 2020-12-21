@@ -144,6 +144,12 @@ struct DaysView: View {
                     })
             ).onReceive(dayRouter.objectWillChange, perform: self.updateOffset)
         }.animation(.default)
+        .onAppear(perform: initialOffset)
+    }
+    
+    func initialOffset(){
+        self.offset =  -CGFloat(dayRouter.dayIndex) * UIScreen.screenWidth
+        self.originalOffset = -CGFloat(dayRouter.dayIndex) * UIScreen.screenWidth
     }
     
     func updateOffset() {

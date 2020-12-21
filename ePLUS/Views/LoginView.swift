@@ -12,8 +12,8 @@ struct LoginView: View {
     @EnvironmentObject var dayRouter: DayRouter
     @EnvironmentObject var userData: UserData
 
-    @State private var account = ""
-    @State private var password = ""
+    @State var account: String
+    @State var password: String
     
     @State private var isLoginValid: Bool = false
     @State private var shouldShowLoginAlert: Bool = false
@@ -25,7 +25,7 @@ struct LoginView: View {
                     .font(.largeTitle)
                     .shadow(radius: 10.0, x: 20, y: 10)
                 Spacer()
-                Image("zuccottiPark")
+                Image("logo")
                     .resizable()
                     .frame(width: 250, height: 250)
                     .clipShape(Circle())
@@ -59,6 +59,8 @@ struct LoginView: View {
                                 .onTapGesture {
                                     if verifyUser(account: self.account, password: self.password) {
                                         isLoginValid = true
+                                        UserDefaults.standard.set(self.account, forKey: "account")
+                                        UserDefaults.standard.set(self.password, forKey: "password")
                                     }
                                     if isLoginValid {
                                         self.isLoginValid = true //trigger NavigationLink
@@ -72,12 +74,37 @@ struct LoginView: View {
                 Spacer()
             }
         }
+        .onAppear(perform: checkIfLoginBefore)
         .background(Color(UIColor.secondarySystemBackground).edgesIgnoringSafeArea(.all))
         .navigationBarHidden(true)
         .alert(isPresented: $shouldShowLoginAlert) {
             Alert(title: Text("Account/Password incorrect"))
         }
     }
+    
+    func checkIfLoginBefore() {
+        self.isLoginValid = false
+        
+        let group = DispatchGroup()
+        
+        group.enter()
+        var fetchedPassword: String? = nil
+        API().getUser(userAccount: account) { result in
+            switch result {
+            case .success(let user):
+                fetchedPassword = user.password
+            case .failure:
+                break
+            }
+            group.leave()
+        }
+        group.wait()
+        
+        if fetchedPassword == password {
+            self.isLoginValid = true
+        }
+    }
+    
     
     func verifyUser(account: String, password: String) -> Bool {
         let group = DispatchGroup()
@@ -95,6 +122,8 @@ struct LoginView: View {
         }
         group.wait()
         
+        
+        
         return password == fetchedPassword
     }
     
@@ -102,6 +131,6 @@ struct LoginView: View {
 
 struct LoginView_Previews: PreviewProvider {
     static var previews: some View {
-        LoginView()
+        LoginView(account: "guest", password: "guest")
     }
 }

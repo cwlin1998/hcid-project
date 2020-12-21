@@ -12,10 +12,13 @@ struct ContentView: View {
     @EnvironmentObject var viewRouter: ViewRouter
     @EnvironmentObject var dayRouter: DayRouter
     @EnvironmentObject var userData: UserData
+    
+    @State var account = UserDefaults.standard.string(forKey: "account")
+    @State var password = UserDefaults.standard.string(forKey: "password")
         
     var body: some View {
         VStack {
-            LoginView()
+            LoginView(account: account == nil ? "" : account!, password: password == nil ? "" : password!)
         }
     }
 }

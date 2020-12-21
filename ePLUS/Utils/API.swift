@@ -9,8 +9,8 @@ import SwiftUI
 import GooglePlaces
 
 struct API {
-    let hostURL = "http://localhost:8000"
-//    let hostURL = "https://hcid-project-backend.herokuapp.com"
+//    let hostURL = "http://localhost:8000"
+    let hostURL = "https://hcid-project-backend.herokuapp.com"
     
     // PLAN API
     func addPlan(userAccount: String, planName: String, handler: @escaping (Result<EmptyJson, Error>) -> Void) {
@@ -192,7 +192,6 @@ struct API {
         task.resume()
     }
     
-    // not confirmed
     func addUser2Plan(planId: String, userAccount: String, handler: @escaping (Result<EmptyJson, Error>) -> Void) {
         guard let url = URL(string: hostURL + "/plans/" + planId + "/users") else {
             print("error...")

@@ -7,31 +7,111 @@
 
 import SwiftUI
 
+
+struct EditCommentBlock: View {
+    @EnvironmentObject var userData: UserData
+    @Environment(\.colorScheme) var colorScheme
+    let destination: Destination
+    @State var commentText: String
+    @State var rating: Float
+    @Binding var showEditComment: Bool
+    
+    var body: some View {
+        ZStack {
+            RoundedRectangle(cornerRadius: 10, style: .continuous)
+                .fill(Color(UIColor.secondarySystemBackground))
+                .opacity(0.9)
+            VStack {
+                TextArea(commentText, text: self.$commentText, height: .infinity)
+                Spacer()
+                HeartRating(rating: self.$rating).disabled(false)
+                HStack{
+                    Spacer()
+                    Button(action: {
+                        withAnimation {
+                            self.showEditComment.toggle()
+                        }
+                    }) {
+                        Text("CANCEL").bold()
+                    }
+                    Spacer()
+                    Button(action: {
+                        self.addComment()
+                        withAnimation {
+                            self.showEditComment.toggle()
+                        }
+                    }) {
+                        Text("DONE").bold()
+                    }
+                    Spacer()
+                }
+            }
+            .padding(15)
+        }
+        .frame(width: UIScreen.screenWidth/3*2, height: UIScreen.screenHeight/3)
+    }
+    
+    func addComment() {
+        
+        let comment = Comment(locationId: self.destination.id, content: self.commentText, rating: Int(self.rating))
+        
+        API().addComment(userAccount: userData.currentUser.account, comment: comment) { result in
+            switch result {
+            case .success:
+                print("add comment success")
+                break
+            case .failure:
+                print("add comment failure")
+                break
+            }
+        }
+    }
+}
+
+
 struct CommentBlock: View{
+    @EnvironmentObject var userData: UserData
+    @Environment(\.colorScheme) var colorScheme
+    
     var user: String
     var content: String
     @State var rating: Float
+    @Binding var showEditComment: Bool
     
     var body: some View{
-        VStack(alignment: .leading, spacing: 8){
-            Text(self.content)
-            Spacer()
-            HStack (spacing: 12){
+        VStack(alignment: .leading, spacing: 8) {
+            HStack {
+                Text(self.content)
+                Spacer()
+                Button(action: {
+                    withAnimation {
+                        self.showEditComment.toggle()
+                    }
+                }) {
+                    Image(systemName: "pencil")
+                        .font(.system(size: CGFloat(25), weight: .bold))
+                        .foregroundColor(colorScheme == .dark ? Color(UIColor.systemTeal): Color(UIColor.systemIndigo))
+                        .opacity(self.user == userData.currentUser.account ? 1 : 0)
+                }.disabled(self.user == userData.currentUser.account ? false : true)
+            }
+            HStack (spacing: 12) {
                 utils().getUserImage(usernickname: user)
                     .resizable()
                     .frame(width: 50, height: 50)
-                    .foregroundColor(Color(UIColor.systemIndigo))
+                    .foregroundColor(colorScheme == .dark ? Color(UIColor.systemTeal): Color(UIColor.systemIndigo))
                     .clipShape(Circle())
                 VStack (alignment: .leading){
                     Text(user)
                         .bold()
-                        .foregroundColor(Color(UIColor.systemIndigo))
+                        .foregroundColor(colorScheme == .dark ? Color(UIColor.systemTeal): Color(UIColor.systemIndigo))
                     HeartRating(rating: self.$rating).disabled(true)
                 }
                 Spacer()
             }
         }
-        .padding(20)
+        .padding(.horizontal, 20)
+        .padding(.top, 8)
+        .padding(.bottom, 8)
         .frame(minWidth: 0, maxWidth: .infinity)
         .frame(height: 160)
         .background(Color(UIColor.tertiarySystemBackground))
@@ -44,35 +124,45 @@ struct DestinationView: View {
     @EnvironmentObject var userData: UserData
     @Environment(\.presentationMode) var presentationMode
     
-    @State var loading = false
+    let timer = Timer.publish(every: 0.1, on: .main, in: .common).autoconnect()
+    
+    @State var loading = true
     let destination: Destination
     let users: [String]
     @State var usercommentDict = [String: Comment]()
+    @State var showEditComment: Bool = false
     var body: some View {
         VStack{
             if loading {
                 LoadingView()
             }
-            if usercommentDict.count != 0 {
-                ZStack(alignment: .top){
+            else {
+                ZStack(alignment: .top) {
                     Color(UIColor.secondarySystemBackground).ignoresSafeArea()
                     
-                    ScrollView{
-                        VStack (spacing: 24){
-                            GooglePlaceImage(url: self.destination.img, width: Int(UIScreen.main.bounds.size.width*0.8), height: Int(UIScreen.main.bounds.size.width*0.45), cornerRadius: 10)
-                            Text(self.destination.address)
-                            CommentBlock(user: userData.currentUser.account, content: usercommentDict[userData.currentUser.account]!.content, rating: Float(usercommentDict[userData.currentUser.account]!.rating))
-                            ForEach(usercommentDict.keys.sorted(), id: \.self) {key in
-                                if key != userData.currentUser.account {
-                                    CommentBlock(user: key, content: usercommentDict[key]!.content, rating: Float(usercommentDict[key]!.rating))
+                    if usercommentDict.count != 0 {
+                        ScrollView {
+                            VStack (spacing: 24) {
+                                // Destination Image
+                                GooglePlaceImage(url: self.destination.img, width: Int(UIScreen.main.bounds.size.width*0.8), height: Int(UIScreen.main.bounds.size.width*0.45), cornerRadius: 10)
+                                // Address
+                                Text(self.destination.address)
+                                // the user's comment
+                                CommentBlock(user: userData.currentUser.account, content: self.usercommentDict[userData.currentUser.account]!.content, rating: Float(self.usercommentDict[userData.currentUser.account]!.rating), showEditComment: self.$showEditComment)
+                                // others' comment
+                                ForEach(usercommentDict.keys.sorted(), id: \.self) {key in
+                                    if key != userData.currentUser.account {
+                                        CommentBlock(user: key, content: usercommentDict[key]!.content, rating: Float(usercommentDict[key]!.rating), showEditComment: self.$showEditComment)
+                                    }
                                 }
                             }
+                            .padding(.horizontal, 36)
+                            .padding(.top, 130)
                         }
-                        .padding(.horizontal, 36)
-                        .padding(.top, 130)
                     }
                     
-                    ZStack{
+                    // Navigation Bar
+                    ZStack {
                         Image("desNavigateBar")
                             .resizable()
                             .scaledToFill()
@@ -83,14 +173,23 @@ struct DestinationView: View {
                             }, size: 35)
                             Spacer()
                         }
-                        HStack{
-                            Text(self.destination.name).font(/*@START_MENU_TOKEN@*/.title/*@END_MENU_TOKEN@*/).bold()
+                        HStack {
+                            Text(self.destination.name).font(.title).bold()
                         }
+                    }
+                    
+                    // Edit comment or not
+                    if showEditComment {
+                        EditCommentBlock(destination: self.destination, commentText: usercommentDict[userData.currentUser.account]!.content, rating: Float(usercommentDict[userData.currentUser.account]!.rating), showEditComment: self.$showEditComment)
+                            .offset(y: UIScreen.screenWidth/2.5)
                     }
                 }
             }
         }
-        .onAppear(perform: fetchData)
+        .onAppear(perform: self.fetchData)
+        .onReceive(self.timer) { _ in
+            self.fetchData()
+        }
         .navigationBarHidden(true)
         .ignoresSafeArea(.all)
     }
@@ -107,9 +206,8 @@ struct DestinationView: View {
                 case .success(let comment):
                     usercommentDict[userAccount] = comment
                 case .failure:
-//                    usercommentDict[userAccount] = Comment(locationId: self.destination.id, content: "", rating: 0)
                     if userData.currentUser.account == userAccount{
-                        usercommentDict[userAccount] = Comment(locationId: self.destination.id, content: "you haven't make comment yet!", rating: 0)
+                        usercommentDict[userAccount] = Comment(locationId: self.destination.id, content: "Make your comment here...", rating: 0)
                     }
                 }
                 group.leave()
@@ -117,12 +215,11 @@ struct DestinationView: View {
             group.wait()
         }
         
-        
         group.notify(queue: .main) {
+//            print(self.usercommentDict)
             self.usercommentDict = usercommentDict
             self.loading = false
         }
-        
     }
 }
 
@@ -135,6 +232,6 @@ struct DestinationView_Previews: PreviewProvider {
     )
     static var previews: some View {
 //        DestinationView(destination: destination, users: ["guest", "a", "b", "c"])
-        CommentBlock(user: "guest", content: "hi~~~", rating: 5)
+        CommentBlock(user: "guest", content: "hi~~~", rating: 5, showEditComment: .constant(false))
     }
 }

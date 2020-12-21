@@ -10,23 +10,25 @@ import SwiftUI
 struct TextArea: View {
     private let placeholder: String
     @Binding var text: String
+    var height: Float
     
-    init(_ placeholder: String = "Type something here...", text: Binding<String>) {
+    init(_ placeholder: String = "Type something here...", text: Binding<String>, height: Float = Float(UIScreen.screenHeight/5)) {
         self.placeholder = placeholder
         self._text = text
+        self.height = height
     }
     
     var body: some View {
         TextEditor(text: $text)
             .foregroundColor(self.text == self.placeholder ? Color(UIColor.placeholderText) : .primary)
-            .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: UIScreen.screenHeight/5)
+            .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: CGFloat(self.height))
             .lineSpacing(1)
             .onAppear {
                 self.text = self.placeholder
                 // remove the placeholder text when keyboard appears
                 NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillShowNotification, object: nil, queue: .main) { (noti) in
                     withAnimation {
-                        if (self.text == self.placeholder) {
+                        if (self.text == "Make your comment here...") {
                             self.text = ""
                         }
                     }
@@ -34,7 +36,7 @@ struct TextArea: View {
                 // put back the placeholder text if the user dismisses the keyboard without adding any text
                 NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillHideNotification, object: nil, queue: .main) { (noti) in
                     withAnimation {
-                        if (self.text == "") {
+                        if (self.text == "Make your comment here...") {
                             self.text = self.placeholder
                         }
                     }

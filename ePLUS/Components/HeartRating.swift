@@ -12,7 +12,6 @@ struct HeartRating: View {
     let heartSize: CGFloat = 20
     @Binding var rating: Float
     @State var status: [String] = ["hearthollow", "hearthollow", "hearthollow", "hearthollow", "hearthollow"]
-    @State var changable: Bool = false
 
     var body: some View {
         // Heart rating
@@ -23,16 +22,11 @@ struct HeartRating: View {
                     .scaledToFit()
                     .frame(width: heartSize, height: heartSize)
                     .onTapGesture {
-                        if (changable) {
-                            updateRating(Float(i+1))
-                        }
+                        updateRating(Float(i+1))
                     }
             }
         }.onAppear(perform: {
             updateRating(self.rating)
-            if (self.rating == 0) {
-                self.changable = true
-            }
         })
     }
     

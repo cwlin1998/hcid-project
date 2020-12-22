@@ -8,7 +8,6 @@
 enum Page {
     case list
     case map
-    case route
 }
 
 struct Plan: Codable, Identifiable {

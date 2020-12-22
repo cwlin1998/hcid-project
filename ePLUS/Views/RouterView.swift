@@ -13,7 +13,7 @@ import SwiftyJSON
 
 struct RouterView: UIViewRepresentable {
     let destinations: [[Destination]]
-    let dayIndex: Int = 0
+    let dayIndex: Int 
     
     func makeUIView(context: Self.Context) -> GMSMapView {
         

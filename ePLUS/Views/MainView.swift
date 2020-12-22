@@ -12,7 +12,6 @@ struct MainView: View {
     @EnvironmentObject var viewRouter: ViewRouter
     @EnvironmentObject var dayRouter: DayRouter
     @EnvironmentObject var userData: UserData
-    @Environment(\.presentationMode) var presentationMode
     
     let timer = Timer.publish(every: 5, on: .main, in: .common).autoconnect()
     

@@ -13,7 +13,7 @@ struct MainView: View {
     @EnvironmentObject var dayRouter: DayRouter
     @EnvironmentObject var userData: UserData
     
-    let timer = Timer.publish(every: 5, on: .main, in: .common).autoconnect()
+    let timer = Timer.publish(every: 0.5, on: .main, in: .common).autoconnect()
     
     @State var loading = true
     @State var error = false
@@ -101,7 +101,9 @@ struct MainView: View {
         }
         .onAppear(perform: fetchData)
         .onReceive(timer) { _ in
-            self.fetchData()
+            DispatchQueue.global(qos: .background).async {
+                self.fetchData()
+            }
         }
         .navigationBarHidden(true)
     }
@@ -132,55 +134,67 @@ struct MainView: View {
         
         group.enter()
         
+        var plans: [String] = []
         API().getUser(userAccount: self.account) { result in
             
             switch result {
             case .success(let user):
-                self.plans = user.plans
+                plans = user.plans
             case .failure:
-                self.error = true
+                DispatchQueue.main.async {
+                    self.error = true
+                }
             }
             group.leave()
         }
         
         group.wait()
         
+        var tmpPlan: Plan? = nil
         var destinations: [[Destination]]? = nil
-        if (self.plans!.count > 0) {
+        if (plans.count > 0) {
             group.enter()
-            self.havePlan = true
-            API().getPlan(planId: self.plans![self.planIndex]) { result in
+            API().getPlan(planId: plans[self.planIndex]) { result in
                 
                 switch result {
                 case .success(let plan):
-                    self.plan = plan
+                    tmpPlan = plan
                 case .failure:
-                    self.error = true
+                    DispatchQueue.main.async {
+                        self.error = true
+                    }
                 }
                 group.leave()
             }
             
             group.wait()
             
-            destinations = self.getDestinations(group: group)
+            destinations = self.getDestinations(group: group, plan: tmpPlan!)
         }
         
         group.notify(queue: .main) {
-            if (self.plans!.count == 0) {
+            if (plans.count == 0) {
                 self.havePlan = false
-            } else if (destinations != self.destinations) {
-                self.destinations = destinations
+            } else {
+                self.havePlan = true
+                self.plans = plans
+                self.plan = tmpPlan
+                if (destinations != self.destinations) {
+                    self.destinations = destinations
+                }
             }
             userData.currentUser = User(account: self.account, password: self.account, nickname: self.account, plans:self.plans!, comments: [:])
             self.loading = false
         }
     }
     
-    func getDestinations(group: DispatchGroup) -> [[Destination]] {
+    func getDestinations(group: DispatchGroup, plan: Plan) -> [[Destination]] {
         var destinations: [[Destination]] = []
-        for (dayIndex, day) in self.plan!.destinations.enumerated() {
+        for (dayIndex, day) in plan.destinations.enumerated() {
             destinations.append([])
-            isactive.append([])  // for map view
+            DispatchQueue.main.async {
+                self.isactive.append([])  // for map view
+            }
             for locationId in day {
                 group.enter()
                 var id = ""
@@ -200,14 +214,16 @@ struct MainView: View {
                             longitude: location.result.geometry.location.longitude
                         )
                     case .failure:
-                        self.error = true
+                        DispatchQueue.main.async {
+                            self.error = true
+                        }
                     }
                     group.leave()
                 }
                 group.wait()
                 var comments: [String: String] = [:]
                 var ratings: Float = 0
-                for userAccount in self.plan!.users {
+                for userAccount in plan.users {
                     group.enter()
                     API().getComment(userAccount: userAccount, locationId: locationId) { result in
                         switch result {
@@ -224,7 +240,9 @@ struct MainView: View {
                 let destination = Destination(id: id, img: img, name: name, address: address, cooridinate: coordinate,
                                               comments: comments, rating: ratings / Float(comments.count))
                 destinations[dayIndex].append(destination)
-                isactive[dayIndex].append(false)  // for map view
+                DispatchQueue.main.async {
+                    self.isactive[dayIndex].append(false)  // for map view
+                }
             }
         }
         return destinations

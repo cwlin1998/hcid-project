@@ -183,7 +183,7 @@ struct MainView: View {
                     self.destinations = destinations
                 }
             }
-            userData.currentUser = User(account: self.account, password: self.account, nickname: self.account, plans:self.plans!, comments: [:])
+            userData.currentUser = User(account: self.account, password: self.account, nickname: self.account, plans:self.plans ?? [], comments: [:])
             self.loading = false
         }
     }

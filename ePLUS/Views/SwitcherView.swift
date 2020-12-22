@@ -18,10 +18,10 @@ struct SwitcherView: View {
     let users: [String]
     let planId: String
     @Binding var showMenu: Bool
-    @State var dayIndex: Int = 0
     @Binding var loading: Bool
 
     @Binding var isactive: [[Bool]]
+    @State var routing: Bool = false
     var body: some View {
 //        NavigationView(){
             ZStack(alignment: .topLeading) {
@@ -30,42 +30,48 @@ struct SwitcherView: View {
                     case .list:
                         ListView(planId: planId, name: name, destinations: destinations, users: users, showMenu: self.$showMenu)
                     case .map:
-                        MapView(destinations: destinations, users: users, isactive: self.isactive, showMenu: self.$showMenu)
+                        MapView(route: false, destinations: destinations, users: users, isactive: self.isactive, showMenu: self.$showMenu)
                     case .route:
-//                        RouterView()
-//
-                        RouterView(destinations: destinations)
+                        MapView(route: true, destinations: destinations, users: users, isactive: self.isactive, showMenu: self.$showMenu)
                     }
                 }.disabled(self.showMenu ? true : false)
                 VStack(alignment: .trailing, spacing: 10) {
                     HStack(spacing: 12) {
-                        Button(action: {
-                            withAnimation {
-                               self.showMenu.toggle()
+                        // side menu button
+                        if (!self.routing) {
+                            Button(action: {
+                                withAnimation {
+                                   self.showMenu.toggle()
+                                }
+                            }) {
+                                Image(systemName: self.showMenu ? "chevron.backward.square.fill" : "chevron.forward.square.fill")
+                                    .resizable()
+                                    .frame(width: 30, height: 30)
+                                    .foregroundColor(colorScheme == .dark ? Color(UIColor.systemTeal): Color(UIColor.systemIndigo))
+                                    .imageScale(.large)
                             }
-                        }) {
-                            Image(systemName: self.showMenu ? "chevron.backward.square.fill" : "chevron.forward.square.fill")
-                                .resizable()
-                                .frame(width: 30, height: 30)
-                                .foregroundColor(colorScheme == .dark ? Color(UIColor.systemTeal): Color(UIColor.systemIndigo))
-                                .imageScale(.large)
                         }
+
                         Spacer()
                         Text(name).font(.title).fontWeight(.bold).foregroundColor(Color.black)
                         Spacer()
-                        
-                        Button(action: {
-                            viewRouter.currentPage = .route
-                        }, label: {
-                            Image(systemName:  "map.fill")
-                                .resizable()
-                                .frame(width: 30, height: 30)
-                                .foregroundColor(Color.black)
-                                .imageScale(.large)
-                        })
-                        
+                        // route button
+                        if (destinations[dayRouter.dayIndex].count > 0){
+                            Button(action: {
+                                viewRouter.currentPage = .route
+                                self.routing = true
+                            }, label: {
+                                Image(systemName: "paperplane.circle.fill")
+                                    .resizable()
+                                    .frame(width: 30, height: 30)
+                                    .foregroundColor(colorScheme == .dark ? Color(UIColor.systemTeal): Color(UIColor.systemIndigo))
+                                    .imageScale(.large)
+                            })
+                        }
+                        // list/map button
                         Button(action: {
                             viewRouter.currentPage = (viewRouter.currentPage == .map) ? .list : .map
+                            self.routing = false
                         }, label: {
                             Image(systemName: (viewRouter.currentPage == .map) ? "list.dash": "map.fill")
                                 .resizable()
@@ -73,8 +79,9 @@ struct SwitcherView: View {
                                 .foregroundColor(colorScheme == .dark ? Color(UIColor.systemTeal): Color(UIColor.systemIndigo))
                                 .imageScale(.large)
                         })
+                        
+                        // add destination button
                         NavigationLink(destination: AddDestinationView(planId: planId, dayIndex: dayRouter.dayIndex)) {
-//                            Text("+")
                             Image(systemName: "plus.app.fill")
                                 .resizable()
                                 .frame(width: 30, height: 30)

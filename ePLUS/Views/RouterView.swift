@@ -12,16 +12,15 @@ import GoogleMaps
 import SwiftyJSON
 
 struct RouterView: UIViewRepresentable {
+    @EnvironmentObject var dayRouter: DayRouter
     let destinations: [[Destination]]
-    let dayIndex: Int = 0
     
     func makeUIView(context: Self.Context) -> GMSMapView {
         
-
         GMSServices.provideAPIKey("AIzaSyAnU8CmfDD8S3X6xAYvlScSwvhrm2mht2A")
         var camera = GMSCameraPosition.camera(withLatitude:25.0173405, longitude: 121.5375631, zoom: 15.0)
-        if (destinations[dayIndex].count>0){
-            camera = GMSCameraPosition.camera(withLatitude: destinations[dayIndex][0].cooridinate.latitude , longitude: destinations[dayIndex][0].cooridinate.longitude , zoom: 15.0)
+        if (destinations[dayRouter.dayIndex].count>0){
+            camera = GMSCameraPosition.camera(withLatitude: destinations[dayRouter.dayIndex][0].cooridinate.latitude , longitude: destinations[dayRouter.dayIndex][0].cooridinate.longitude , zoom: 15.0)
         }
         
         let mapView = GMSMapView.map(withFrame: CGRect.zero, camera: camera)
@@ -30,9 +29,9 @@ struct RouterView: UIViewRepresentable {
         var des: Destination
         
         
-        if (destinations[dayIndex].count>0){
-            for index in 0...destinations[dayIndex].count-1{
-                    des = destinations[dayIndex][index]
+        if (destinations[dayRouter.dayIndex].count>0){
+            for index in 0...destinations[dayRouter.dayIndex].count-1{
+                    des = destinations[dayRouter.dayIndex][index]
                     marker = GMSMarker()
                     marker.position = CLLocationCoordinate2D(latitude:  des.cooridinate.latitude, longitude:  des.cooridinate.longitude    )
                     marker.title = des.name
@@ -70,8 +69,8 @@ struct RouterView: UIViewRepresentable {
                         let points = overview_polyline?["points"]?.string
                         let path = GMSPath.init(fromEncodedPath: points ?? "")
                         let polyline = GMSPolyline.init(path: path)
-                        polyline.strokeColor = .systemBlue
-                        polyline.strokeWidth = 5
+                        polyline.strokeColor = .systemOrange
+                        polyline.strokeWidth = 8
                         polyline.map = mapView
                     }
 

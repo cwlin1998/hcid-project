@@ -169,8 +169,7 @@ struct MenuView: View {
                                 self.planIndex = userData.currentUser.plans.firstIndex(of: planId)!
                                 self.showMenu = false
                             }) {
-//                                Text("\(planId)")
-                                Text("\(self.planDict[planId]!)")
+                                Text("\(self.planDict[planId] ?? planId)")
                             }
                         }
                     }.frame(minWidth: 0, maxWidth: .infinity)
@@ -212,7 +211,6 @@ struct MenuView: View {
     
     func fetchPlans(){
         let group = DispatchGroup()
-        
         if (userData.currentUser.plans.count > 0) {
             for i in 0..<userData.currentUser.plans.count{
                 group.enter()

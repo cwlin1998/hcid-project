@@ -75,7 +75,7 @@ struct CommentBlock: View{
     
     var user: String
     var content: String
-    @State var rating: Float
+    let rating: Float
     @Binding var showEditComment: Bool
     
     var body: some View{
@@ -104,7 +104,7 @@ struct CommentBlock: View{
                     Text(user)
                         .bold()
                         .foregroundColor(colorScheme == .dark ? Color(UIColor.systemTeal): Color(UIColor.systemIndigo))
-                    HeartRating(rating: self.$rating).disabled(true)
+                    DisabledHeartRating(rating: self.rating).disabled(true)
                 }
                 Spacer()
             }
@@ -124,7 +124,7 @@ struct DestinationView: View {
     @EnvironmentObject var userData: UserData
     @Environment(\.presentationMode) var presentationMode
     
-    let timer = Timer.publish(every: 0.1, on: .main, in: .common).autoconnect()
+    let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
     
     @State var loading = true
     let destination: Destination

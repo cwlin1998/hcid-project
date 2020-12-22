@@ -13,7 +13,7 @@ struct MainView: View {
     @EnvironmentObject var dayRouter: DayRouter
     @EnvironmentObject var userData: UserData
     
-    let timer = Timer.publish(every: 0.1, on: .main, in: .common).autoconnect()
+    let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
     
     @State var loading = true
     @State var error = false

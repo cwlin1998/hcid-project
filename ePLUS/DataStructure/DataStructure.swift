@@ -28,7 +28,7 @@ struct Destination: Identifiable, Equatable {
     let rating: Float
     
     static func == (lhs: Destination, rhs: Destination) -> Bool {
-        return lhs.id == rhs.id
+        return (lhs.id == rhs.id && lhs.comments == rhs.comments && lhs.rating == rhs.rating)
     }
 }
 

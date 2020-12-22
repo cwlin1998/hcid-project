@@ -4,4 +4,5 @@ target 'ePLUS' do
   pod 'GooglePlaces', '4.1.0'
   pod 'GoogleMaps', '4.1.0'
   pod 'ActivityIndicatorView'
+  pod 'SwiftyJSON', '~> 4.0'
 end

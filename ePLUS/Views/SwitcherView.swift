@@ -31,6 +31,10 @@ struct SwitcherView: View {
                         ListView(planId: planId, name: name, destinations: destinations, users: users, showMenu: self.$showMenu)
                     case .map:
                         MapView(destinations: destinations, users: users, isactive: self.isactive, showMenu: self.$showMenu)
+                    case .route:
+//                        RouterView()
+//
+                        RouterView(destinations: destinations)
                     }
                 }.disabled(self.showMenu ? true : false)
                 VStack(alignment: .trailing, spacing: 10) {
@@ -49,6 +53,17 @@ struct SwitcherView: View {
                         Spacer()
                         Text(name).font(.title).fontWeight(.bold).foregroundColor(Color.black)
                         Spacer()
+                        
+                        Button(action: {
+                            viewRouter.currentPage = .route
+                        }, label: {
+                            Image(systemName:  "map.fill")
+                                .resizable()
+                                .frame(width: 30, height: 30)
+                                .foregroundColor(Color.black)
+                                .imageScale(.large)
+                        })
+                        
                         Button(action: {
                             viewRouter.currentPage = (viewRouter.currentPage == .map) ? .list : .map
                         }, label: {

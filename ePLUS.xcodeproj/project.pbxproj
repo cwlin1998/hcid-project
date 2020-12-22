@@ -39,6 +39,7 @@
 		82CD0907256E5F9400F21693 /* ePLUSUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CD0906256E5F9400F21693 /* ePLUSUITests.swift */; };
 		F30B35F8258A70B700D05E3E /* GoogleMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F30B35F6258A70B700D05E3E /* GoogleMapView.swift */; };
 		F30B35F9258A70B700D05E3E /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F30B35F7258A70B700D05E3E /* MapView.swift */; };
+		F354ED182591907E00E443FD /* RouterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F354ED172591907E00E443FD /* RouterView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -99,6 +100,7 @@
 		E045F45D9B6858255B7C0E86 /* Pods-ePLUS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ePLUS.release.xcconfig"; path = "Target Support Files/Pods-ePLUS/Pods-ePLUS.release.xcconfig"; sourceTree = "<group>"; };
 		F30B35F6258A70B700D05E3E /* GoogleMapView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GoogleMapView.swift; sourceTree = "<group>"; };
 		F30B35F7258A70B700D05E3E /* MapView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
+		F354ED172591907E00E443FD /* RouterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouterView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -185,6 +187,7 @@
 				824FADFA25752EA7005C62C4 /* ListView.swift */,
 				825F2B92257F935B0001D37C /* AddDestinationView.swift */,
 				825151D22584900200E4D9FF /* MenuView.swift */,
+				F354ED172591907E00E443FD /* RouterView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -457,6 +460,7 @@
 				825151E62587552D00E4D9FF /* NewPlanView.swift in Sources */,
 				827A3840258DF49E00F3DC0D /* LoginView.swift in Sources */,
 				825F2BA1257FA0E20001D37C /* GoooglePlaceStructure.swift in Sources */,
+				F354ED182591907E00E443FD /* RouterView.swift in Sources */,
 				825151E12584B97700E4D9FF /* SwitcherView.swift in Sources */,
 				824387B2258283C500DC6664 /* RoundedRectButton.swift in Sources */,
 				824FADFB25752EA7005C62C4 /* ListView.swift in Sources */,

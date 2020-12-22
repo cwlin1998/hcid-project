@@ -22,6 +22,9 @@ struct SwitcherView: View {
 
     @Binding var isactive: [[Bool]]
     @State var routing: Bool = false
+    
+    @State private var isrouteValid: Bool = false
+    @State private var shouldShowRouteAlert: Bool = false
     var body: some View {
 //        NavigationView(){
             ZStack(alignment: .topLeading) {
@@ -54,14 +57,21 @@ struct SwitcherView: View {
                         Text(name).font(.title).fontWeight(.bold).foregroundColor(Color.black)
                         Spacer()
                         
-                        if (destinations[dayRouter.dayIndex].count > 1){
-                            NavigationLink(destination: RoutingView(destinations: self.destinations)){
-                                Image(systemName: "paperplane.circle.fill")
-                                    .resizable()
-                                    .frame(width: 30, height: 30)
-                                    .foregroundColor(colorScheme == .dark ? Color(UIColor.systemTeal): Color(UIColor.systemIndigo))
-                                    .imageScale(.large)
-                            }
+                        // Route button
+                        NavigationLink(destination: RoutingView(destinations: self.destinations), isActive: self.$isrouteValid) {
+                            Image(systemName: "paperplane.circle.fill")
+                                .resizable()
+                                .frame(width: 30, height: 30)
+                                .foregroundColor(colorScheme == .dark ? Color(UIColor.systemTeal): Color(UIColor.systemIndigo))
+                                .imageScale(.large)
+                                .onTapGesture {
+                                    if destinations[dayRouter.dayIndex].count > 1 {
+                                        isrouteValid = true
+                                    }
+                                    if !isrouteValid {
+                                        self.shouldShowRouteAlert = true //trigger Alert
+                                    }
+                                }
                         }
 
                         // list/map button
@@ -90,6 +100,9 @@ struct SwitcherView: View {
             }.ignoresSafeArea(edges:.bottom)
         .navigationBarTitle("")
         .navigationBarHidden(true)
+            .alert(isPresented: $shouldShowRouteAlert) {
+                Alert(title: Text("At least need two destinations!"))
+            }
 //        }
     }
 }

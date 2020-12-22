@@ -12,8 +12,9 @@ struct MainView: View {
     @EnvironmentObject var viewRouter: ViewRouter
     @EnvironmentObject var dayRouter: DayRouter
     @EnvironmentObject var userData: UserData
+    @Environment(\.presentationMode) var presentationMode
     
-    let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
+    let timer = Timer.publish(every: 5, on: .main, in: .common).autoconnect()
     
     @State var loading = true
     @State var error = false
@@ -26,68 +27,76 @@ struct MainView: View {
     @State var placeId: String = ""
     @State var dayIndex = 0
     @State var planIndex = 0
+    @State var planDict = [String: String]()
     
     @State var isactive: [[Bool]] = [[]]
+    
+    @Binding var isLoginValid: Bool
     
     let originalOffset: CGFloat = UIScreen.main.bounds.size.width/3*2.3  // 320
     @State var offset: CGFloat = UIScreen.main.bounds.size.width/3*2.3  // 320
     
     var body: some View {
-        VStack {
-            if (loading) {
-                LoadingView()
-            }
-            if (error) {
-                Text("Error. Doh!")
-            }
-            if (!havePlan) {
-                NavigationLink(destination: NewPlanView(havePlan: false, showMenu: $showMenu, planIndex: $planIndex)) {
-                    VStack {
-                        Text("You got no plan.")
-                        MenuButton(text: "create a new plan")
+        NavigationView {
+            VStack {
+                if (loading) {
+                    LoadingView()
+                }
+                if (error) {
+                    Text("Error. Doh!")
+                }
+                if (!havePlan) {
+                    NavigationLink(destination: NewPlanView(havePlan: false, showMenu: $showMenu, planIndex: $planIndex)) {
+                        VStack {
+                            Text("You got no plan.")
+                            MenuButton(text: "create a new plan")
+                        }
                     }
                 }
-            }
-            if (plan != nil && destinations != nil) {
-                GeometryReader { g in
-                    ZStack(alignment: .leading) {
-                        if (showMenu) {
-                            MenuView(
-                                planId: self.plan!.id,
-                                users: self.plan!.users,
-                                destinations: self.destinations!,
-                                showMenu: self.$showMenu,
-                                planIndex: $planIndex
-                            ).frame(width: originalOffset)
-                        }
-                        SwitcherView(
-                            name: self.plan!.name,
-                            destinations: self.destinations!,
-                            users: self.plan!.users,
-                            planId: self.plan!.id,
-                            showMenu: self.$showMenu,
-                            loading: self.$loading,
-                            isactive: self.$isactive
-                        )
-                        .frame(width: g.frame(in: .global).width)
-                        .offset(x: self.showMenu ? self.offset: 0)
-                    }
-                    .gesture(
-                        DragGesture()
-                            .onChanged { value in
-                                if (value.translation.width < 0 && value.translation.width > -originalOffset) {
-                                    self.offset = originalOffset + value.translation.width
-                                }
+                if (plan != nil && destinations != nil) {
+                    GeometryReader { g in
+                        ZStack(alignment: .leading) {
+                            if (showMenu && planDict.count != 0) {
+                                MenuView(
+                                    planId: self.plan!.id,
+                                    users: self.plan!.users,
+                                    destinations: self.destinations!,
+                                    showMenu: self.$showMenu,
+                                    planIndex: $planIndex,
+                                    isLoginValid: self.$isLoginValid,
+                                    planDict: self.planDict
+                                ).frame(width: originalOffset)
                             }
-                            .onEnded { value in
-                                if value.translation.width < -100 {
-                                    withAnimation {
-                                        self.showMenu = false
+                            SwitcherView(
+                                name: self.plan!.name,
+                                destinations: self.destinations!,
+                                users: self.plan!.users,
+                                planId: self.plan!.id,
+                                showMenu: self.$showMenu,
+                                loading: self.$loading,
+                                isactive: self.$isactive
+                            )
+                            .frame(width: g.frame(in: .global).width)
+                            .offset(x: self.showMenu ? self.offset: 0)
+                        }
+                        .onAppear(perform: fetchPlans)
+                        .gesture(
+                            DragGesture()
+                                .onChanged { value in
+                                    if (value.translation.width < 0 && value.translation.width > -originalOffset) {
+                                        self.offset = originalOffset + value.translation.width
                                     }
                                 }
-                                self.offset = originalOffset
-                            }
-                    )
+                                .onEnded { value in
+                                    if value.translation.width < -100 {
+                                        withAnimation {
+                                            self.showMenu = false
+                                        }
+                                    }
+                                    self.offset = originalOffset
+                                }
+                        )
+                    }
                 }
             }
         }
@@ -96,6 +105,27 @@ struct MainView: View {
             self.fetchData()
         }
         .navigationBarHidden(true)
+    }
+    
+    func fetchPlans(){
+        let group = DispatchGroup()
+        if (userData.currentUser.plans.count > 0) {
+            for i in 0..<userData.currentUser.plans.count{
+                group.enter()
+                
+                API().getPlan(planId: userData.currentUser.plans[i]) { result in
+                    switch result {
+                    case .success(let plan):
+                        self.planDict[plan.id] = plan.name
+                    case .failure:
+                        self.error = true
+                    }
+                    group.leave()
+                }
+                
+                group.wait()
+            }
+        }
     }
     
     func fetchData() {
@@ -187,7 +217,6 @@ struct MainView: View {
                             ratings += Float(comment.rating)
                         case .failure:
                             break
-//                            self.error = true
                         }
                         group.leave()
                     }
@@ -203,8 +232,8 @@ struct MainView: View {
     }
 }
 
-struct MainView_Previews: PreviewProvider {
-    static var previews: some View {
-        MainView(account: "guest", isactive: [[false]])
-    }
-}
+//struct MainView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        MainView(account: "guest", isactive: [[false]])
+//    }
+//}

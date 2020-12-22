@@ -29,7 +29,6 @@ struct LoginView: View {
                     .resizable()
                     .frame(width: 250, height: 250)
                     .clipShape(Circle())
-//                        .overlay(Circle().stroke(Color.white, lineWidth: 4))
                     .padding(.bottom, 50)
                 Spacer()
                 VStack(alignment: .center, spacing: 20) {
@@ -45,7 +44,7 @@ struct LoginView: View {
                         .shadow(radius: 5.0, x: 10, y: 5)
                     
                     NavigationLink(
-                        destination: MainView(account: self.account),
+                        destination: MainView(account: self.account, isLoginValid: self.$isLoginValid),
                         isActive: self.$isLoginValid,
                         label: {
                             Text("Sign In")
@@ -62,9 +61,7 @@ struct LoginView: View {
                                         UserDefaults.standard.set(self.account, forKey: "account")
                                         UserDefaults.standard.set(self.password, forKey: "password")
                                     }
-                                    if isLoginValid {
-                                        self.isLoginValid = true //trigger NavigationLink
-                                    } else {
+                                    if !isLoginValid {
                                         self.shouldShowLoginAlert = true //trigger Alert
                                     }
                                 }
@@ -76,7 +73,6 @@ struct LoginView: View {
         }
         .onAppear(perform: checkIfLoginBefore)
         .background(Color(UIColor.secondarySystemBackground).edgesIgnoringSafeArea(.all))
-        .navigationBarHidden(true)
         .alert(isPresented: $shouldShowLoginAlert) {
             Alert(title: Text("Account/Password incorrect"))
         }

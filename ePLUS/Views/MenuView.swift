@@ -104,17 +104,15 @@ struct MenuView: View {
     @EnvironmentObject var dayRouter: DayRouter
     @EnvironmentObject var userData: UserData
     @Environment(\.colorScheme) var colorScheme
-    @Environment(\.presentationMode) var presentationMode
-    
-    let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
-    
+        
     @State var error = false
     let planId: String
     let users : [String]
     let destinations: [[Destination]]
     @Binding var showMenu: Bool
     @Binding var planIndex: Int
-    @State var planDict = [String: String]()
+    @Binding var isLoginValid: Bool
+    @State var planDict: [String: String]
     
     var body: some View {
         NavigationView {
@@ -182,7 +180,7 @@ struct MenuView: View {
                         MenuButton(text: "create a new plan")
                     }
                     Button(action: {
-                        presentationMode.wrappedValue.dismiss()
+                        self.isLoginValid = false
                     }, label: {
                         MenuButton(text: "Logout")
                     })
@@ -194,7 +192,7 @@ struct MenuView: View {
             .background(Color(UIColor.secondarySystemBackground).ignoresSafeArea())
             .navigationBarTitle("")
             .navigationBarHidden(true)
-        }.onAppear(perform: fetchPlans)
+        }
     }
     
     func addDay() {
@@ -231,17 +229,17 @@ struct MenuView: View {
     }
 }
 
-struct MenuView_Previews: PreviewProvider {
-    static var previews: some View {
-        PreviewWrapper()
-    }
-    struct PreviewWrapper: View {
-        @State var showMenu = true
-        @State var dayIndex = 0
-        @State var planIndex = 0
-
-        var body: some View{
-            MenuView(planId:"", users: ["Candy", "Bob", "Alice"], destinations: [[], []], showMenu: $showMenu, planIndex: $planIndex)
-        }
-    }
-}
+//struct MenuView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        PreviewWrapper()
+//    }
+//    struct PreviewWrapper: View {
+//        @State var showMenu = true
+//        @State var dayIndex = 0
+//        @State var planIndex = 0
+//
+//        var body: some View{
+//            MenuView(planId:"", users: ["Candy", "Bob", "Alice"], destinations: [[], []], showMenu: $showMenu, planIndex: $planIndex)
+//        }
+//    }
+//}

@@ -6,7 +6,6 @@ import UIKit
 
 struct MapView: View {
     @EnvironmentObject var dayRouter: DayRouter
-    let route: Bool
     let destinations: [[Destination]]
     let users: [String]
     @State var isactive: [[Bool]]
@@ -16,51 +15,45 @@ struct MapView: View {
     @State var offset: CGFloat = 0
     
     var body: some View {
-        if route {
-            ZStack {
-                RouterView(destinations: destinations)
-            }.ignoresSafeArea(.all)
-        }
-        else {
-            GeometryReader { g in
-                HStack(spacing:0 ){
-                    ForEach(destinations.indices, id: \.self) { dayIndex in
-                        ZStack{
-                            
-                            GoogleMapsView(destinations: destinations,dayIndex: dayIndex, isactive: self.$isactive[dayIndex])
+        GeometryReader { g in
+            HStack(spacing:0 ){
+                ForEach(destinations.indices, id: \.self) { dayIndex in
+                    ZStack{
                         
-                            ForEach(destinations[dayIndex].indices, id: \.self) { index in
-                                NavigationLink("", destination: DestinationView(destination: destinations[dayIndex][index],users: self.users), isActive: self.$isactive[dayIndex][index])
-                            }
-                            
-                            HStack(spacing: 8) {
-                                if (dayIndex > 0) { DayBlock(day: dayIndex, showMenu: $showMenu) }
-                                DayBlock(day: dayIndex+1, showMenu: $showMenu)
-                                if (dayIndex+2 <= destinations.count) {DayBlock(day: dayIndex+2, showMenu: $showMenu)}
-                            }
-                            .frame(width: UIScreen.screenWidth*0.9, height: 100)
-                            .offset(y: UIScreen.screenHeight/2-100)
-                            
+                        GoogleMapsView(destinations: destinations,dayIndex: dayIndex, isactive: self.$isactive[dayIndex])
+                    
+                        ForEach(destinations[dayIndex].indices, id: \.self) { index in
+                            NavigationLink("", destination: DestinationView(destination: destinations[dayIndex][index],users: self.users), isActive: self.$isactive[dayIndex][index])
                         }
-                        .ignoresSafeArea(.all)
-                        .frame(width: UIScreen.screenWidth, height: UIScreen.screenHeight)
-                        .opacity((self.showMenu && dayIndex < dayRouter.dayIndex) ? 0 : 1)
+                        
+                        HStack(spacing: 8) {
+                            if (dayIndex > 0) { DayBlock(day: dayIndex, showMenu: $showMenu) }
+                            DayBlock(day: dayIndex+1, showMenu: $showMenu)
+                            if (dayIndex+2 <= destinations.count) {DayBlock(day: dayIndex+2, showMenu: $showMenu)}
+                        }
+                        .frame(width: UIScreen.screenWidth*0.9, height: 100)
+                        .offset(y: UIScreen.screenHeight/2-100)
+                        
                     }
+                    .ignoresSafeArea(.all)
+                    .frame(width: UIScreen.screenWidth, height: UIScreen.screenHeight)
+                    .opacity((self.showMenu && dayIndex < dayRouter.dayIndex) ? 0 : 1)
                 }
-                .offset(x: self.offset)
-                .highPriorityGesture(
-                    DragGesture()
-                        .onChanged({ value in
-                            self.handleDragging(translation: value.translation)
-                        })
-                        .onEnded({ value in
-                            self.handleDragged(translation: value.translation)
-                        })
-                ).onReceive(dayRouter.objectWillChange, perform: self.updateOffset)
-            }.animation(.default)
-            .onAppear(perform: initialOffset)
-        }
+            }
+            .offset(x: self.offset)
+            .highPriorityGesture(
+                DragGesture()
+                    .onChanged({ value in
+                        self.handleDragging(translation: value.translation)
+                    })
+                    .onEnded({ value in
+                        self.handleDragged(translation: value.translation)
+                    })
+            ).onReceive(dayRouter.objectWillChange, perform: self.updateOffset)
+        }.animation(.default)
+        .onAppear(perform: initialOffset)
     }
+    
 
     func initialOffset(){
         self.offset =  -CGFloat(dayRouter.dayIndex) * UIScreen.screenWidth

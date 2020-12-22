@@ -30,9 +30,7 @@ struct SwitcherView: View {
                     case .list:
                         ListView(planId: planId, name: name, destinations: destinations, users: users, showMenu: self.$showMenu)
                     case .map:
-                        MapView(route: false, destinations: destinations, users: users, isactive: self.isactive, showMenu: self.$showMenu)
-                    case .route:
-                        MapView(route: true, destinations: destinations, users: users, isactive: self.isactive, showMenu: self.$showMenu)
+                        MapView(destinations: destinations, users: users, isactive: self.isactive, showMenu: self.$showMenu)
                     }
                 }.disabled(self.showMenu ? true : false)
                 VStack(alignment: .trailing, spacing: 10) {
@@ -55,19 +53,17 @@ struct SwitcherView: View {
                         Spacer()
                         Text(name).font(.title).fontWeight(.bold).foregroundColor(Color.black)
                         Spacer()
-                        // route button
-                        if (destinations[dayRouter.dayIndex].count > 0){
-                            Button(action: {
-                                viewRouter.currentPage = .route
-                                self.routing = true
-                            }, label: {
+                        
+                        if (destinations[dayRouter.dayIndex].count > 1){
+                            NavigationLink(destination: RoutingView(destinations: self.destinations)){
                                 Image(systemName: "paperplane.circle.fill")
                                     .resizable()
                                     .frame(width: 30, height: 30)
                                     .foregroundColor(colorScheme == .dark ? Color(UIColor.systemTeal): Color(UIColor.systemIndigo))
                                     .imageScale(.large)
-                            })
+                            }
                         }
+
                         // list/map button
                         Button(action: {
                             viewRouter.currentPage = (viewRouter.currentPage == .map) ? .list : .map

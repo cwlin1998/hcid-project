@@ -7,6 +7,30 @@
 
 import SwiftUI
 
+struct DisabledHeartRating: View {
+    @Environment(\.colorScheme) var colorScheme
+    let heartSize: CGFloat = 20
+    let rating: Float
+
+    var body: some View {
+        // Heart rating
+        HStack(spacing: 12){
+            ForEach(0..<Int(self.rating), id: \.self) { i in
+                Image(colorScheme == .dark ? "darkheartfill" : "heartfill")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: heartSize, height: heartSize)
+            }
+            ForEach(Int(self.rating)..<5, id: \.self) { i in
+                Image(colorScheme == .dark ? "darkhearthollow" : "hearthollow")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: heartSize, height: heartSize)
+            }
+        }
+    }
+}
+
 struct HeartRating: View {
     @Environment(\.colorScheme) var colorScheme
     let heartSize: CGFloat = 20

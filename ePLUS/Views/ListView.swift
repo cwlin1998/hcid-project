@@ -14,15 +14,7 @@ struct ListBlock: View {
     let planId: String
     let destination: Destination
     let users: [String]
-    @State var rating: Float
     @State var showDeleteAlert: Bool = false
-    
-    init(planId: String, destination: Destination, users: [String]) {
-        self.planId = planId
-        self.destination = destination
-        self.users = users
-        self._rating = State(initialValue: destination.rating)
-    }
     
     var body: some View {
         NavigationLink(destination: DestinationView(destination: destination, users: users)) {
@@ -33,7 +25,7 @@ struct ListBlock: View {
                     Text("\(self.destination.name)")
                         .bold()
                         .foregroundColor(colorScheme == .dark ? Color(UIColor.systemTeal): Color(UIColor.systemIndigo))
-                    HeartRating(rating: $rating).disabled(true)
+                    DisabledHeartRating(rating: destination.rating)
                 }
                 .offset(x: 16)
                 Spacer()

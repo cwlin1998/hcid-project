@@ -187,6 +187,7 @@ struct MenuView: View {
                 }
                 Spacer()
             }
+            .onAppear(perform: fetchPlans)
             .padding(.top, 80)
             .padding(.horizontal, 36)
             .background(Color(UIColor.secondarySystemBackground).ignoresSafeArea())

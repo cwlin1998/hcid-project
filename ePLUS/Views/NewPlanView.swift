@@ -67,7 +67,7 @@ struct CreatePlanButton: View {
     @EnvironmentObject var userData: UserData
     @Environment(\.colorScheme) var colorScheme
     
-    let planName: String
+    @Binding var planName: String
     @State var error = false
     @Binding var showMenu: Bool
     @Binding var planIndex: Int
@@ -164,7 +164,7 @@ struct NewPlanView: View {
                 Spacer()
                 
                 // Button
-                CreatePlanButton(planName: nameText, showMenu: $showMenu, planIndex: $planIndex)
+                CreatePlanButton(planName: $nameText, showMenu: $showMenu, planIndex: $planIndex)
                 
                 if havePlan{
                     Button(action:{

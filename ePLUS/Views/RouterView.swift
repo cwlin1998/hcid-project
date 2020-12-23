@@ -13,10 +13,12 @@ import SwiftyJSON
 
 struct RoutingView: View {
     @Environment(\.presentationMode) var presentationMode
+    @State var duration: String = ""
+    @State var distance: String = ""
     let destinations: [[Destination]]
     var body: some View{
         ZStack  {
-            RouterView(destinations: destinations)
+            RouterView(destinations: destinations, duration: duration, distance: distance)
             
             VStack (alignment: .leading) {
                 ReturnButton(action: {
@@ -58,6 +60,9 @@ struct RoutingView: View {
 struct RouterView: UIViewRepresentable {
     @EnvironmentObject var dayRouter: DayRouter
     let destinations: [[Destination]]
+    @State var duration: String
+    @State var distance: String
+    
     
     func makeUIView(context: Self.Context) -> GMSMapView {
         
@@ -134,7 +139,11 @@ struct RouterView: UIViewRepresentable {
                     let jsonData = JSON(data)
 //                    print(jsonData)
                     let routes = jsonData["routes"].arrayValue
+                    
                     for route in routes {
+                        let disandtime = route["legs"].arrayValue[0].dictionary
+                        distance = (disandtime?["distance"]?["value"].description)!
+                        duration = (disandtime?["duration"]?["value"].description)!
                         let overview_polyline = route["overview_polyline"].dictionary
                         let points = overview_polyline?["points"]?.string
                         let path = GMSPath.init(fromEncodedPath: points ?? "")
@@ -142,6 +151,7 @@ struct RouterView: UIViewRepresentable {
                         polyline.strokeColor = .systemOrange
                         polyline.strokeWidth = 8
                         polyline.map = mapView
+                        
                     }
 
                 }

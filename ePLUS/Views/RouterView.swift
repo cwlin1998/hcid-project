@@ -13,8 +13,8 @@ import SwiftyJSON
 
 struct RoutingView: View {
     @Environment(\.presentationMode) var presentationMode
-    @State var duration: String = ""
-    @State var distance: String = ""
+    @State var duration: String = "" //unit s
+    @State var distance: String = "" //unit m
     let destinations: [[Destination]]
     var body: some View{
         ZStack  {

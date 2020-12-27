@@ -18,7 +18,7 @@ struct RoutingView: View {
     let destinations: [[Destination]]
     var body: some View{
         ZStack  {
-            RouterView(destinations: destinations, duration: duration, distance: distance)
+            RouterView(destinations: destinations, duration: $duration, distance: $distance)
             
             VStack (alignment: .leading) {
                 ReturnButton(action: {
@@ -28,13 +28,13 @@ struct RoutingView: View {
                 HStack {
                     Image(systemName: "figure.walk")
                         .font(.title)
-                    Text("min")
+                    Text("\(duration)min")
                         .fontWeight(.semibold)
-                        .font(.title)
+                        .font(.title2)
                     Spacer()
-                    Text("km")
+                    Text("\(distance)km")
                         .fontWeight(.semibold)
-                        .font(.title)
+                        .font(.title2)
                     Spacer()
                     Image(systemName: "paperplane.fill")
                         .font(.title)
@@ -45,7 +45,6 @@ struct RoutingView: View {
                 .foregroundColor(.white)
                 .background(LinearGradient(gradient: Gradient(colors: [Color(red: 43/255, green: 185/255, blue: 222/255), Color(red: 124/255, green: 211/255, blue: 200/255)]), startPoint: .leading, endPoint: .trailing))
                 .cornerRadius(40)
-                .hidden()
             }
             .padding()
             .padding(.top, 50)
@@ -60,8 +59,8 @@ struct RoutingView: View {
 struct RouterView: UIViewRepresentable {
     @EnvironmentObject var dayRouter: DayRouter
     let destinations: [[Destination]]
-    @State var duration: String
-    @State var distance: String
+    @Binding var duration: String
+    @Binding var distance: String
     
     
     func makeUIView(context: Self.Context) -> GMSMapView {
@@ -153,7 +152,8 @@ struct RouterView: UIViewRepresentable {
                         polyline.map = mapView
                         
                     }
-
+                    distance = String(format: "%.2f", Float(distance)!/1000)
+                    duration = String(format: "%.2f", Float(duration)!/60)
                 }
                 return
             }

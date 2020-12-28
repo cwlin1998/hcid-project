@@ -24,6 +24,7 @@ struct InformationBlock: View {
     @State var currentRating: Float = 0
     @State var img: Image
     
+    @State var showAlert: Bool = false
     
     var body: some View {
         ZStack (alignment: .top) {
@@ -56,15 +57,23 @@ struct InformationBlock: View {
                 
                 // Add to plan button
                 RoundedRectButton(action: {
-                    self.addDestination()
-                    self.addComment()
-                    self.presentationMode.wrappedValue.dismiss()
+                    if self.currentRating == 0 {
+                        self.showAlert = true
+                    }
+                    else {
+                        self.addDestination()
+                        self.addComment()
+                        self.presentationMode.wrappedValue.dismiss()
+                    }
                 }, text: "Add to plan")
                 
             }.padding(EdgeInsets(top: 0, leading: 20, bottom: 20, trailing: 20))
         }
         .padding(.horizontal, 10)
         .frame(height: UIScreen.screenHeight*0.6)
+        .alert(isPresented: $showAlert) {
+            Alert(title: Text("Remember to give the rating!"))
+        }
     }
     
     func addDestination() {

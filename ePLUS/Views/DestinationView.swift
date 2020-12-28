@@ -124,7 +124,7 @@ struct DestinationView: View {
     @EnvironmentObject var userData: UserData
     @Environment(\.presentationMode) var presentationMode
     
-    let timer = Timer.publish(every: 0.5, on: .main, in: .common).autoconnect()
+    let timer = Timer.publish(every: 2, on: .main, in: .common).autoconnect()
     
     @State var loading = true
     let destination: Destination

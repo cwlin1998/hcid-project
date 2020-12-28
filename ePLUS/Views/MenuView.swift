@@ -187,7 +187,6 @@ struct MenuView: View {
                 }
                 Spacer()
             }
-            .onAppear(perform: fetchPlans)
             .padding(.top, 80)
             .padding(.horizontal, 36)
             .background(Color(UIColor.secondarySystemBackground).ignoresSafeArea())
@@ -204,27 +203,6 @@ struct MenuView: View {
                 break
             case .failure:
                 self.error = true
-            }
-        }
-    }
-    
-    func fetchPlans(){
-        let group = DispatchGroup()
-        if (userData.currentUser.plans.count > 0) {
-            for i in 0..<userData.currentUser.plans.count{
-                group.enter()
-                
-                API().getPlan(planId: userData.currentUser.plans[i]) { result in
-                    switch result {
-                    case .success(let plan):
-                        self.planDict[plan.id] = plan.name
-                    case .failure:
-                        self.error = true
-                    }
-                    group.leave()
-                }
-                
-                group.wait()
             }
         }
     }

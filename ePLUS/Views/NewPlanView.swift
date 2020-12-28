@@ -74,9 +74,18 @@ struct CreatePlanButton: View {
     
     var body : some View{
         Button(action: {
-            self.addPlan()
-            self.planIndex = userData.currentUser.plans.count
-            self.showMenu = false
+            DispatchQueue.global().async {
+                let group = DispatchGroup()
+                group.enter()
+                self.addPlan(group: group)
+                group.wait()
+                
+                group.notify(queue: .main) {
+                    print("change planIndex")
+                    self.planIndex = userData.currentUser.plans.count
+                    self.showMenu = false
+                }
+            }
         }) {
             Text("Create")
                 .font(.system(size: 28, weight: .regular))
@@ -90,14 +99,16 @@ struct CreatePlanButton: View {
         }
     }
     
-    func addPlan() {
+    func addPlan(group: DispatchGroup) {
         API().addPlan(userAccount: userData.currentUser.account, planName: planName) { result in
             switch result {
             case .success:
+                print("finish adding")
                 break
             case .failure:
                 self.error = true
             }
+            group.leave()
         }
     }
     

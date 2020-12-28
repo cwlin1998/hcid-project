@@ -13,7 +13,7 @@ struct MainView: View {
     @EnvironmentObject var dayRouter: DayRouter
     @EnvironmentObject var userData: UserData
     
-    let timer = Timer.publish(every: 0.5, on: .main, in: .common).autoconnect()
+    let timer = Timer.publish(every: 2, on: .main, in: .common).autoconnect()
     
     @State var loading = true
     @State var error = false
@@ -103,6 +103,7 @@ struct MainView: View {
         .onReceive(timer) { _ in
             DispatchQueue.global(qos: .background).async {
                 self.fetchData()
+                self.fetchPlans()
             }
         }
         .navigationBarHidden(true)
@@ -117,9 +118,13 @@ struct MainView: View {
                 API().getPlan(planId: userData.currentUser.plans[i]) { result in
                     switch result {
                     case .success(let plan):
-                        self.planDict[plan.id] = plan.name
+                        DispatchQueue.main.async {
+                            self.planDict[plan.id] = plan.name
+                        }
                     case .failure:
-                        self.error = true
+                        DispatchQueue.main.async {
+                            self.error = true
+                        }
                     }
                     group.leave()
                 }

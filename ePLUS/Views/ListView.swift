@@ -81,12 +81,14 @@ struct DayView: View {
 
     var body: some View {
         VStack(alignment: .center) {
+            /*
             Text("Day \(dayIndex + 1)")
                 .frame(width: 80, height: 20)
                 .padding(EdgeInsets(top: 10, leading: 20, bottom: 10, trailing: 20))
                 .background(Color(UIColor.tertiarySystemBackground))
                 .opacity(0.85)
                 .cornerRadius(50)
+            */
             ScrollView {
                 VStack(spacing: 16) { // space bewtween destinations
                     ForEach(destinations) { des in
@@ -110,16 +112,29 @@ struct DaysView: View {
     @State var originalOffset: CGFloat = 0
     @State var offset: CGFloat = 0
     @Binding var showMenu: Bool
+    let dayWidth: Int = 80
+    let dayHeight: Int = 20
     
     var body: some View {
         GeometryReader { g in
             HStack(spacing: 0) {
                 ForEach(destinations.indices, id: \.self) { dayIndex in
-                    DayView(
-                        planId: planId, dayIndex: dayIndex,
-                        destinations: destinations[dayIndex],
-                        users: users
-                    ).frame(width: g.frame(in: .global).width)
+                    VStack{
+                        HStack(spacing: CGFloat(dayWidth/2)) {
+                            DayBlock(day: dayIndex, showMenu: $showMenu, width: dayWidth, height: dayHeight, leading: 36, trailing: 4)
+                                .opacity(dayIndex > 0 && dayIndex == dayRouter.dayIndex ? 1 : 0)
+                                .offset(x: CGFloat(-dayWidth/2))
+                            DayBlock(day: dayIndex+1, showMenu: $showMenu, width: dayWidth, height: dayHeight)
+                            DayBlock(day: dayIndex+2, showMenu: $showMenu, width: dayWidth, height: dayHeight, leading: 4, trailing: 36)
+                                .opacity(dayIndex+1 < destinations.count && dayIndex == dayRouter.dayIndex ? 1 : 0)
+                                .offset(x: CGFloat(dayWidth/2))
+                        }
+                        DayView(
+                            planId: planId, dayIndex: dayIndex,
+                            destinations: destinations[dayIndex], users: users
+                        )
+                    }
+                    .frame(width: g.frame(in: .global).width)
                     .opacity((self.showMenu && dayIndex < dayRouter.dayIndex) ? 0 : 1)
                 }
             }

@@ -12,7 +12,19 @@ struct DayBlock: View{
     @Environment(\.colorScheme) var colorScheme
     let day: Int
     @Binding var showMenu: Bool
+    let width: Int
+    let height: Int
+    let leading: CGFloat
+    let trailing: CGFloat
 
+    init(day: Int, showMenu: Binding<Bool>, width: Int = 0, height: Int = 24, leading: CGFloat = 20, trailing: CGFloat = 20){
+        self.day = day
+        self._showMenu = showMenu
+        self.width = width
+        self.height = height
+        self.leading = leading
+        self.trailing = trailing
+    }
     
     var body: some View{
         Button(action: {
@@ -22,21 +34,23 @@ struct DayBlock: View{
             if colorScheme == .dark {
                 Text("Day \(day)")
                     .font(.system(size: 22, weight: .regular))
-                    .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: 16)
-                    .padding()
+                    .frame(minWidth: 0, maxWidth: self.width == 0 ? .infinity : CGFloat(width), minHeight: 0, maxHeight: CGFloat(height))
+//                    .padding()
+                    .padding(EdgeInsets(top: 10, leading: leading, bottom: 10, trailing: trailing))
                     .background((self.dayRouter.dayIndex == day - 1) ? Color(UIColor.systemTeal) : Color(UIColor.tertiarySystemBackground))
                     .foregroundColor((self.dayRouter.dayIndex == day - 1) ? Color.white : Color(UIColor.systemTeal))
-                    .opacity(0.9)
+                    .opacity(self.showMenu ? 1 : 0.85)
                     .cornerRadius(50)
             }
             else {
                 Text("Day \(day)")
                     .font(.system(size: 22, weight: .regular))
-                    .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: 16)
-                    .padding()
+                    .frame(minWidth: 0, maxWidth: self.width == 0 ? .infinity : CGFloat(width), minHeight: 0, maxHeight: CGFloat(height))
+//                    .padding()
+                    .padding(EdgeInsets(top: 10, leading: leading, bottom: 10, trailing: trailing))
                     .background((self.dayRouter.dayIndex == day - 1) ? Color(UIColor.systemIndigo) : Color(UIColor.tertiarySystemBackground))
                     .foregroundColor((self.dayRouter.dayIndex == day - 1) ? Color.white : Color(UIColor.systemIndigo))
-                    .opacity(0.9)
+                    .opacity(self.showMenu ? 1 : 0.85)
                     .cornerRadius(50)
             }
         }
@@ -61,6 +75,7 @@ struct MenuButton: View {
 }
 
 struct AddDayButton: View {
+    @Environment(\.colorScheme) var colorScheme
     @EnvironmentObject var dayRouter: DayRouter
     @State var error = false
     let planId: String
@@ -80,10 +95,10 @@ struct AddDayButton: View {
             .frame(minWidth: 0, maxWidth: .infinity)
             .frame(height: 16)
             .padding()
-            .foregroundColor(Color(UIColor.systemIndigo))
+            .foregroundColor(colorScheme == .dark ? Color(UIColor.systemTeal): Color(UIColor.systemIndigo))
             .overlay(
                 RoundedRectangle(cornerRadius: 50)
-                    .stroke(Color(UIColor.systemIndigo), lineWidth: 3)
+                    .stroke(colorScheme == .dark ? Color(UIColor.systemTeal): Color(UIColor.systemIndigo), lineWidth: 3)
             )
         }
     }

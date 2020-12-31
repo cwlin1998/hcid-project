@@ -80,10 +80,10 @@ struct AddDayButton: View {
             .frame(minWidth: 0, maxWidth: .infinity)
             .frame(height: 16)
             .padding()
-            .foregroundColor(.gray)
+            .foregroundColor(Color(UIColor.systemIndigo))
             .overlay(
                 RoundedRectangle(cornerRadius: 50)
-                    .stroke(Color.gray, lineWidth: 3)
+                    .stroke(Color(UIColor.systemIndigo), lineWidth: 3)
             )
         }
     }

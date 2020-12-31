@@ -48,7 +48,7 @@ struct SwitcherView: View {
                                 Image(systemName: self.showMenu ? "chevron.backward.square.fill" : "chevron.forward.square.fill")
                                     .resizable()
                                     .frame(width: 30, height: 30)
-                                    .foregroundColor(colorScheme == .dark ? Color(UIColor.systemTeal): Color(UIColor.systemIndigo))
+                                    .foregroundColor(Color(UIColor.systemIndigo))
                                     .imageScale(.large)
                             }
                         }
@@ -62,7 +62,7 @@ struct SwitcherView: View {
                             Image(systemName: "paperplane.circle.fill")
                                 .resizable()
                                 .frame(width: 30, height: 30)
-                                .foregroundColor(colorScheme == .dark ? Color(UIColor.systemTeal): Color(UIColor.systemIndigo))
+                                .foregroundColor(Color(UIColor.systemIndigo))
                                 .imageScale(.large)
                                 .onTapGesture {
                                     if destinations[dayRouter.dayIndex].count > 1 {
@@ -82,7 +82,7 @@ struct SwitcherView: View {
                             Image(systemName: (viewRouter.currentPage == .map) ? "list.dash": "map.fill")
                                 .resizable()
                                 .frame(width: 30, height: 30)
-                                .foregroundColor(colorScheme == .dark ? Color(UIColor.systemTeal): Color(UIColor.systemIndigo))
+                                .foregroundColor(Color(UIColor.systemIndigo))
                                 .imageScale(.large)
                         })
                         
@@ -91,7 +91,7 @@ struct SwitcherView: View {
                             Image(systemName: "plus.app.fill")
                                 .resizable()
                                 .frame(width: 30, height: 30)
-                                .foregroundColor(colorScheme == .dark ? Color(UIColor.systemTeal): Color(UIColor.systemIndigo))
+                                .foregroundColor(Color(UIColor.systemIndigo))
                                 .imageScale(.large)
                         }
                     }.padding(.horizontal, 8)

@@ -136,17 +136,8 @@ struct NewPlanView: View {
     
     var body: some View {
         VStack(spacing: 24){
-            ZStack {
-//                HStack {
-//                    ReturnButton(action: {
-//                        self.presentationMode.wrappedValue.dismiss()
-//                    }, size: 20)
-//                    Spacer()
-//                }
-                HStack{
-//                    if havePlan { Spacer() }
-                    Text("Create New Plan").font(.system(size: 24, weight: .bold))
-                }
+            HStack {
+                Text("Create New Plan").font(.system(size: 24, weight: .bold))
             }
             VStack(spacing: 20) {
                 // Name

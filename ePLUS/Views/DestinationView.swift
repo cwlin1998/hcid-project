@@ -218,7 +218,6 @@ struct DestinationView: View {
         }
         
         group.notify(queue: .main) {
-//            print(self.usercommentDict)
             self.usercommentDict = usercommentDict
             self.loading = false
         }

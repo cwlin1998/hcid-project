@@ -30,10 +30,8 @@ struct ListBlock: View {
                 .offset(x: 16)
                 Spacer()
             }
-//            .padding()
             .frame(minWidth: 0, maxWidth: .infinity)
             .frame(height: 88)
-//            .background(Color(UIColor.tertiarySystemBackground))
             .background(colorScheme == .dark ? Color(UIColor.systemGray3) :Color.white)
             .cornerRadius(10)
             .contextMenu{
@@ -202,8 +200,6 @@ struct ListView: View {
                 .resizable()
                 .scaledToFill()
                 .frame(width: UIScreen.main.bounds.size.width, height: UIScreen.main.bounds.size.width/16*9)
-//            RemoteImage(url: "https://picsum.photos/800/450/?blur", width: Float(UIScreen.main.bounds.size.width), height: Float(UIScreen.main.bounds.size.width/16*9), cornerRadius: 0)
-//            Text(name).font(.title).fontWeight(.bold).foregroundColor(Color.black).offset(y: 16)
             VStack(alignment: .center) {
                 DaysView(planId: planId, destinations: destinations, users: users, showMenu: self.$showMenu)
             }.padding(.top, UIScreen.main.bounds.size.width/16*6)

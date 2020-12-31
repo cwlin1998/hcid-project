@@ -35,7 +35,6 @@ struct InformationBlock: View {
             VStack(alignment: .leading, spacing: 15){
                 HStack (alignment: .bottom, spacing: 30){
                     // Image
-//                    Image(self.destination!.img)
                     self.img
                         .resizable()
                         .scaledToFill()
@@ -113,9 +112,7 @@ struct AddDesCommentView: View {
     let dayIndex: Int
     let placeId: String
     @Binding var searching: Bool
-    
     @State var destination: Destination?
-//    @State var destination: Destination? = Destination(id: "ChIJZQD10CZawokRCuvDW1oLE-Y", img: "columbusPark", name: "Columbus Park", address: "Mulberry Street &, Baxter St, New York, NY 10013, USA", cooridinate: Coordinate(latitude: 40.7155353, longitude: -74.0000483), comments: [""], rating: 3)
     
     @State private var region: MKCoordinateRegion = MKCoordinateRegion(
         center: CLLocationCoordinate2D(

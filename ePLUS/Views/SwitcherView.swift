@@ -21,7 +21,6 @@ struct SwitcherView: View {
     @Binding var loading: Bool
 
     @Binding var isactive: [[Bool]]
-    @State var routing: Bool = false
     
     @State private var isrouteValid: Bool = false
     @State private var shouldShowRouteAlert: Bool = false
@@ -39,18 +38,16 @@ struct SwitcherView: View {
                 VStack(alignment: .trailing, spacing: 10) {
                     HStack(spacing: 12) {
                         // side menu button
-                        if (!self.routing) {
-                            Button(action: {
-                                withAnimation {
-                                   self.showMenu.toggle()
-                                }
-                            }) {
-                                Image(systemName: self.showMenu ? "chevron.backward.square.fill" : "chevron.forward.square.fill")
-                                    .resizable()
-                                    .frame(width: 30, height: 30)
-                                    .foregroundColor(Color(UIColor.systemIndigo))
-                                    .imageScale(.large)
+                        Button(action: {
+                            withAnimation {
+                               self.showMenu.toggle()
                             }
+                        }) {
+                            Image(systemName: self.showMenu ? "chevron.backward.square.fill" : "chevron.forward.square.fill")
+                                .resizable()
+                                .frame(width: 30, height: 30)
+                                .foregroundColor(Color(UIColor.systemIndigo))
+                                .imageScale(.large)
                         }
 
                         Spacer()
@@ -77,7 +74,6 @@ struct SwitcherView: View {
                         // list/map button
                         Button(action: {
                             viewRouter.currentPage = (viewRouter.currentPage == .map) ? .list : .map
-                            self.routing = false
                         }, label: {
                             Image(systemName: (viewRouter.currentPage == .map) ? "list.dash": "map.fill")
                                 .resizable()

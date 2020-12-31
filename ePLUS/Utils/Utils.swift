@@ -21,8 +21,8 @@ struct utils{
         return Image(uiImage: uiImage)
     }
     func getPlanImage() -> Image{
-        let num = Int.random(in: 0...5)
-        let imgname = "randomBg\(num)"
+//        let num = Int.random(in: 0...5)
+        let imgname = "randomBg0"
         let uiImage = (UIImage(named: imgname) ?? UIImage(systemName: "photo")?.withTintColor(.purple, renderingMode: .alwaysTemplate))!
         return Image(uiImage: uiImage)
     }

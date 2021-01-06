@@ -34,17 +34,6 @@ struct ListBlock: View {
             .frame(height: 88)
             .background(colorScheme == .dark ? Color(UIColor.systemGray3) :Color.white)
             .cornerRadius(10)
-            .contextMenu{
-                VStack {
-                    Button(action: {
-                        self.showDeleteAlert = true
-                    }){
-                        Image(systemName: "trash")
-                        Text("Delete")
-                        .foregroundColor(.red)
-                    }
-                }
-            }
             .alert(isPresented: $showDeleteAlert) {
                 Alert(
                     title: Text("Remove \(self.destination.name) from Day \(dayRouter.dayIndex+1)?"),
@@ -58,6 +47,31 @@ struct ListBlock: View {
                     )
                 )
             }
+            .contextMenu{
+                VStack {
+                    Button(action: {
+//                        self.showDeleteAlert = true
+                        self.deleteDestination()
+                    }){
+                        Image(systemName: "trash")
+                        Text("Delete")
+                        .foregroundColor(.red)
+                    }
+                }
+            }
+//            .alert(isPresented: $showDeleteAlert) {
+//                Alert(
+//                    title: Text("Remove \(self.destination.name) from Day \(dayRouter.dayIndex+1)?"),
+//                    message: Text("The action cannot be recovered"),
+//                    primaryButton: .cancel(),
+//                    secondaryButton: .destructive(
+//                        Text("Delete"),
+//                        action: {
+//                            self.deleteDestination()
+//                        }
+//                    )
+//                )
+//            }
         }
     }
     
@@ -78,7 +92,6 @@ struct DayView: View {
     let dayIndex: Int
     let destinations: [Destination]
     let users: [String]
-
     var body: some View {
         VStack(alignment: .center) {
             /*

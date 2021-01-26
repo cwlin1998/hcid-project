@@ -28,8 +28,7 @@ struct GoogleMapsView: UIViewRepresentable {
     
     
     func makeUIView(context: Self.Context) -> GMSMapView {
-
-        GMSServices.provideAPIKey("AIzaSyAnU8CmfDD8S3X6xAYvlScSwvhrm2mht2A")
+        GMSServices.provideAPIKey("\(GoogleMapAPI.key)")
         var camera = GMSCameraPosition.camera(withLatitude:25.0173405, longitude: 121.5375631, zoom: 15.0)
         if (destinations[dayIndex].count>0){
             camera = GMSCameraPosition.camera(withLatitude: destinations[dayIndex][0].cooridinate.latitude , longitude: destinations[dayIndex][0].cooridinate.longitude , zoom: 15.0)

@@ -65,7 +65,7 @@ struct RouterView: UIViewRepresentable {
     
     func makeUIView(context: Self.Context) -> GMSMapView {
         
-        GMSServices.provideAPIKey("AIzaSyAnU8CmfDD8S3X6xAYvlScSwvhrm2mht2A")
+        GMSServices.provideAPIKey("\(GooglePlaceAPI.key)")
         var camera = GMSCameraPosition.camera(withLatitude:25.0173405, longitude: 121.5375631, zoom: 15.0)
         if (destinations[dayRouter.dayIndex].count>0){
             camera = GMSCameraPosition.camera(withLatitude: destinations[dayRouter.dayIndex][0].cooridinate.latitude , longitude: destinations[dayRouter.dayIndex][0].cooridinate.longitude , zoom: 15.0)
@@ -116,7 +116,7 @@ struct RouterView: UIViewRepresentable {
         print(locarr)
         
         // MARK: Create URL
-        var urlstr = "https://maps.googleapis.com/maps/api/directions/json?origin=\(locarr[0])&destination=\(locarr[locarr.count-1])&mode=walking&key=AIzaSyAnU8CmfDD8S3X6xAYvlScSwvhrm2mht2A"
+        var urlstr = "https://maps.googleapis.com/maps/api/directions/json?origin=\(locarr[0])&destination=\(locarr[locarr.count-1])&mode=walking&key=\(GoogleMapAPI.key)"
         if (locarr.count > 2) {
             urlstr = urlstr + "&waypoints="
             urlstr = urlstr + "via:\(locarr[1])"

@@ -660,10 +660,18 @@ struct API {
     }
 }
 
+struct GooglePlaceAPI{
+    static let key = "YOUR_GooglePlaceAPI_KEY"
+}
+
+struct GoogleMapAPI{
+    static let key = "YOUR_GoogleMapAPI_KEY"
+}
+
 struct GoogleAPI {
     let hostURL = "https://maps.googleapis.com/maps/api/place/details/json"
     func getLocation(locationId: String, handler: @escaping (Result<GooglePlaceDetailsResponse, Error>) -> Void) {
-        guard let url = URL(string: hostURL + "?" + "key=AIzaSyBP-OM2AulCwjnQV8IN72HdH-w12umJpxQ" + "&" + "placeid=" + locationId) else {
+        guard let url = URL(string: hostURL + "?" + "key=\(GooglePlaceAPI.key)" + "&" + "placeid=" + locationId) else {
             print("error...")
             return
         }

@@ -25,7 +25,7 @@ struct AutoCompleteView: UIViewControllerRepresentable {
         let autocompleteController = GMSAutocompleteViewController()
         autocompleteController.delegate = context.coordinator
 
-        GMSPlacesClient.provideAPIKey("AIzaSyBP-OM2AulCwjnQV8IN72HdH-w12umJpxQ")
+        GMSPlacesClient.provideAPIKey("\(GooglePlaceAPI.key)")
 
         let fields: GMSPlaceField = GMSPlaceField(rawValue: UInt(GMSPlaceField.placeID.rawValue) |
                 UInt(GMSPlaceField.name.rawValue) | UInt(GMSPlaceField.formattedAddress.rawValue)

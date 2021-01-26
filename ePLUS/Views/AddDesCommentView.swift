@@ -155,7 +155,7 @@ struct AddDesCommentView: View {
         if reference == "unknown_destination" {
             return Image("unknown_destination")
         }
-        let urlStr = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=\(reference)&key=AIzaSyBP-OM2AulCwjnQV8IN72HdH-w12umJpxQ"
+        let urlStr = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=\(reference)&key=\(GooglePlaceAPI.key)"
         if let url = URL(string: urlStr), let data = try? Data(contentsOf: url) {
             return Image(uiImage: UIImage(data: data)!)
         }

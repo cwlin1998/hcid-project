@@ -17,7 +17,7 @@ struct GooglePlaceImage: View {
         var state = LoadState.loading
 
         init(url: String) {
-            let urlStr = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=\(url)&key=AIzaSyBP-OM2AulCwjnQV8IN72HdH-w12umJpxQ"
+            let urlStr = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=\(url)&key=\(GooglePlaceAPI.key)"
             
             guard let parsedURL = URL(string: urlStr) else {
                 fatalError("Invalid URL: \(url)")
